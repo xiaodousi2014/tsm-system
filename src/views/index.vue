@@ -70,12 +70,13 @@
       
       
         <el-main>
-          <div style="background: #fff; border-radius: 8px;height: calc(100% - 60px);">
+          <div style="background: #fff; border-radius: 8px;height: calc(100% - 50px);">
               <el-breadcrumb separator="/" style="position: fixed;
     z-index: 10000;
     background: rgb(255, 255, 255);
     right: 20px;
     width: calc(100% - 240px);
+    height: 40px;
     top: 80px;
     border-radius: 8px;
     border-bottom: none;">
@@ -87,7 +88,7 @@
                 >{{ item.name }}</el-breadcrumb-item
                 >
             </el-breadcrumb>
-            <div style="height: 100%;margin-top: 60px;border-radius: 8px;">
+            <div style="height: 100%;margin-top: 50px;border-radius: 8px;">
                     <h1 class="title" v-show="$route.path === '/index'">
                     园区用户管理系统 欢迎您！
                 </h1>
@@ -520,6 +521,10 @@ height: 100%;
   color: #333;
   .el-breadcrumb {
       margin: 0;
+  }
+  .el-breadcrumb__item {
+          height: 40px;
+    line-height: 40px;
   }
   .title {
     height: 80px;
