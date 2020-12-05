@@ -75,7 +75,7 @@
         <el-main>
           <div style="background: #fff; border-radius: 8px;height: calc(100% - 40px);">
               <el-breadcrumb separator="/" style="position: fixed;
-    z-index: 10000000;
+    z-index: 20000;
     background: rgb(249 249 249);
     right: 0;
     width: calc(100% - 200px);
@@ -414,7 +414,9 @@ export default {
   .el-container-sub {
   }
 }
-
+.el-dropdown-menu {
+    z-index: 30000 !important;
+}
 .el-header .el-dropdown {
     color: #fff;
 }
