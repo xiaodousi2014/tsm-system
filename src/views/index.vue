@@ -67,49 +67,31 @@
         </el-menu>
         <!-- aside 侧边栏 -->
       </el-aside>
-        <el-header>
-          <span style="color: #fff; font-size: 26px">教学保障管理系统</span>
-          <div class="user-box">
-            <!-- <i class="icon-icon_renwu iconfont"></i>
-            <span style="color: #fff;"></span>
-            <i class="el-icon-caret-bottom"></i>
-              <div class="users">
-                <div class="userDiv one" @click="showModificationDialog">
-                  <i class="icon-icon_mima iconfont"></i>
-                  <p>修改密码</p>
-                </div>
-                <div class="userDiv two" @click="showLogout">
-                  <i class="icon-icon_tuichusj iconfont"></i>
-                  <p>注销</p>
-                </div>
-              </div> -->
-            测试账号
-            <el-button type="primary" size="mini">退出</el-button>
-          </div>
-        </el-header>
         <el-main>
-          <el-breadcrumb separator="/">
-            <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
-            <el-breadcrumb-item
-              v-for="(item, index) in $route.meta"
-              :key="index"
-              :to="{ path: item.path }"
-              >{{ item.name }}</el-breadcrumb-item
-            >
-          </el-breadcrumb>
-          <h1 class="title" v-show="$route.path === '/index'">
-            园区用户管理系统 欢迎您！
-          </h1>
-          <p
-            style="font-size: 12px; color: #a8a8a8"
-            v-show="$route.path === '/index'"
-          ></p>
-          <div
-            class="home-img"
-            :style="{ backgroundImage: 'url(' + homeBg + ')' }"
-            v-show="$route.path === '/index'"
-          ></div>
-          <router-view />
+          <div style="background: #fff; height: 100%; border-radius: 8px;">
+              <el-breadcrumb separator="/">
+                <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
+                <el-breadcrumb-item
+                v-for="(item, index) in $route.meta"
+                :key="index"
+                :to="{ path: item.path }"
+                >{{ item.name }}</el-breadcrumb-item
+                >
+            </el-breadcrumb>
+            <h1 class="title" v-show="$route.path === '/index'">
+                园区用户管理系统 欢迎您！
+            </h1>
+            <p
+                style="font-size: 12px; color: #a8a8a8"
+                v-show="$route.path === '/index'"
+            ></p>
+            <div
+                class="home-img"
+                :style="{ backgroundImage: 'url(' + homeBg + ')' }"
+                v-show="$route.path === '/index'"
+            ></div>
+            <router-view />
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -522,8 +504,8 @@ height: 100%;
 }
 .el-main {
   position: relative;
+  height: 100%;
   background: rgba(249,250,252,1);
-  padding-top: 0;
   color: #333;
   .el-breadcrumb {
       margin: 0;
