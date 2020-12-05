@@ -185,14 +185,14 @@ export default {
         {
           id: 15,
           menuId: "300001",
-          name: "子应用平台",
+          name: "测试字符串长速使用",
           url: "subApp",
           parentId: "",
           children: [
             {
               id: 16,
               menuId: "300011",
-              name: "子应用管理",
+              name: "演播室（电教设备）",
               url: "demo",
               parentId: "300001",
               children: [],
@@ -567,16 +567,17 @@ body > .el-container {
   color: #444444;
 }
 .el-menu {
-    padding: 0 20px 0 20px;
+    padding: 0 10px;
 }
 /deep/ .el-menu--inline {
-    padding-left: 20px !important;
+    padding-left: 30px !important;
 }
 .el-menu-item {
     min-width: inherit !important;
     background-color:#61BBD8 !important;
-    padding-left:40px !important;
+    padding:0 !important;
     height: 35px !important;
+    text-align: center !important;
     line-height: 35px !important;
     border-radius: 8px;
     color: #fff !important;
