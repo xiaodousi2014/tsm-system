@@ -40,7 +40,6 @@
            background-color="#fff"
             text-color="#000"
             active-text-color="rgba(0, 102, 153, 0.81960784)">
-        >
           <template v-for="parent in menuList">
             <el-menu-item
               v-if="parent.children.length === 0"
