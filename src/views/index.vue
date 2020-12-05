@@ -67,9 +67,18 @@
         </el-menu>
         <!-- aside 侧边栏 -->
       </el-aside>
+      
+      
         <el-main>
-          <div style="background: #fff; height: 100%; border-radius: 8px;">
-              <el-breadcrumb separator="/">
+          <div style="background: #fff; border-radius: 8px;height: calc(100% - 60px);">
+              <el-breadcrumb separator="/" style="position: fixed;
+    z-index: 10000;
+    background: rgb(255, 255, 255);
+    right: 20px;
+    width: calc(100% - 240px);
+    top: 80px;
+    border-radius: 8px;
+    border-bottom: none;">
                 <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
                 <el-breadcrumb-item
                 v-for="(item, index) in $route.meta"
@@ -78,19 +87,21 @@
                 >{{ item.name }}</el-breadcrumb-item
                 >
             </el-breadcrumb>
-            <h1 class="title" v-show="$route.path === '/index'">
-                园区用户管理系统 欢迎您！
-            </h1>
-            <p
-                style="font-size: 12px; color: #a8a8a8"
-                v-show="$route.path === '/index'"
-            ></p>
-            <div
-                class="home-img"
-                :style="{ backgroundImage: 'url(' + homeBg + ')' }"
-                v-show="$route.path === '/index'"
-            ></div>
-            <router-view />
+            <div style="height: 100%;margin-top: 60px;border-radius: 8px;">
+                    <h1 class="title" v-show="$route.path === '/index'">
+                    园区用户管理系统 欢迎您！
+                </h1>
+                <p
+                    style="font-size: 12px; color: #a8a8a8"
+                    v-show="$route.path === '/index'"
+                ></p>
+                <div
+                    class="home-img"
+                    :style="{ backgroundImage: 'url(' + homeBg + ')' }"
+                    v-show="$route.path === '/index'"
+                ></div>
+                <router-view />
+            </div>
           </div>
         </el-main>
       </el-container>
