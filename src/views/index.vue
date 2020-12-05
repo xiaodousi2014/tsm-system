@@ -32,54 +32,58 @@
     <el-container class="main-container">
         
       <el-aside width="200px">
-        <el-menu
-          unique-opened
-          router
-          :default-active="$route.path.slice(1).split('-')[0]"
-          class="el-menu-vertical-demo"
-           background-color="#fff"
-            text-color="#000"
-            active-text-color="rgba(0, 102, 153, 0.81960784)">
-          <template v-for="parent in menuList">
-            <el-menu-item
-              v-if="parent.children.length === 0"
-              :index="parent.url"
-            >
-              {{ parent.name }}
-            </el-menu-item>
-            <el-submenu
-              v-if="parent.children.length !== 0"
-              :index="parent.url"
-              :key="parent.menuId"
-            >
-              <template slot="title">
-                <span>{{ parent.name }}</span>
-              </template>
-              <el-menu-item
-                v-for="child in parent.children"
-                :index="child.url"
-                :key="child.menuId"
-              >
-                {{ child.name }}
-              </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-menu>
-        <!-- aside 侧边栏 -->
-      </el-aside>
+            <el-menu
+                unique-opened
+                router
+                :default-active="$route.path.slice(1).split('-')[0]"
+                class="el-menu-vertical-demo"
+                background-color="#fff"
+                    text-color="#000"
+                    active-text-color="rgba(0, 102, 153, 0.81960784)">
+                <template v-for="parent in menuList">
+                    <el-menu-item
+                    class="is-activedddd"
+                    v-if="parent.children.length === 0"
+                    :index="parent.url"
+                    >
+                    {{ parent.name }}
+                    </el-menu-item>
+                    <el-submenu
+                    v-if="parent.children.length !== 0"
+                    :index="parent.url"
+                    :key="parent.menuId"
+                    >
+                    <template slot="title">
+                        <span>{{ parent.name }}</span>
+                    </template>
+                    <el-menu-item
+                        v-for="child in parent.children"
+                        :index="child.url"
+                        :key="child.menuId"
+                    >
+                        {{ child.name }}
+                    </el-menu-item>
+                    </el-submenu>
+                </template>
+            </el-menu>
+
+                <!-- aside 侧边栏 -->
+     </el-aside>
+        
       
       
         <el-main>
-          <div style="background: #fff; border-radius: 8px;height: calc(100% - 50px);">
+          <div style="background: #fff; border-radius: 8px;height: calc(100% - 40px);">
               <el-breadcrumb separator="/" style="position: fixed;
-    z-index: 10000;
-    background: rgb(255, 255, 255);
-    right: 20px;
-    width: calc(100% - 240px);
+    z-index: 10000000;
+    background: rgb(249 249 249);
+    right: 0;
+    width: calc(100% - 200px);
     height: 40px;
-    top: 80px;
-    border-radius: 8px;
-    border-bottom: none;">
+    top: 60px;
+    border-bottom: none;
+    border-left: 5px solid #61BBD8;
+    border-bottom: 1px solid #e6e7e8;">
                 <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
                 <el-breadcrumb-item
                 v-for="(item, index) in $route.meta"
@@ -88,7 +92,7 @@
                 >{{ item.name }}</el-breadcrumb-item
                 >
             </el-breadcrumb>
-            <div style="height: 100%;margin-top: 50px;border-radius: 8px;">
+            <div style="height: 100%;margin-top: 40px;border-radius: 8px;">
                     <h1 class="title" v-show="$route.path === '/index'">
                     园区用户管理系统 欢迎您！
                 </h1>
@@ -562,43 +566,47 @@ body > .el-container {
 /deep/.el-dialog__headerbtn .el-dialog__close {
   color: #444444;
 }
+.el-menu {
+    padding: 0 20px 0 20px;
+}
+/deep/ .el-menu--inline {
+    padding-left: 20px !important;
+}
+.el-menu-item {
+    min-width: inherit !important;
+    background-color:#61BBD8 !important;
+    padding-left:40px !important;
+    height: 35px !important;
+    line-height: 35px !important;
+    border-radius: 8px;
+    color: #fff !important;
+}
 .el-menu-item:hover {
-  background-color: #ebebeb !important;
+  background-color: #006699 !important;
+}
+/deep/.el-submenu__title {
+    line-height: 35px;
+    height: 35px;
+    border-radius: 8px;
+    background: #61BBD8 !important;
+    padding: 0;
+    margin: 10px 0;
+    color: #fff !important;
 }
 /deep/.el-submenu__title:hover {
-  background-color: #ebebeb !important;
+  background-color: #006699 !important;
+}
+/deep/.el-submenu__title:active {
+  background-color: #fff !important;
 }
 .el-submenu:focus {
   background-color: #ebebeb !important;
 }
 .el-menu-item.is-active {
-  background-color: #fff !important;
-}
-.el-menu-item.is-active::before {
-  content: "" !important;
-  position: absolute !important;
-  background-color: #0091ea !important;
-  width: 6px !important;
-  height: 50px !important;
-  top: 0 !important;
-  left: 0 !important;
-  display: block !important;
-}
-/deep/.el-submenu__title:focus {
-  background-color: #fff !important;
-}
-/deep/.el-submenu__title:focus::before {
-  content: "";
-  position: absolute;
-  background-color: #0091ea;
-  width: 5px;
-  height: 50px;
-  top: 0;
-  left: 0;
-  display: block;
+  background-color: #006699 !important;
 }
 /deep/ .el-submenu__icon-arrow {
-  color: #999999;
+  color: #fff;
   right: 5%;
   font-size: 14px;
   font-weight: 700;
