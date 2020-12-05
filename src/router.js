@@ -16,15 +16,21 @@ export default new Router({
             component: () => import('./views/mainList.vue')
         },
         {
-            path: '/manage',
-            name: 'manage',
-            component: () => import('./views/DemoJump.vue'),
+            path: '/index',
+            name: 'index',
+            meta: [{name: '首页', path: '/index'}],
+            component: () => import('./views/index.vue'),
             children: [{
-              path: '/index',
-              name: 'index',
-              meta: [{name: '首页', path: '/index'}],
+              path: '/demo',
+              name: 'demo',
+              meta: [{name: '子应用管理', path: '/demo'}],
               component: () => import('./views/Demo.vue')
+            }, {
+                path: '/UsePlan',
+                name: 'UsePlan',
+                meta: [{name: '使用计划', path: '/UsePlan'}],
+                component: () => import('./views/TrainingFieldM/UsePlan.vue')
             }]
-        }
+        },
     ]
 })

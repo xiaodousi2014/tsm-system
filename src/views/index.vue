@@ -2,7 +2,7 @@
   <div class="manage">
     <el-container>
       <el-aside width="200px">
-        <h1 class="logo"><router-link style="opacity: 1" to="/manage">首页</router-link></h1>
+        <h1 class="logo"><router-link style="opacity: 1" to="/index">首页</router-link></h1>
         <el-menu
           unique-opened
           router
@@ -59,12 +59,12 @@
         </el-header>
         <el-main>
           <el-breadcrumb separator="/">
-            <!-- <el-breadcrumb-item :to="{ path: '/manage' }">首页</el-breadcrumb-item> -->
+            <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
             <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index" :to="{ path: item.path }">{{item.name}}</el-breadcrumb-item>
           </el-breadcrumb>
-          <h1 class="title" v-show="$route.path === '/manage'">园区用户管理系统 欢迎您！</h1>
-          <p style="font-size: 12px; color: #A8A8A8;" v-show="$route.path === '/manage'"></p>
-          <div class="home-img" :style="{backgroundImage:'url('+homeBg+')'}" v-show="$route.path === '/manage'"></div>
+          <h1 class="title" v-show="$route.path === '/index'">园区用户管理系统 欢迎您！</h1>
+          <p style="font-size: 12px; color: #A8A8A8;" v-show="$route.path === '/index'"></p>
+          <div class="home-img" :style="{backgroundImage:'url('+homeBg+')'}" v-show="$route.path === '/index'"></div>
           <router-view/>
         </el-main>
       </el-container>
@@ -113,7 +113,7 @@ export default {
   data () {
     return {
       homeBg: '',
-      menuList: [ {
+      menuList: [{
             "id":15,
             "menuId":"300001",
             "name":"子应用平台",
@@ -124,8 +124,26 @@ export default {
                     "id":16,
                     "menuId":"300011",
                     "name":"子应用管理",
-                    "url":"index",
+                    "url":"demo",
                     "parentId":"300001",
+                    "children":[
+
+                    ]
+                }
+            ]
+        },{
+            "id":17,
+            "menuId":"300022",
+            "name":"训练场地管理",
+            "url":"subApp17",
+            "parentId":"",
+            "children":[
+                {
+                    "id":18,
+                    "menuId":"300023",
+                    "name":"使用计划",
+                    "url":"UsePlan",
+                    "parentId":"300022",
                     "children":[
 
                     ]
