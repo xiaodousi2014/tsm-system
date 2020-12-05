@@ -1,16 +1,46 @@
 <template>
   <div class="manage">
-    <el-container>
+      <el-header>
+         <span style="color: #fff;font-size:26px">教学保障管理系统</span>
+          <div class="user-box">
+            <!-- <i class="icon-icon_renwu iconfont"></i>
+            <span style="color: #fff;"></span>
+            <i class="el-icon-caret-bottom"></i>
+              <div class="users">
+                <div class="userDiv one" @click="showModificationDialog">
+                  <i class="icon-icon_mima iconfont"></i>
+                  <p>修改密码</p>
+                </div>
+                <div class="userDiv two" @click="showLogout">
+                  <i class="icon-icon_tuichusj iconfont"></i>
+                  <p>注销</p>
+                </div>
+              </div> -->
+              <!-- <span style="color: #fff">测试账号</span>
+             <el-button type="primary" size="mini" >退出</el-button> -->
+
+            <el-dropdown @command="handleLogout">
+                <span class="el-dropdown-link">
+                    测试账号<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>退出</el-dropdown-item>
+                </el-dropdown-menu>
+                </el-dropdown>
+          </div>
+        </el-header>
+    <el-container class="main-container">
+        
       <el-aside width="200px">
-        <h1 class="logo"><router-link style="opacity: 1" to="/index">首页</router-link></h1>
+          
         <el-menu
           unique-opened
           router
           :default-active="$route.path.slice(1).split('-')[0]"
           class="el-menu-vertical-demo"
-          background-color="#F5F5F5"
-          text-color="#444444"
-          active-text-color="#0091E9">
+           background-color="#fff"
+            text-color="#000"
+            active-text-color="rgba(0, 102, 153, 0.81960784)">
           <template v-for="parent in menuList">
             <el-menu-item
             v-if="parent.children.length === 0"
@@ -35,37 +65,18 @@
         </el-menu>
         <!-- aside 侧边栏 -->
       </el-aside>
-      <el-container>
-        <el-header>
-            
-              <span style="color: #fff;font-size:26px">教学保障管理系统</span>
-          <div class="user-box">
-            <!-- <i class="icon-icon_renwu iconfont"></i>
-            <span style="color: #fff;"></span>
-            <i class="el-icon-caret-bottom"></i>
-              <div class="users">
-                <div class="userDiv one" @click="showModificationDialog">
-                  <i class="icon-icon_mima iconfont"></i>
-                  <p>修改密码</p>
-                </div>
-                <div class="userDiv two" @click="showLogout">
-                  <i class="icon-icon_tuichusj iconfont"></i>
-                  <p>注销</p>
-                </div>
-              </div> -->
-              测试账号
-                <el-button type="primary" size="mini" >退出</el-button>
-          </div>
-        </el-header>
+      <el-container class="el-container-sub">
         <el-main>
-          <el-breadcrumb separator="/">
-            <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
-            <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index" :to="{ path: item.path }">{{item.name}}</el-breadcrumb-item>
-          </el-breadcrumb>
-          <h1 class="title" v-show="$route.path === '/index'">园区用户管理系统 欢迎您！</h1>
-          <p style="font-size: 12px; color: #A8A8A8;" v-show="$route.path === '/index'"></p>
-          <div class="home-img" :style="{backgroundImage:'url('+homeBg+')'}" v-show="$route.path === '/index'"></div>
-          <router-view/>
+            <div style="height: 100%; background: #fff;border-radius: 12px;">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index" :to="{ path: item.path }">{{item.name}}</el-breadcrumb-item>
+                </el-breadcrumb>
+            
+            <h1 class="title" v-show="$route.path === '/index'">园区用户管理系统 欢迎您！</h1>
+            <p style="font-size: 12px; color: #A8A8A8;" v-show="$route.path === '/index'"></p>
+            <div class="home-img" :style="{backgroundImage:'url('+homeBg+')'}" v-show="$route.path === '/index'"></div>
+            <router-view/>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -173,6 +184,9 @@ export default {
     }
   },
   methods: {
+    handleLogout() {
+        this.logoutDialog = true
+    },
     enterLogout () {
       this.loading = true;
       logout().then(res=>{
@@ -314,19 +328,26 @@ export default {
 <style lang="less" scoped>
 .manage {
   height: 100%;
-  .el-container {
-    height: 100%;
+  .main-container {
+    height: calc(100% - 60px);
   }
+  .el-container-sub {
+  }
+}
+
+.el-header .el-dropdown {
+    color: #fff;
 }
 .el-header,
 .el-footer {
-  background-color: #0091EA;
+  background-color: rgba(0, 102, 153, 0.819607843137255);
   color: #333;
   text-align: center;
   line-height: 60px;
   .user-box {
-    position: relative;
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 20px;
     li {
       margin-left: 20px;
       float: left;
@@ -352,9 +373,6 @@ export default {
   .el-icon-caret-bottom {
     font-size: 5px;
     color: #ffffff;
-  }
-  .user-box {
-    position: relative;
   }
   .users {
     position: absolute;
@@ -395,13 +413,14 @@ export default {
   }
 }
 .el-aside {
+height: 100%;
   background-color: #F5F5F5;
   color: #333;
   text-align: left;
   line-height: 200px;
   h1 {
     text-align: center;
-    background-color: #0281CE;
+    background-color: #409eff;
     line-height: 60px;
     a {
       color: #FFF;
@@ -414,15 +433,18 @@ export default {
     font-size: 14px;
   }
   .el-menu {
+      height: 100%;
     border-right: none;
     width: 200px;
   }
 }
 .el-main {
   position: relative;
-  padding-top: 0;
-  background-color: #FFF;
+  background: rgba(249,250,252,1);
   color: #333;
+  .el-breadcrumb {
+      margin: 0;
+  }
   .title {
     height: 80px;
     line-height: 80px;
@@ -506,7 +528,6 @@ body > .el-container {
   height: 50px;
   line-height: 50px;
   padding-left: 10px;
-  background-color: #f5f5f5;
   border-bottom: 1px solid #e4e4e4;
   margin-left: -20px;
   margin-right: -20px;
@@ -527,6 +548,9 @@ body > .el-container {
 .logo {
 //   background: #0181d0 url('../assets/logo.png') no-repeat 50%;
   background-size: 128px auto;
+    line-height: 60px;
+    height: 60px;
+    background-color: #409eff;
 }
 /deep/.el-button--primary:hover {
   background-color: #3D85CC;
