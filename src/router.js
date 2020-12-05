@@ -30,6 +30,11 @@ export default new Router({
                 name: 'UsePlan',
                 meta: [{name: '使用计划', path: '/UsePlan'}],
                 component: () => import('./views/TrainingFieldM/UsePlan.vue')
+            },{
+                path: '/classifiedDisplay',
+                name: 'ClassifiedDisplay',
+                meta: [{name: '分类显示', path: '/ClassifiedDisplay'}],
+                component: () => import('./views/statuteKnow/classifiedDisplay.vue')
             }]
         },
     ]

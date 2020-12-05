@@ -32,7 +32,6 @@
     <el-container class="main-container">
         
       <el-aside width="200px">
-          
         <el-menu
           unique-opened
           router
@@ -41,42 +40,78 @@
            background-color="#fff"
             text-color="#000"
             active-text-color="rgba(0, 102, 153, 0.81960784)">
+        >
           <template v-for="parent in menuList">
             <el-menu-item
-            v-if="parent.children.length === 0"
-            :index="parent.url">
-              {{parent.name}}
+              v-if="parent.children.length === 0"
+              :index="parent.url"
+            >
+              {{ parent.name }}
             </el-menu-item>
             <el-submenu
-            v-if="parent.children.length !== 0"
-            :index="parent.url" :key="parent.menuId">
-            <template slot="title">
-              <span>{{parent.name}}</span>
-            </template>
+              v-if="parent.children.length !== 0"
+              :index="parent.url"
+              :key="parent.menuId"
+            >
+              <template slot="title">
+                <span>{{ parent.name }}</span>
+              </template>
               <el-menu-item
-              v-for="child in parent.children"
-              :index="child.url"
-              :key="child.menuId">
-                {{child.name}}
+                v-for="child in parent.children"
+                :index="child.url"
+                :key="child.menuId"
+              >
+                {{ child.name }}
               </el-menu-item>
             </el-submenu>
           </template>
-
         </el-menu>
         <!-- aside 侧边栏 -->
       </el-aside>
-      <el-container class="el-container-sub">
-        <el-main>
-            <div style="height: 100%; background: #fff;border-radius: 12px;">
-                <el-breadcrumb separator="/">
-                    <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index" :to="{ path: item.path }">{{item.name}}</el-breadcrumb-item>
-                </el-breadcrumb>
-            
-            <h1 class="title" v-show="$route.path === '/index'">园区用户管理系统 欢迎您！</h1>
-            <p style="font-size: 12px; color: #A8A8A8;" v-show="$route.path === '/index'"></p>
-            <div class="home-img" :style="{backgroundImage:'url('+homeBg+')'}" v-show="$route.path === '/index'"></div>
-            <router-view/>
+        <el-header>
+          <span style="color: #fff; font-size: 26px">教学保障管理系统</span>
+          <div class="user-box">
+            <!-- <i class="icon-icon_renwu iconfont"></i>
+            <span style="color: #fff;"></span>
+            <i class="el-icon-caret-bottom"></i>
+              <div class="users">
+                <div class="userDiv one" @click="showModificationDialog">
+                  <i class="icon-icon_mima iconfont"></i>
+                  <p>修改密码</p>
+                </div>
+                <div class="userDiv two" @click="showLogout">
+                  <i class="icon-icon_tuichusj iconfont"></i>
+                  <p>注销</p>
+                </div>
+              </div> -->
+            测试账号
+            <el-button type="primary" size="mini">退出</el-button>
           </div>
+        </el-header>
+        <el-main>
+          <el-breadcrumb separator="/">
+            <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
+            <el-breadcrumb-item
+              v-for="(item, index) in $route.meta"
+              :key="index"
+              :to="{ path: item.path }"
+              >{{ item.name }}</el-breadcrumb-item
+            >
+          </el-breadcrumb>
+          <h1 class="title" v-show="$route.path === '/index'">
+            园区用户管理系统 欢迎您！
+          </h1>
+          <p
+            style="font-size: 12px; color: #a8a8a8"
+            v-show="$route.path === '/index'"
+          ></p>
+          <div
+            class="home-img"
+            :style="{ backgroundImage: 'url(' + homeBg + ')' }"
+            v-show="$route.path === '/index'"
+          ></div>
+          <router-view />
+>>>>>>> c60e452f4e24dd2258e350515312d939e8c8ff6b
         </el-main>
       </el-container>
     </el-container>
@@ -84,18 +119,38 @@
       title="修改密码"
       :visible.sync="modificationDialog"
       inline-message
-      width="25%">
-      <el-form :model="modificationPassword" :rules="rules" ref="modificationPassword" label-width="100px">
+      width="25%"
+    >
+      <el-form
+        :model="modificationPassword"
+        :rules="rules"
+        ref="modificationPassword"
+        label-width="100px"
+      >
         <el-form-item label="原密码：" prop="password">
-          <el-input @focus="inputChange" v-model="modificationPassword.password" type="password"></el-input>
-          <span class="passwordError" v-show="oldpasswordError">原密码有误</span>
+          <el-input
+            @focus="inputChange"
+            v-model="modificationPassword.password"
+            type="password"
+          ></el-input>
+          <span class="passwordError" v-show="oldpasswordError"
+            >原密码有误</span
+          >
         </el-form-item>
         <el-form-item label="新密码：" prop="newpasswordOne">
-          <el-input @input="inputChange" v-model="modificationPassword.newpasswordOne" type="password"></el-input>
+          <el-input
+            @input="inputChange"
+            v-model="modificationPassword.newpasswordOne"
+            type="password"
+          ></el-input>
         </el-form-item>
         <el-form-item label="密码确认：" prop="newpasswordTwo">
-          <el-input @focus="inputChange" v-model="modificationPassword.newpasswordTwo" type="password"></el-input>
-          <span class="passwordError" v-show="passwordError">{{msg}}</span>
+          <el-input
+            @focus="inputChange"
+            v-model="modificationPassword.newpasswordTwo"
+            type="password"
+          ></el-input>
+          <span class="passwordError" v-show="passwordError">{{ msg }}</span>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -107,11 +162,17 @@
       title="温馨提示"
       :visible.sync="logoutDialog"
       inline-message
-      width="20%">
-      <p style="text-align: center;">确定要退出系统吗？</p>
+      width="20%"
+    >
+      <p style="text-align: center">确定要退出系统吗？</p>
       <span slot="footer" class="dialog-footer">
         <el-button @click="logoutDialog = false">取 消</el-button>
-        <el-button type="primary" v-loading.fullscreen.lock="loading" @click="enterLogout">确 定</el-button>
+        <el-button
+          type="primary"
+          v-loading.fullscreen.lock="loading"
+          @click="enterLogout"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -121,158 +182,185 @@
 // import { setStorage, getStorage,getStorageJson, removeStorage, encrypt,delCookie } from '@/config/Utils'
 // import { getMenuList, isPassword, updatePassword ,logout} from '@/api/getApi'
 export default {
-  data () {
+  data() {
     return {
-      homeBg: '',
-      menuList: [{
-            "id":15,
-            "menuId":"300001",
-            "name":"子应用平台",
-            "url":"subApp",
-            "parentId":"",
-            "children":[
-                {
-                    "id":16,
-                    "menuId":"300011",
-                    "name":"子应用管理",
-                    "url":"demo",
-                    "parentId":"300001",
-                    "children":[
-
-                    ]
-                }
-            ]
-        },{
-            "id":17,
-            "menuId":"300022",
-            "name":"训练场地管理",
-            "url":"subApp17",
-            "parentId":"",
-            "children":[
-                {
-                    "id":18,
-                    "menuId":"300023",
-                    "name":"使用计划",
-                    "url":"UsePlan",
-                    "parentId":"300022",
-                    "children":[
-
-                    ]
-                }
-            ]
-        }],
+      homeBg: "",
+      menuList: [
+        {
+          id: 15,
+          menuId: "300001",
+          name: "子应用平台",
+          url: "subApp",
+          parentId: "",
+          children: [
+            {
+              id: 16,
+              menuId: "300011",
+              name: "子应用管理",
+              url: "demo",
+              parentId: "300001",
+              children: [],
+            },
+          ],
+        },
+        {
+          id: 1,
+          menuId: '11',
+          name: "法规知识",
+          url: "subApp1",
+          parentId: "",
+          children: [
+            {
+              id: 2,
+              menuId: "22",
+              name: "分类显示",
+              url: "classifiedDisplay",
+              parentId: 1,
+              children: [],
+            },
+          ],
+        },
+        {
+          id: 17,
+          menuId: "300022",
+          name: "训练场地管理",
+          url: "subApp17",
+          parentId: "",
+          children: [
+            {
+              id: 18,
+              menuId: "300023",
+              name: "使用计划",
+              url: "UsePlan",
+              parentId: "300022",
+              children: [],
+            },
+          ],
+        },
+      ],
       userName: "",
       modificationDialog: false,
       oldpasswordError: false,
       passwordError: false,
       logoutDialog: false,
-      loading:false,
-      msg: '',
+      loading: false,
+      msg: "",
       clickMenu: false,
       modificationPassword: {
-        password: '',
-        newpasswordOne: '',
-        newpasswordTwo: ''
+        password: "",
+        newpasswordOne: "",
+        newpasswordTwo: "",
       },
       rules: {
-        password: [{required: true, message: '请输入原密码', trigger: 'blur'}],
-        newpasswordOne: [{required: true, message: '请输入新密码', trigger: 'blur'},
-        {pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[])+$)([^(0-9a-zA-Z)]|[]|[a-zA-Z]|[0-9]){6,}$/, message: '不低于6位，数字、大小写、符号两种或以上', trigger: 'blur'}],
-        newpasswordTwo: [{required: true, message: '请再次输入新密码', trigger: 'blur'},
-        {pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[])+$)([^(0-9a-zA-Z)]|[]|[a-zA-Z]|[0-9]){6,}$/, message: '不低于6位，数字、大小写、符号两种或以上', trigger: 'blur'}],
-      }
-    }
+        password: [
+          { required: true, message: "请输入原密码", trigger: "blur" },
+        ],
+        newpasswordOne: [
+          { required: true, message: "请输入新密码", trigger: "blur" },
+          {
+            pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[])+$)([^(0-9a-zA-Z)]|[]|[a-zA-Z]|[0-9]){6,}$/,
+            message: "不低于6位，数字、大小写、符号两种或以上",
+            trigger: "blur",
+          },
+        ],
+        newpasswordTwo: [
+          { required: true, message: "请再次输入新密码", trigger: "blur" },
+          {
+            pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[])+$)([^(0-9a-zA-Z)]|[]|[a-zA-Z]|[0-9]){6,}$/,
+            message: "不低于6位，数字、大小写、符号两种或以上",
+            trigger: "blur",
+          },
+        ],
+      },
+    };
   },
   methods: {
     handleLogout() {
         this.logoutDialog = true
     },
-    enterLogout () {
+    enterLogout() {
       this.loading = true;
-      logout().then(res=>{
+      logout()
+        .then((res) => {
           this.logoutDialog = false;
-          removeStorage('ifLogin')
-          removeStorage('token')
-          delCookie('token');
-          this.$router.push('/login')
-      }).finally(()=>{
-        this.loading = false;
-      });
-
-
-
+          removeStorage("ifLogin");
+          removeStorage("token");
+          delCookie("token");
+          this.$router.push("/login");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
-    showLogout () {
-      this.logoutDialog = true
+    showLogout() {
+      this.logoutDialog = true;
     },
-    showModificationDialog () {
-      this.modificationDialog = true
+    showModificationDialog() {
+      this.modificationDialog = true;
     },
-    modificationSuccess () {
+    modificationSuccess() {
       this.$refs.modificationPassword.validate((valid) => {
         if (valid) {
-          let user = {...this.modificationPassword}
-          let password = user.password
-          let encryptPassword = encrypt(password)
-          let users = getStorage('ifLogin')
-          let mobile = users.mobile
+          let user = { ...this.modificationPassword };
+          let password = user.password;
+          let encryptPassword = encrypt(password);
+          let users = getStorage("ifLogin");
+          let mobile = users.mobile;
           let data = {
             password: encryptPassword,
-            mobile: mobile
-          }
-          isPassword(data)
-          .then(res => {
-            let { code, msg } = res
-            console.log(res)
+            mobile: mobile,
+          };
+          isPassword(data).then((res) => {
+            let { code, msg } = res;
+            console.log(res);
             if (code === 200) {
-              this.updateUserPassword()
+              this.updateUserPassword();
             } else {
-              this.oldpasswordError = true
+              this.oldpasswordError = true;
               // this.$refs.modificationPassword.resetFields()
             }
-          })
+          });
         }
-      })
+      });
     },
-    getUserName () {
-      const user = getStorage('ifLogin')
-      const name = user.employeeName
-      this.userName = name
+    getUserName() {
+      const user = getStorage("ifLogin");
+      const name = user.employeeName;
+      this.userName = name;
     },
-    updateUserPassword () {
-      let user = {...this.modificationPassword}
-      let users = getStorage('ifLogin')
-      let mobile = users.mobile
+    updateUserPassword() {
+      let user = { ...this.modificationPassword };
+      let users = getStorage("ifLogin");
+      let mobile = users.mobile;
       let data = {
         mobile: mobile,
-        password: encrypt(user.newpasswordOne)
-      }
+        password: encrypt(user.newpasswordOne),
+      };
       if (user.newpasswordOne !== user.newpasswordTwo) {
-        this.msg = '两次输入密码不一致'
-        this.passwordError = true
-        return false
+        this.msg = "两次输入密码不一致";
+        this.passwordError = true;
+        return false;
       } else {
-        updatePassword(data)
-        .then(res => {
+        updatePassword(data).then((res) => {
           if (res.code === 200) {
-            this.$refs.modificationPassword.resetFields()
-            this.$message.success('密码已修改，请重新登录')
-            removeStorage('ifLogin')
-            this.$router.push('/login')
+            this.$refs.modificationPassword.resetFields();
+            this.$message.success("密码已修改，请重新登录");
+            removeStorage("ifLogin");
+            this.$router.push("/login");
           } else {
-            this.msg = res.msg
-            this.passwordError = true
+            this.msg = res.msg;
+            this.passwordError = true;
           }
-        })
+        });
       }
     },
-    inputChange () {
-      this.passwordError = false
-      this.oldpasswordError = false
-    }
+    inputChange() {
+      this.passwordError = false;
+      this.oldpasswordError = false;
+    },
   },
   // 获取侧边栏菜单结构
-  created () {
+  created() {
     // this.getUserName()
     // try {
     //   getMenuList()
@@ -293,9 +381,6 @@ export default {
     //         obj.url = item.url;
     //         obj.parentId = item.parentId;
     //         obj.children =[];
-
-
-
     //         if (item.children){
     //           item.children.forEach(a=>{
     //             pages.some((value,inde)=>{
@@ -305,7 +390,6 @@ export default {
     //             })
     //           });
     //         }
-
     //         pages.some((v,index)=>{
     //           if (v.name == obj.url) {
     //             this.menuList.push(obj);
@@ -321,8 +405,8 @@ export default {
     // } catch(err) {
     //   console.log(err)
     // }
-  }
-}
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -352,7 +436,7 @@ export default {
       margin-left: 20px;
       float: left;
       a {
-        color: #FFF;
+        color: #fff;
       }
     }
   }
@@ -367,8 +451,8 @@ export default {
     line-height: 40px;
     font-size: 30px;
     border-radius: 50%;
-    color: #FFFFFF;
-    background-color: #A1C5F5;
+    color: #ffffff;
+    background-color: #a1c5f5;
   }
   .el-icon-caret-bottom {
     font-size: 5px;
@@ -385,7 +469,7 @@ export default {
     .userDiv {
       display: block;
       height: 100px;
-      border: 1px solid #E4E4E4;
+      border: 1px solid #e4e4e4;
       cursor: pointer;
     }
     .userDiv:nth-child(1) {
@@ -402,10 +486,10 @@ export default {
       line-height: 15px;
     }
     .userDiv.one:hover {
-      color: #0091EA;
+      color: #0091ea;
     }
     .userDiv.two:hover {
-      color: #0091EA;
+      color: #0091ea;
     }
   }
   .user-box:hover .users {
@@ -420,10 +504,10 @@ height: 100%;
   line-height: 200px;
   h1 {
     text-align: center;
-    background-color: #409eff;
+    background-color: #0281ce;
     line-height: 60px;
     a {
-      color: #FFF;
+      color: #fff;
       font-family: MicrosoftYaHei;
     }
   }
@@ -441,6 +525,7 @@ height: 100%;
 .el-main {
   position: relative;
   background: rgba(249,250,252,1);
+  padding-top: 0;
   color: #333;
   .el-breadcrumb {
       margin: 0;
@@ -448,7 +533,7 @@ height: 100%;
   .title {
     height: 80px;
     line-height: 80px;
-    color: #008DE9;
+    color: #008de9;
     font-size: 20px;
     font-weight: 400;
   }
@@ -482,21 +567,21 @@ body > .el-container {
   color: #444444;
 }
 .el-menu-item:hover {
-  background-color: #EBEBEB !important;
+  background-color: #ebebeb !important;
 }
 /deep/.el-submenu__title:hover {
-  background-color: #EBEBEB !important;
+  background-color: #ebebeb !important;
 }
 .el-submenu:focus {
-  background-color: #EBEBEB !important;
+  background-color: #ebebeb !important;
 }
 .el-menu-item.is-active {
   background-color: #fff !important;
 }
 .el-menu-item.is-active::before {
-  content: '' !important;
+  content: "" !important;
   position: absolute !important;
-  background-color: #0091EA !important;
+  background-color: #0091ea !important;
   width: 6px !important;
   height: 50px !important;
   top: 0 !important;
@@ -507,9 +592,9 @@ body > .el-container {
   background-color: #fff !important;
 }
 /deep/.el-submenu__title:focus::before {
-  content: '';
+  content: "";
   position: absolute;
-  background-color: #0091EA;
+  background-color: #0091ea;
   width: 5px;
   height: 50px;
   top: 0;
@@ -532,11 +617,11 @@ body > .el-container {
   margin-left: -20px;
   margin-right: -20px;
 }
-/deep/.el-breadcrumb__inner.is-link{
+/deep/.el-breadcrumb__inner.is-link {
   color: #666666;
   font-weight: 400;
 }
-/deep/.is-link{
+/deep/.is-link {
   color: #666666;
   font-weight: 400;
 }
@@ -546,14 +631,14 @@ body > .el-container {
   // display: none;
 }
 .logo {
-//   background: #0181d0 url('../assets/logo.png') no-repeat 50%;
+  //   background: #0181d0 url('../assets/logo.png') no-repeat 50%;
   background-size: 128px auto;
     line-height: 60px;
     height: 60px;
     background-color: #409eff;
 }
 /deep/.el-button--primary:hover {
-  background-color: #3D85CC;
+  background-color: #3d85cc;
 }
 .passwordError {
   color: #f56c6c;
