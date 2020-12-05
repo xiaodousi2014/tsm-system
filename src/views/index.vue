@@ -111,7 +111,6 @@
             v-show="$route.path === '/index'"
           ></div>
           <router-view />
->>>>>>> c60e452f4e24dd2258e350515312d939e8c8ff6b
         </el-main>
       </el-container>
     </el-container>
