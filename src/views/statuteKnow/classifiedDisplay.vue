@@ -2,68 +2,14 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <collapse-transition>
-      <el-form
-        :inline="true"
-        ref="form1"
-        label-position="right"
-        :model="formDataSelect"
-      >
-        <el-form-item label="品牌名称：">
-          <el-input
-            size="small"
-            v-model="formDataSelect.brandName"
-            placeholder="请输入品牌名称"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="退单时间：">
-          <el-date-picker
-            size="small"
-            v-model="formDataSelect.reTime"
-            type="daterange"
-            :default-time="['00:00:00', '23:59:59']"
-            value-format="timestamp"
-            unlink-panels
-            range-separator="~"
-            start-placeholder="请输入开始时间"
-            end-placeholder="结束时间"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <div class="search-button-block">
-          <el-button size="small" type="primary">查 询</el-button>
-          <el-button size="small">重 置</el-button>
-        </div>
-        <!--<div @click="showMore = !showMore" class="search-show-more">-->
-        <!--<span>展开更多</span>-->
-        <!--<i class="icon-show-more el-icon-arrow-down" :class="{'arrowRotate':!showMore}"></i>-->
-        <!--</div>-->
-      </el-form>
-    </collapse-transition>
-    <el-table :data="tableData3" border id="el-table" style="width: 100%">
-      <!-- 动态循环的列表 -->
-      <template v-for="(item, index) in tableLabel">
-        <el-table-column
-          :key="index"
-          :prop="item.prop"
-          :label="item.label"
-          width=""
-        >
-        </el-table-column>
-      </template>
-      <!-- 固定的列：从业人员 -->
-      <el-table-column label="操作" width="200px">
-        <template slot-scope="scope">
-          　　　　　　 <el-button type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small">删除</el-button>
-          <el-button type="text" size="small">上传附件</el-button>
-          　　　　</template
-        >
-      </el-table-column>
-    </el-table>
-
+    <custom-search :searchList = searchList></custom-search>
+    <custom-table-select
+      :list="tableAllIist"
+      @changeTable="changeTable"
+    ></custom-table-select>
+    <custom-table :tableAllIist = tableAllIist :tableData = tableData3></custom-table>
     <!-- 分页 -->
-    <!-- <div class="pagination" >
+    <div class="pagination" >
       <el-pagination
         background
         @size-change="handleSizeChange"
@@ -75,64 +21,199 @@
         :total="total"
         border
       ></el-pagination>
-    </div> -->
-    <!-- <el-dialog title="选择申请类别" :visible.sync="dialogFormVisible">
-      <el-select v-model="selectType" placeholder="请选择" style="width: 100%">
-        <el-option
-          v-for="item in choseList"
-          :value="item.id"
-          :label="item.name"
-          :key="item.id"
-        ></el-option>
-      </el-select>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="goNewPage()">确 定</el-button>
-      </div>
-    </el-dialog> -->
-    <!-- <adjustment-change :show="editFormShow" /> -->
-    <!-- <add-input-info :show="addInfoModal" @close="closeModal()"></add-input-info> -->
+    </div>
   </div>
 </template>
 <script>
+import customTableSelect from "../../components/customTableSelect";
+import customSearch from "../../components/customSearch";
 import Http from "../../api/api";
+import customTable from '../../components/customTable'
 export default {
   name: "ClassifiedDisplay",
-  components: {},
+  components: { customTableSelect, customSearch, customTable},
   data() {
     return {
-      ClassifiedDisplay: [],
-      formDataSelect: {},
+      query: {
+         limit: 1,
+         pageNo: 10
+      },
+      total: 0,
       tableData3: [
         {
           id: "1",
           number: "112",
           a: "这是个数据",
           b: "这是个数据",
+          c: "这是个数据",
+          d: "这是个数据",
+          e: "这是个数据",
+          f: "这是个数据",
+          g: "这是个数据",
+          h: "这是个数据",
+          j: "这是个数据",
+          k: "这是个数据",
+          l: "这是个数据",
         },
         {
           id: "2",
           number: "113",
-          a: "这是个数据",
-          b: "这是个数据",
+          a: "这是个数据1",
+          b: "这是个数据2",
+          c: "这是个数据3",
+          d: "这是个数据4",
+          e: "这是个数据5",
+          f: "这是个数据6",
+          g: "这是个数据7",
+          h: "这是个数据8",
+          j: "这是个数据9",
+          k: "这是个数据10",
+          l: "这是个数据",
         },
       ],
-      tableLabel: [
-        { label: "文件标题", prop: "id" },
-        { label: "作者", prop: "number" },
-        { label: "发布时间", prop: "a" },
-        { label: "发布层级", prop: "b" },
-        { label: "发布人", prop: "b" },
-        { label: "分类", prop: "b" },
-        { label: "创建日期", prop: "b" },
+      tableAllIist: [],
+      searchList: [
+        {
+          name: "姓名",
+          type: "text",
+          code: "name",
+          value: "",
+        },
+        {
+          name: "性别",
+          type: "text",
+          code: "sex",
+          value: "",
+        },
+        {
+          name: "年龄",
+          type: "number",
+          code: "age",
+          value: "",
+        },
+        {
+          name: "出生日期",
+          type: "date",
+          code: "year",
+          value: "",
+        },
+        {
+          name: "爱好",
+          type: "text",
+          code: "like",
+          value: "",
+        },
+        {
+          name: "专业",
+          type: "text",
+          code: "object",
+          value: "",
+        },
+        {
+          name: "描述",
+          type: "text",
+          code: "remark",
+          value: "",
+        },
       ],
     };
   },
-  methods: {},
-  created() {},
+  methods: {
+    handleSizeChange() {
+
+    },
+    handleCurrentChange() {
+
+    },
+    getAllTableList() {
+      this.tableAllIist = [
+        {
+          code: "a",
+          name: "北京",
+          checked: true,
+        },
+        {
+          code: "b",
+          name: "上海上海上海上海上海上海上海上海",
+          checked: true,
+        },
+        {
+          code: "c",
+          name: "成都",
+          checked: true,
+        },
+        {
+          code: "d",
+          name: "四川",
+          checked: true,
+        },
+        {
+          code: "e",
+          name: "俄罗斯",
+          checked: false,
+        },
+        {
+          code: "f",
+          name: "福建",
+          checked: true,
+        },
+        {
+          code: "g",
+          name: "广州",
+          checked: true,
+        },
+        {
+          code: "h",
+          name: "杭州",
+          checked: false,
+        },
+        {
+          code: "j",
+          name: "济南",
+          checked: true,
+        },
+        {
+          code: "k",
+          name: "河南",
+          checked: true,
+        },
+      ];
+    },
+  },
+  created() {
+    this.getAllTableList();
+  },
 };
 </script>
-<style scoped>
-
+<style scoped lang="less">
+.showIcon {
+  text-align: right;
+  padding-right: 5px;
+  font-size: 25px;
+  position: relative;
+  .selectList {
+    position: absolute;
+    height: 400px;
+    overflow-y: scroll;
+    top: 30px;
+    right: 0;
+    z-index: 99;
+    min-width: 100px;
+    text-align: left;
+    font-size: 20px;
+    padding: 20px 0;
+    background: #fdfdfd;
+    border: 1px solid rgb(238, 238, 238);
+    li {
+      padding: 0 10px;
+      line-height: 50px;
+    }
+  }
+}
+.pagination {
+  margin-top:20px;
+}
+.showIcon i {
+  cursor: pointer;
+}
 </style>
