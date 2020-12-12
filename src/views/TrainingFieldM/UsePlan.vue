@@ -31,7 +31,7 @@
                         <custom-table-select
                             :list="tableAllIist"
                             ></custom-table-select>
-                        <custom-table :isCheckBox="false" :tableAllIist = tableAllIist :tableData = tableData1></custom-table>
+                        <custom-table :tableAllIist = tableAllIist :tableData = tableData1></custom-table>
                     </div>
                 </div>
             </el-tab-pane>
