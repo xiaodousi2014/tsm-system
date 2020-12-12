@@ -209,7 +209,7 @@ export default {
             {
               id: 2,
               menuId: "22",
-              name: "申报入库",
+              name: "采购申报",
               url: "declareWarehousing",
               parentId: 1,
               children: [],

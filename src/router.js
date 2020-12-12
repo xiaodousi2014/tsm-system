@@ -33,7 +33,7 @@ export default new Router({
             },{
                 path: '/declareWarehousing',
                 name: 'declareWarehousing',
-                meta: [{name: '申报入库', path: '/declareWarehousing'}],
+                meta: [{name: '采购申报', path: '/declareWarehousing'}],
                 component: () => import('./views/deviceManager/declareWarehousing.vue')
             }]
         },

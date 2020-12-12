@@ -11,6 +11,20 @@
 
 <el-button type="primary" icon="el-icon-search" size="small" @click="onSumit()">提交</el-button>
 <el-button type="primary" icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onUploadAttachment()">上传附件</el-button>
+<el-button type="danger" icon="el-icon-search" size="small" @click="onRevoke()">撤销操作</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onDocumentSummary()">文件汇总</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onHandlingOpinions()">处理意见</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onAgree()">同意</el-button>
+<el-button type="danger" icon="el-icon-search" size="small" @click="onReject()">驳回</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onQingLing()">请领</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onBorrow()">借用</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onReport()">报修</el-button>
+<el-button type="danger" icon="el-icon-search" size="small" @click="onScrap()">报废</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onInventory()">盘点</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onReturn()">归还</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onRepairSettlement()">维修结算</el-button>
+
     </div>
     <custom-search :searchList = searchList></custom-search>
     <custom-table-select
@@ -129,9 +143,72 @@ export default {
     };
   },
   methods: {
+    // 维修结算
+    onRepairSettlement(){
+      
+    },
+    // 请领
+    onQingLing() {
+
+    },
+      // 借用
+    onBorrow() {
+
+    },
+      // 报修
+    onReport() {
+
+    },
+      // 报废
+    onScrap() {
+
+    },
+      // 盘点
+    onInventory() {
+
+    },
+      // 归还
+    onReturn() {
+
+    },
+
+    // 文件汇总
+    onDocumentSummary(){
+
+    },
+    // 处理意见
+    onHandlingOpinions() {
+
+    },
+    // 同意
+    onAgree() {
+
+    },
+    // 驳回
+    onReject() {
+
+    },
     //导出
     onExport() {
 
+    },
+    // 上传附件
+    onUploadAttachment() {
+       if(!this.multipleSelection.length) {
+       this.$message.warning('请选择要上传附件的数据列！');
+       return
+     }
+     if(this.multipleSelection.length > 1) {
+       this.$message.warning('只能选择单个数据列上传附件！');
+       return
+     }
+    },
+    // 撤销操作
+    onRevoke() {
+     if(!this.multipleSelection.length) {
+       this.$message.warning('请选择要撤销操作的数据列！');
+       return
+     }
     },
     // 提交
     onSumit() {
