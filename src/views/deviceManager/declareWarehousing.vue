@@ -29,7 +29,7 @@ import customSearch from "../../components/customSearch";
 import Http from "../../api/api";
 import customTable from '../../components/customTable'
 export default {
-  name: "ClassifiedDisplay",
+  name: "declareWarehousing",
   components: { customTableSelect, customSearch, customTable},
   data() {
     return {

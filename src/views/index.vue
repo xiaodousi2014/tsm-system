@@ -202,15 +202,15 @@ export default {
         {
           id: 1,
           menuId: '11',
-          name: "法规知识",
+          name: "设备管理",
           url: "subApp1",
           parentId: "",
           children: [
             {
               id: 2,
               menuId: "22",
-              name: "分类显示",
-              url: "classifiedDisplay",
+              name: "申报入库",
+              url: "declareWarehousing",
               parentId: 1,
               children: [],
             },

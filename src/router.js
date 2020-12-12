@@ -31,10 +31,10 @@ export default new Router({
                 meta: [{name: '使用计划', path: '/UsePlan'}],
                 component: () => import('./views/TrainingFieldM/UsePlan.vue')
             },{
-                path: '/classifiedDisplay',
-                name: 'ClassifiedDisplay',
-                meta: [{name: '分类显示', path: '/ClassifiedDisplay'}],
-                component: () => import('./views/statuteKnow/classifiedDisplay.vue')
+                path: '/declareWarehousing',
+                name: 'declareWarehousing',
+                meta: [{name: '申报入库', path: '/declareWarehousing'}],
+                component: () => import('./views/deviceManager/declareWarehousing.vue')
             }]
         },
     ]
