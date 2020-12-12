@@ -15,5 +15,18 @@ export default {
 #app{
     width: 100%;
     height: 100%;
+
+    .pagination {
+        text-align: right;
+    }
+    .el-pagination {
+        padding: 0;
+    }
+    .el-pagination__sizes {
+        margin: 0;
+    }
+    .el-pagination .el-select .el-input {
+        margin: 0;
+    }
 }
 </style>

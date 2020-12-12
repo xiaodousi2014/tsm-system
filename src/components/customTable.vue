@@ -1,8 +1,9 @@
 <template>
-  <div >
+  <div class="common-table">
     <el-table  border id="el-table" style="width: 100%"  :data="tableData" @selection-change="handleSelectionChange">
       <!-- 动态循环的列表 -->
         <el-table-column
+        v-if="isCheckBox"
       type="selection"
       width="55">
     </el-table-column>
@@ -32,6 +33,10 @@ export default {
       tableData: {
         type:Array,
         default: []
+      },
+      isCheckBox: {
+        type: Boolean,
+        default: true
       }
   },
   data() {
@@ -49,31 +54,35 @@ export default {
 };
 </script>
 <style scoped lang="less">
-.showIcon {
-  text-align: right;
-  padding-right: 5px;
-  font-size: 25px;
-  position: relative;
-  .selectList {
-    position: absolute;
-    height: 400px;
-    overflow-y: scroll;
-    top: 30px;
-    right: 0;
-    z-index: 99;
-    min-width: 100px;
-    text-align: left;
-    font-size: 20px;
-    padding: 20px 0;
-    background: #fdfdfd;
-    border: 1px solid rgb(238, 238, 238);
-    li {
-      padding: 0 10px;
-      line-height: 50px;
+.common-table {
+    padding: 0 0 20px 0;
+    .showIcon {
+        text-align: right;
+        padding-right: 5px;
+        font-size: 25px;
+        position: relative;
+        .selectList {
+            position: absolute;
+            height: 400px;
+            overflow-y: scroll;
+            top: 30px;
+            right: 0;
+            z-index: 99;
+            min-width: 100px;
+            text-align: left;
+            font-size: 20px;
+            padding: 20px 0;
+            background: #fdfdfd;
+            border: 1px solid rgb(238, 238, 238);
+            li {
+                padding: 0 10px;
+                line-height: 50px;
+            }
+        }
     }
-  }
+    .showIcon i {
+        cursor: pointer;
+    }
 }
-.showIcon i {
-  cursor: pointer;
-}
+
 </style>
