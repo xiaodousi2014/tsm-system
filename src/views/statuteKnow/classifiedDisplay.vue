@@ -5,7 +5,6 @@
     <custom-search :searchList = searchList></custom-search>
     <custom-table-select
       :list="tableAllIist"
-      @changeTable="changeTable"
     ></custom-table-select>
     <custom-table :tableAllIist = tableAllIist :tableData = tableData3></custom-table>
     <!-- 分页 -->
