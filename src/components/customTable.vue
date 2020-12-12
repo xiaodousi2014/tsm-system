@@ -36,12 +36,12 @@ export default {
   },
   data() {
     return {
-      multipleSelection: []
+      
     };
   },
   methods: {
     handleSelectionChange(val) {
-        this.multipleSelection = val;
+        this.$emit('selectTableList', val)
       }
   },
   created() {

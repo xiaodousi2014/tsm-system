@@ -2,11 +2,21 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
+    <div>
+      <el-button type="primary" icon="el-icon-edit" size="small">检索</el-button>
+<el-button type="primary" icon="el-icon-share" size="small">项目导入</el-button>
+<el-button type="primary" icon="el-icon-delete" size="small">新建</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onEdit()">编辑</el-button>
+<el-button type="danger" icon="el-icon-search" size="small" @click="onDelete()">删除</el-button>
+
+<el-button type="primary" icon="el-icon-search" size="small" @click="onSumit()">提交</el-button>
+<el-button type="primary" icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
+    </div>
     <custom-search :searchList = searchList></custom-search>
     <custom-table-select
       :list="tableAllIist"
     ></custom-table-select>
-    <custom-table :tableAllIist = tableAllIist :tableData = tableData3></custom-table>
+    <custom-table :tableAllIist = tableAllIist :tableData = tableData3 @selectTableList= selectTableList></custom-table>
     <!-- 分页 -->
     <div class="pagination" >
       <el-pagination
@@ -115,14 +125,60 @@ export default {
           value: "",
         },
       ],
+      multipleSelection: [],
     };
   },
   methods: {
+    //导出
+    onExport() {
+
+    },
+    // 提交
+    onSumit() {
+     if(!this.multipleSelection.length) {
+       this.$message.warning('请选择要提交的数据列！');
+       return
+     }
+    },
+    // 编辑
+    onEdit() {
+      if(!this.multipleSelection.length) {
+       this.$message.warning('请选择要编辑的数据列！');
+       return
+     }
+     if(this.multipleSelection.length > 1) {
+       this.$message.warning('只能选择单个数据列编辑！');
+       return
+     }
+    },
+    // 删除
+    onDelete() {
+     if(!this.multipleSelection.length) {
+       this.$message.warning('请选择要删除的数据列！');
+       return
+     }
+      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+        this.$message.success('删除成功')
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+    },
     handleSizeChange() {
 
     },
     handleCurrentChange() {
 
+    },
+    // table选中
+    selectTableList(list) {
+     this.multipleSelection = list;
     },
     getAllTableList() {
       this.tableAllIist = [
