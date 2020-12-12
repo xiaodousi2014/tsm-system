@@ -6,8 +6,8 @@
             <el-tab-pane label="日计划" name="day">
                 <div class="user_plan_day">
                     <div class="user_plan_day_btn">
-                        <el-button type="primary" size="small">新建</el-button>
-                        <el-button type="primary" size="small">编辑</el-button>
+                        <el-button type="primary" size="small" @click="createData">新建</el-button>
+                        <el-button type="primary" size="small" @click="editData">编辑</el-button>
                         <el-button type="primary" size="small">删除</el-button>
                         <el-button type="primary" size="small">导出</el-button>
                         <el-button type="primary" size="small" @click="dayListTable()">列表显示</el-button>
@@ -153,6 +153,83 @@
                 border
             ></el-pagination>
         </div>
+
+        <el-drawer
+            title="新建"
+            size="80%"
+            style="height:100vh; overflow: auto;"
+            :close-on-press-escape="false"
+            :destroy-on-close="true"
+            :wrapperClosable="false"
+            :visible.sync="createDialogVisible"
+            direction="rtl"
+            :before-close="handleClose">
+                
+                <el-form ref="form" :inline="true" :model="form" label-width="150px">
+                    <el-form-item :label="item.name" v-for="(item, index) in tableAllIist" :key="index">
+                        <el-col :span="24" v-if="item.type == 'number'">
+                            <el-input v-model="form[item.code]" type="number" :placeholder="'请输入' + item.name"></el-input>
+                        </el-col>
+                        <el-col :span="24" v-if="item.type == 'string'">
+                            <el-input v-model="form[item.code]" type="number" :placeholder="'请输入' + item.name"></el-input>
+                        </el-col>
+                        
+                        <el-col :span="14" v-if="item.type == 'array'">
+                            <el-input v-model="form[item.code]" type="number" :placeholder="'请输入' + item.name"></el-input>
+                        </el-col>
+                        <el-col :span="8" v-if="item.type == 'array'" style="margin-left: 10px">
+                            <el-button
+                                type="primary"
+                                size="small"
+                                icon="el-icon-plus"
+                                @click="addInput(index, item.code)"
+                            ></el-button>
+                            <el-button
+                                size="small"
+                                icon="el-icon-minus"
+                                @click="removeInput(index, item.code)"
+                                v-if="index != 0"
+                            ></el-button>
+                        </el-col>
+
+                        <el-row v-if="item.type == 'time'">
+                            <el-col :span="11">
+                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                            </el-col>
+                            <el-col style="text-align: center;" class="line" :span="1">-</el-col>
+                            <el-col :span="11">
+                                <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                            </el-col>
+                        </el-row>
+                        <el-row v-if="item.type == 'file'">
+                            <el-col :span="24"></el-col>
+                        </el-row>
+                        
+                        <el-row v-if="item.type == 'file'">
+                            <el-col :span="24">
+                            <el-upload
+                                action="https://jsonplaceholder.typicode.com/posts/"
+                                list-type="picture-card"
+                                :on-preview="handlePictureCardPreview"
+                                :on-remove="handleRemove">
+                                <i class="el-icon-plus"></i>
+                                </el-upload>
+
+                            <el-dialog :visible.sync="dialogVisible">
+                                <img width="100%" :src="dialogImageUrl" alt="">
+                            </el-dialog>
+                            </el-col>
+                        </el-row>
+                    </el-form-item>
+                </el-form>
+
+                <div style="margin: 100px;"></div>
+                
+                <div class="el-drawer__footer">
+                    <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                    <el-button>取消</el-button>
+                </div>
+        </el-drawer>
     </div>
 </template>
 
@@ -166,6 +243,19 @@ export default {
     components: { customTableSelect, customTable },
     data() {
         return {
+            dialogImageUrl: '',
+            dialogVisible: false,
+            form: {
+                name: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            },
+            createDialogVisible: false,
             activeName: 'day',
             query: {
                 limit: 1,
@@ -260,6 +350,37 @@ export default {
         this.getAllTableList();
     },
     methods: {
+        handleClose() {
+            this.createDialogVisible = false
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        handlePictureCardPreview(file) {
+            this.dialogImageUrl = file.url;
+            this.dialogVisible = true;
+        },
+        addInput(index, code) {
+            let query = {
+                code: "e",
+                name: "俄罗斯",
+                checked: false,
+                type: 'array'
+            };
+            this.form[code].splice(index + 1, 0, query);
+        },
+        removeInput(index) {
+            this.form[code].splice(index, 1);
+        },
+        onSubmit() {
+            console.log('submit!');
+        },
+        createData() {
+            this.createDialogVisible = true
+        },
+        editData() {
+
+        },
         rowClass({ row, column, rowIndex, columnIndex }) {
             if (rowIndex === 1 && columnIndex === 4) {
                 return 'table_td_color'
@@ -390,51 +511,61 @@ export default {
                     code: "a",
                     name: "北京",
                     checked: true,
+                    type: 'number'
                 },
                 {
                     code: "b",
                     name: "上海上海上海上海上",
                     checked: true,
+                    type: 'string'
                 },
                 {
                     code: "c",
                     name: "成都",
                     checked: true,
+                    type: 'string'
                 },
                 {
                     code: "d",
                     name: "四川",
                     checked: true,
+                    type: 'string'
                 },
                 {
                     code: "e",
                     name: "俄罗斯",
                     checked: false,
+                    type: 'array'
                 },
                 {
                     code: "f",
                     name: "福建",
                     checked: true,
+                    type: 'string'
                 },
                 {
                     code: "g",
                     name: "广州",
                     checked: true,
+                    type: 'number'
                 },
                 {
                     code: "h",
                     name: "杭州",
                     checked: false,
+                    type: 'time'
                 },
                 {
                     code: "j",
                     name: "济南",
                     checked: true,
+                    type: 'file'
                 },
                 {
                     code: "k",
                     name: "河南",
                     checked: true,
+                    type: 'file'
                 },
             ];
         }
@@ -451,6 +582,22 @@ export default {
 <style scoped lang="less">
 .user_plan {
     padding: 16px;
+
+    /deep/ :focus {
+        outline: 0;
+    }
+
+    /deep/ .el-drawer__body {
+        height: 100vh;
+        overflow: auto;
+    }
+
+    /deep/ .el-drawer__footer {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 20px;
+    }
 
     .user_plan_day_default_table {
         padding: 20px 0;
