@@ -42,7 +42,7 @@
                     active-text-color="rgba(0, 102, 153, 0.81960784)">
                 <template v-for="parent in menuList">
                     <el-menu-item
-                    class="is-activedddd"
+                    class="is-active"
                     v-if="parent.children.length === 0"
                     :index="parent.url"
                     >
@@ -57,6 +57,7 @@
                         <span>{{ parent.name }}</span>
                     </template>
                     <el-menu-item
+                    style="margin-top:10px"
                         v-for="child in parent.children"
                         :index="child.url"
                         :key="child.menuId"
@@ -210,7 +211,39 @@ export default {
               id: 2,
               menuId: "22",
               name: "采购申报",
-              url: "declareWarehousing",
+              url: "purchase",
+              parentId: 1,
+              children: [],
+            },
+             {
+              id: 3,
+              menuId: "23",
+              name: "计划审核",
+              url: "reviewPlan",
+              parentId: 1,
+              children: [],
+            },
+             {
+              id: 4,
+              menuId: "24",
+              name: "入库登记",
+              url: "warehousing",
+              parentId: 1,
+              children: [],
+            },
+             {
+              id: 5, 
+              menuId: "25",
+              name: "在库设备",
+              url: "equipment",
+              parentId: 1,
+              children: [],
+            },
+             {
+              id: 6, 
+              menuId: "26",
+              name: "请领记录",
+              url: "pleaseRecord",
               parentId: 1,
               children: [],
             },
