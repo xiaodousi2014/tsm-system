@@ -63,7 +63,7 @@
 <style lang="less" scoped>
   .showIcon {
   text-align: right;
-  padding-right: 5px;
+  padding-right: 20px;
   font-size:25px;
   position: relative;
   .selectList {
@@ -71,7 +71,7 @@
    height: 400px;
    overflow-y: scroll;
    top: 30px;
-   right: 0;
+   right: 20px;
    z-index: 99;
     min-width: 100px;
     text-align: left;
