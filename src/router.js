@@ -57,6 +57,60 @@ export default new Router({
                 name: 'pleaseRecord',
                 meta: [{name: '请领记录', path: '/pleaseRecord'}],
                 component: () => import('./views/deviceManager/pleaseRecord.vue')
+            },
+            {
+                path: '/pleaseCheck', 
+                name: 'pleaseCheck',
+                meta: [{name: '请领审核', path: '/pleaseCheck'}],
+                component: () => import('./views/deviceManager/pleaseCheck.vue')
+            },
+            {
+                path: '/borrowRecord', 
+                name: 'borrowRecord',
+                meta: [{name: '借用记录', path: '/borrowRecord'}],
+                component: () => import('./views/deviceManager/borrowRecord.vue')
+            },
+            {
+                path: '/borrowCheck', 
+                name: 'borrowCheck',
+                meta: [{name: '借用审核', path: '/borrowCheck'}],
+                component: () => import('./views/deviceManager/borrowCheck.vue')
+            },
+            {
+                path: '/repairRecord', 
+                name: 'repairRecord',
+                meta: [{name: '维修记录', path: '/repairRecord'}],
+                component: () => import('./views/deviceManager/repairRecord.vue')
+            },
+            {
+                path: '/repairCheck', 
+                name: 'repairCheck',
+                meta: [{name: '维修审核', path: '/repairCheck'}],
+                component: () => import('./views/deviceManager/repairCheck.vue')
+            },
+            {
+                path: '/scrapRecord', 
+                name: 'scrapRecord',
+                meta: [{name: '报废记录', path: '/scrapRecord'}],
+                component: () => import('./views/deviceManager/scrapRecord.vue')
+            },
+            {
+                path: '/scrapCheck', 
+                name: 'scrapCheck',
+                meta: [{name: '报废审核', path: '/scrapCheck'}],
+                component: () => import('./views/deviceManager/scrapCheck.vue')
+            },
+            {
+                path: '/inventoryLog', 
+                name: 'inventoryLog',
+                meta: [{name: '盘点日志', path: '/inventoryLog'}],
+                component: () => import('./views/deviceManager/inventoryLog.vue')
+            },
+            {
+                path: '/deviceManage', 
+                name: 'deviceManage',
+                meta: [{name: '维护管理', path: '/deviceManage'}],
+                component: () => import('./views/deviceManager/deviceManage.vue')
             }
         ]
         },
