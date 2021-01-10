@@ -35,7 +35,7 @@
             <el-menu
                 unique-opened
                 router
-                :default-active="$route.path.slice(1).split('-')[0]"
+                :default-active="$route.path.slice(1).split('_')[0]"
                 class="el-menu-vertical-demo"
                 background-color="#001529"
                     text-color="#000"
@@ -389,7 +389,7 @@ export default {
               menuId: "22",
               name: "采购申报",
               url: "equipment-purchase",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -397,7 +397,7 @@ export default {
               menuId: "23",
               name: "计划审核",
               url: "equipment-reviewPlan",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -405,7 +405,7 @@ export default {
               menuId: "24",
               name: "入库登记",
               url: "equipment-warehousing",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -413,7 +413,7 @@ export default {
               menuId: "25",
               name: "在库设备",
               url: "equipment-equipment",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -421,7 +421,7 @@ export default {
               menuId: "26",
               name: "请领记录",
               url: "equipment-pleaseRecord",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -429,7 +429,7 @@ export default {
               menuId: "27",
               name: "请领审核",
               url: "equipment-pleaseCheck",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -437,7 +437,7 @@ export default {
               menuId: "28",
               name: "借用记录",
               url: "equipment-borrowRecord",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -445,7 +445,7 @@ export default {
               menuId: "29",
               name: "借用审核",
               url: "equipment-borrowCheck",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -453,7 +453,7 @@ export default {
               menuId: "30",
               name: "维修记录",
               url: "equipment-repairRecord",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -461,7 +461,7 @@ export default {
               menuId: "31",
               name: "维修审核",
               url: "equipment-repairCheck",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
               {
@@ -469,7 +469,7 @@ export default {
               menuId: "32",
               name: "报废记录",
               url: "equipment-scrapRecord",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -477,7 +477,7 @@ export default {
               menuId: "33",
               name: "报废审核",
               url: "equipment-scrapCheck",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
              {
@@ -485,7 +485,7 @@ export default {
               menuId: "34",
               name: "盘点日志",
               url: "equipment-inventoryLog",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
               {
@@ -493,7 +493,7 @@ export default {
               menuId: "35",
               name: "维护管理",
               url: "equipment-deviceManage",
-              parentId: 1,
+              parentId: 2,
               children: [],
             },
           ],
