@@ -130,19 +130,27 @@
             </div>
         </el-header>
       
-      
-        <el-main>
-          <div style="background: #f0f2f5; border-radius: 8px;height:100%; text-align: right;">
-         
-            <div>
-              <div style="background:#fff;text-align:right">
-                     <span style="padding-right:62px; line-height:48px">
-             <span @click="showModificationDialog" style="    font-size: 20px;
-    margin-right: 10px;
-    vertical-align: middle;"><i class="el-icon-bell"></i></span>
-             刘教官 2020.11.11 15:20   登陆   <el-button  size="small" plain >退出</el-button></span>  
-              </div>
-              
+          <!-- <el-main> -->
+          <div style="background: #fff; border-radius: 8px;height: calc(100% - 40px);width: calc(100% - 210px);position:absolute;left:210px;top:40px">
+              <!-- <el-breadcrumb separator="/" style="position: fixed;
+    z-index: 2;
+    background: rgb(249 249 249);
+    right: 0;
+    width: calc(100% - 200px);
+    height: 40px;
+    top: 60px;
+    border-bottom: none;
+    border-left: 5px solid #61BBD8;
+    border-bottom: 1px solid #e6e7e8;"> -->
+                <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
+                <!-- <el-breadcrumb-item
+                v-for="(item, index) in $route.meta"
+                :key="index"
+                :to="{ path: item.path }"
+                >{{ item.name }}</el-breadcrumb-item
+                >
+            </el-breadcrumb> -->
+            <div style="height: 100%;border-radius: 8px;">
                     <h1 class="title" v-show="$route.path === '/index'">
                     园区用户管理系统 欢迎您！
                 </h1>
@@ -158,7 +166,7 @@
                 <router-view />
             </div>
           </div>
-        </el-main>
+      
       </el-container>
     <el-dialog
       title="修改密码"
