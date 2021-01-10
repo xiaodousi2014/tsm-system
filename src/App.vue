@@ -28,5 +28,9 @@ export default {
     .el-pagination .el-select .el-input {
         margin: 0;
     }
+
+}
+div {
+    text-align: left;
 }
 </style>

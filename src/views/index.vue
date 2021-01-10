@@ -1,8 +1,8 @@
 <template>
   <div class="manage">
-      <el-header>
+      <!-- <el-header>
          <span style="color: #fff;font-size:26px">教学保障管理系统</span>
-          <div class="user-box">
+          <div class="user-box"> -->
             <!-- <i class="icon-icon_renwu iconfont"></i>
             <span style="color: #fff;"></span>
             <i class="el-icon-caret-bottom"></i>
@@ -19,7 +19,7 @@
               <!-- <span style="color: #fff">测试账号</span>
              <el-button type="primary" size="mini" >退出</el-button> -->
 
-            <el-dropdown @command="handleLogout">
+            <!-- <el-dropdown @command="handleLogout">
                 <span class="el-dropdown-link">
                     测试账号<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
@@ -28,16 +28,16 @@
                 </el-dropdown-menu>
                 </el-dropdown>
           </div>
-        </el-header>
+        </el-header> -->
     <el-container class="main-container">
-        
-      <el-aside width="200px">
+      <el-aside width="208px">
+          <h1 style="font-size：30px;">教学保障管理系统</h1>
             <el-menu
                 unique-opened
                 router
                 :default-active="$route.path.slice(1).split('-')[0]"
                 class="el-menu-vertical-demo"
-                background-color="#fff"
+                background-color="#001529"
                     text-color="#000"
                     active-text-color="rgba(0, 102, 153, 0.81960784)">
                 <template v-for="parent in menuList">
@@ -54,6 +54,7 @@
                     :key="parent.menuId"
                     >
                     <template slot="title">
+                        <i class="el-icon-location"></i>
                         <span>{{ parent.name }}</span>
                     </template>
                     <el-menu-item
@@ -74,26 +75,17 @@
       
       
         <el-main>
-          <div style="background: #fff; border-radius: 8px;height: calc(100% - 40px);">
-              <el-breadcrumb separator="/" style="position: fixed;
-    z-index: 2;
-    background: rgb(249 249 249);
-    right: 0;
-    width: calc(100% - 200px);
-    height: 40px;
-    top: 60px;
-    border-bottom: none;
-    border-left: 5px solid #61BBD8;
-    border-bottom: 1px solid #e6e7e8;">
-                <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
-                <el-breadcrumb-item
-                v-for="(item, index) in $route.meta"
-                :key="index"
-                :to="{ path: item.path }"
-                >{{ item.name }}</el-breadcrumb-item
-                >
-            </el-breadcrumb>
-            <div style="height: 100%;margin-top: 40px;border-radius: 8px;">
+          <div style="background: #f0f2f5; border-radius: 8px;height:100%; text-align: right;">
+         
+            <div>
+              <div style="background:#fff;text-align:right">
+                     <span style="padding-right:62px; line-height:48px">
+             <span @click="showModificationDialog" style="    font-size: 20px;
+    margin-right: 10px;
+    vertical-align: middle;"><i class="el-icon-bell"></i></span>
+             刘教官 2020.11.11 15:20   登陆   <el-button  size="small" plain >退出</el-button></span>  
+              </div>
+              
                     <h1 class="title" v-show="$route.path === '/index'">
                     园区用户管理系统 欢迎您！
                 </h1>
@@ -111,7 +103,6 @@
           </div>
         </el-main>
       </el-container>
-    </el-container>
     <el-dialog
       title="修改密码"
       :visible.sync="modificationDialog"
@@ -635,7 +626,8 @@ export default {
 .manage {
   height: 100%;
   .main-container {
-    height: calc(100% - 60px);
+    height: 100%;
+    overflow: hidden;
   }
   .el-container-sub {
   }
@@ -721,14 +713,15 @@ export default {
   }
 }
 .el-aside {
-height: 100%;
-  background-color: #F5F5F5;
+  height: 100%;
+  background-color: rgb(0, 21, 41);
   color: #333;
   text-align: left;
   line-height: 200px;
   h1 {
+    color: #fff;
     text-align: center;
-    background-color: #0281ce;
+   background-color: rgb(0, 21, 41);
     line-height: 60px;
     a {
       color: #fff;
@@ -741,16 +734,17 @@ height: 100%;
     font-size: 14px;
   }
   .el-menu {
-      height: 100%;
+     height: calc(100% - 60px);
     border-right: none;
-    width: 200px;
+    width: 208px;
   }
 }
 .el-main {
   position: relative;
   height: 100%;
-  background: rgba(249,250,252,1);
-  color: #333;
+  background: #eef0f3;
+  color: #000;
+  padding: 0 !important;
   .el-breadcrumb {
       margin: 0;
   }
@@ -795,44 +789,44 @@ body > .el-container {
   color: #444444;
 }
 .el-menu {
-    padding: 0 10px;
+    padding: 0 0px 0 0px;
 }
 /deep/ .el-menu--inline {
-    padding-left: 30px !important;
+    padding-left: 0px !important;
 }
 .el-menu-item {
     min-width: inherit !important;
-    background-color:#61BBD8 !important;
+    background-color:#001529 !important;
     padding:0 !important;
-    height: 35px !important;
+    height: 40px !important;
     text-align: center !important;
-    line-height: 35px !important;
-    border-radius: 8px;
+    line-height: 40px !important;
+    // border-radius: 8px;
     color: #fff !important;
 }
 .el-menu-item:hover {
-  background-color: #006699 !important;
+  background-color: #1890FF !important;
 }
 /deep/.el-submenu__title {
-    line-height: 35px;
-    height: 35px;
-    border-radius: 8px;
-    background: #61BBD8 !important;
+    line-height: 40px;
+    height: 40px;
+    // border-radius: 8px;
     padding: 0;
     margin: 10px 0;
     color: #fff !important;
+    padding-left: 10px !important;
 }
 /deep/.el-submenu__title:hover {
-  background-color: #006699 !important;
+  background-color: #1890FF !important;
 }
 /deep/.el-submenu__title:active {
   background-color: #fff !important;
 }
 .el-submenu:focus {
-  background-color: #ebebeb !important;
+  background-color: #1890FF !important;
 }
 .el-menu-item.is-active {
-  background-color: #006699 !important;
+  background-color:#1890FF !important;
 }
 /deep/ .el-submenu__icon-arrow {
   color: #fff;
@@ -843,8 +837,6 @@ body > .el-container {
 .el-breadcrumb {
   font-size: 15px;
   color: #666666;
-  height: 50px;
-  line-height: 50px;
   padding-left: 10px;
   border-bottom: 1px solid #e4e4e4;
   margin-left: -20px;

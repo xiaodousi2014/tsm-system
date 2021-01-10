@@ -1,8 +1,13 @@
 <template>
   <div class="ClassifiedDisplay padding20">
-    <el-table  border id="el-table" style="width: 100%"  :data="tableData">
+    <el-table  border id="el-table" style="width: 100%"  :data="tableData"  @selection-change="handleSelectionChange">
       <!-- 动态循环的列表 -->
+        <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
       <template v-for="(item, index) in tableAllIist">
+        
         <el-table-column
           v-if="item.checked"
           :key="index"
@@ -18,7 +23,7 @@
 <script>
 
 export default {
-  name: "table",
+  name: "",
   components: {},
   props: {
     tableAllIist: {//是否可折叠
@@ -32,11 +37,13 @@ export default {
   },
   data() {
     return {
-      
+      multipleSelection: []
     };
   },
   methods: {
-
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      }
   },
   created() {
   },
