@@ -2,6 +2,9 @@ let rt = 'http://gaoli.uat1.rs.com/'
 module.exports = {
     publicPath: './',
     lintOnSave: false,
+    chainWebpack: config => {
+        config.resolve.symlinks(true);
+    },
     devServer: {
         port: 6001,
         // 设置代理

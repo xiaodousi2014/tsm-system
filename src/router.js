@@ -33,164 +33,164 @@ export default new Router({
             },{
                 path: '/device-purchase', 
                 name: 'device-purchase',
-                meta: [{name: '采购申报', path: '/device-purchase'}],
+                meta: [{name: '采购申报', parentName: '设备管理', path: '/device-purchase'}],
                 component: () => import('./views/deviceManager/purchase.vue')
             },{
                 path: '/device-reviewPlan',
                 name: 'device-reviewPlan',
-                meta: [{name: '计划审核', path: '/device-reviewPlan'}],
+                meta: [{name: '计划审核', parentName: '设备管理', path: '/device-reviewPlan'}],
                 component: () => import('./views/deviceManager/reviewPlan.vue')
             },{
                 path: '/device-warehousing', 
                 name: 'device-warehousing',
-                meta: [{name: '入库登记', path: '/device-warehousing'}],
+                meta: [{name: '入库登记', parentName: '设备管理', path: '/device-warehousing'}],
                 component: () => import('./views/deviceManager/warehousing.vue')
             },
             {
                 path: '/device-equipment', 
                 name: 'device-equipment',
-                meta: [{name: '在库设备', path: '/device-equipment'}],
+                meta: [{name: '在库设备', parentName: '设备管理', path: '/device-equipment'}],
                 component: () => import('./views/deviceManager/equipment.vue')
             },
             {
                 path: '/device-pleaseRecord', 
                 name: 'device-pleaseRecord',
-                meta: [{name: '请领记录', path: '/device-pleaseRecord'}],
+                meta: [{name: '请领记录', parentName: '设备管理', path: '/device-pleaseRecord'}],
                 component: () => import('./views/deviceManager/pleaseRecord.vue')
             },
             {
                 path: '/device-pleaseCheck', 
                 name: 'device-pleaseCheck',
-                meta: [{name: '请领审核', path: '/device-pleaseCheck'}],
+                meta: [{name: '请领审核',parentName: '设备管理', path: '/device-pleaseCheck'}],
                 component: () => import('./views/deviceManager/pleaseCheck.vue')
             },
             {
                 path: '/device-borrowRecord', 
                 name: 'device-borrowRecord',
-                meta: [{name: '借用记录', path: '/device-borrowRecord'}],
+                meta: [{name: '借用记录', parentName: '设备管理', path: '/device-borrowRecord'}],
                 component: () => import('./views/deviceManager/borrowRecord.vue')
             },
             {
                 path: '/device-borrowCheck', 
                 name: 'device-borrowCheck',
-                meta: [{name: '借用审核', path: '/device-borrowCheck'}],
+                meta: [{name: '借用审核', parentName: '设备管理', path: '/device-borrowCheck'}],
                 component: () => import('./views/deviceManager/borrowCheck.vue')
             },
             {
                 path: '/device-repairRecord', 
                 name: 'device-repairRecord',
-                meta: [{name: '维修记录', path: '/device-repairRecord'}],
+                meta: [{name: '维修记录', parentName: '设备管理', path: '/device-repairRecord'}],
                 component: () => import('./views/deviceManager/repairRecord.vue')
             },
             {
                 path: '/device-repairCheck', 
                 name: 'device-repairCheck',
-                meta: [{name: '维修审核', path: '/device-repairCheck'}],
+                meta: [{name: '维修审核', parentName: '设备管理', path: '/device-repairCheck'}],
                 component: () => import('./views/deviceManager/repairCheck.vue')
             },
             {
                 path: '/device-scrapRecord', 
                 name: 'device-scrapRecord',
-                meta: [{name: '报废记录', path: '/device-scrapRecord'}],
+                meta: [{name: '报废记录', parentName: '设备管理', path: '/device-scrapRecord'}],
                 component: () => import('./views/deviceManager/scrapRecord.vue')
             },
             {
                 path: '/device-scrapCheck', 
                 name: 'device-scrapCheck',
-                meta: [{name: '报废审核', path: '/device-scrapCheck'}],
+                meta: [{name: '报废审核', parentName: '设备管理', path: '/device-scrapCheck'}],
                 component: () => import('./views/deviceManager/scrapCheck.vue')
             },
             {
                 path: '/device-inventoryLog', 
                 name: 'device-inventoryLog',
-                meta: [{name: '盘点日志', path: '/idevice-nventoryLog'}],
+                meta: [{name: '盘点日志',parentName: '设备管理', path: '/device-nventoryLog'}],
                 component: () => import('./views/deviceManager/inventoryLog.vue')
             },
             {
                 path: '/device-deviceManage', 
                 name: 'device-deviceManage',
-                meta: [{name: '维护管理', path: '/device-deviceManage'}],
+                meta: [{name: '维护管理',parentName: '设备管理', parentName: '训练模拟器材管理', path: '/device-deviceManage'}],
                 component: () => import('./views/deviceManager/deviceManage.vue')
             },{
                 path: '/equipment-purchase', 
                 name: 'equipment-purchase',
-                meta: [{name: '采购申报', path: '/equipment-purchase'}],
+                meta: [{name: '采购申报', parentName: '训练模拟器材管理', path: '/equipment-purchase'}],
                 component: () => import('./views/equipmentManager/purchase.vue')
             },{
                 path: '/equipment-reviewPlan',
                 name: 'equipment-reviewPlan',
-                meta: [{name: '计划审核', path: '/equipment-reviewPlan'}],
+                meta: [{name: '计划审核', parentName: '训练模拟器材管理', path: '/equipment-reviewPlan'}],
                 component: () => import('./views/equipmentManager/reviewPlan.vue')
             },{
                 path: '/equipment-warehousing', 
                 name: 'equipment-warehousing',
-                meta: [{name: '入库登记', path: '/equipment-warehousing'}],
+                meta: [{name: '入库登记', parentName: '训练模拟器材管理', path: '/equipment-warehousing'}],
                 component: () => import('./views/equipmentManager/warehousing.vue')
             },
             {
                 path: '/equipment-equipment', 
                 name: 'equipment-equipment',
-                meta: [{name: '在库设备', path: '/equipment-equipment'}],
+                meta: [{name: '在库设备', parentName: '训练模拟器材管理', path: '/equipment-equipment'}],
                 component: () => import('./views/equipmentManager/equipment.vue')
             },
             {
                 path: '/equipment-pleaseRecord', 
                 name: 'equipment-pleaseRecord',
-                meta: [{name: '请领记录', path: '/equipment-pleaseRecord'}],
+                meta: [{name: '请领记录', parentName: '训练模拟器材管理', path: '/equipment-pleaseRecord'}],
                 component: () => import('./views/equipmentManager/pleaseRecord.vue')
             },
             {
                 path: '/equipment-pleaseCheck', 
                 name: 'equipment-pleaseCheck',
-                meta: [{name: '请领审核', path: '/equipment-pleaseCheck'}],
+                meta: [{name: '请领审核', parentName: '训练模拟器材管理', path: '/equipment-pleaseCheck'}],
                 component: () => import('./views/equipmentManager/pleaseCheck.vue')
             },
             {
                 path: '/equipment-borrowRecord', 
                 name: 'equipment-borrowRecord',
-                meta: [{name: '借用记录', path: '/equipment-borrowRecord'}],
+                meta: [{name: '借用记录', parentName: '训练模拟器材管理', path: '/equipment-borrowRecord'}],
                 component: () => import('./views/equipmentManager/borrowRecord.vue')
             },
             {
                 path: '/equipment-borrowCheck', 
                 name: 'equipment-borrowCheck',
-                meta: [{name: '借用审核', path: '/equipment-borrowCheck'}],
+                meta: [{name: '借用审核', parentName: '训练模拟器材管理', path: '/equipment-borrowCheck'}],
                 component: () => import('./views/equipmentManager/borrowCheck.vue')
             },
             {
                 path: '/equipment-repairRecord', 
                 name: 'equipment-repairRecord',
-                meta: [{name: '维修记录', path: '/equipment-repairRecord'}],
+                meta: [{name: '维修记录',parentName: '训练模拟器材管理', path: '/equipment-repairRecord'}],
                 component: () => import('./views/equipmentManager/repairRecord.vue')
             },
             {
                 path: '/equipment-repairCheck', 
                 name: 'equipment-repairCheck',
-                meta: [{name: '维修审核', path: '/equipment-repairCheck'}],
+                meta: [{name: '维修审核', parentName: '训练模拟器材管理', path: '/equipment-repairCheck'}],
                 component: () => import('./views/equipmentManager/repairCheck.vue')
             },
             {
                 path: '/equipment-scrapRecord', 
                 name: 'equipment-scrapRecord',
-                meta: [{name: '报废记录', path: '/equipment-scrapRecord'}],
+                meta: [{name: '报废记录', parentName: '训练模拟器材管理', path: '/equipment-scrapRecord'}],
                 component: () => import('./views/equipmentManager/scrapRecord.vue')
             },
             {
                 path: '/equipment-scrapCheck', 
                 name: 'equipment-scrapCheck',
-                meta: [{name: '报废审核', path: '/equipment-scrapCheck'}],
+                meta: [{name: '报废审核', parentName: '训练模拟器材管理', path: '/equipment-scrapCheck'}],
                 component: () => import('./views/equipmentManager/scrapCheck.vue')
             },
             {
                 path: '/equipment-inventoryLog', 
                 name: 'equipment-inventoryLog',
-                meta: [{name: '盘点日志', path: '/equipment-nventoryLog'}],
+                meta: [{name: '盘点日志', parentName: '训练模拟器材管理', path: '/equipment-nventoryLog'}],
                 component: () => import('./views/equipmentManager/inventoryLog.vue')
             },
             {
                 path: '/equipment-deviceManage', 
                 name: 'equipment-deviceManage',
-                meta: [{name: '维护管理', path: '/equipment-deviceManage'}],
+                meta: [{name: '维护管理', parentName: '训练模拟器材管理', path: '/equipment-deviceManage'}],
                 component: () => import('./views/equipmentManager/deviceManage.vue')
             }
         ]

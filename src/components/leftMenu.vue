@@ -2,7 +2,7 @@
     <div>
         <div class="menu" :class="{thin:isCollapse}">
             <el-menu class="el-menu-vertical-demo"  :collapse="true" :class="{thin:isCollapse}" @select="selectItems($event)">
-                <div v-for="(item,index) in menu.childResourceVoList" >
+                <div v-for="(item,index) in menu.childResourceVoList" :key="index">
                     <el-submenu :index="item.resourceName + '&' + item.resourceUrl" v-if="item.childResourceVoList !== null">
                         <template slot="title">
                             <i class="font_family" v-html="item.iconCode"></i>
@@ -158,15 +158,15 @@
         color:#fff;
     }
     .menu_sec_li.checked{
-        background:#5ECEBE;
+        background:#1890FF;
         color:#fff;
     }
     .menu_li.checked{
-        background: #5ECEBE;
+        background: #1890FF;
         color:#fff;
     }
     .paddingRight{
-        padding-right:20px!important;
+        padding-right:42px!important;
     }
     .hideIcon{
         position: absolute;
@@ -186,50 +186,6 @@
         text-align: left;
         width:60px;
         padding-left:10px;
-    }
-    >>> .menu .el-menu--collapse{
-        width:100%;
-    }
-    >>> .menu .el-menu--collapse>.el-menu-item span,>>>  .menu .el-menu--collapse>.el-submenu>.el-submenu__title span{
-        height: auto;
-        width: auto;
-        overflow: hidden;
-        visibility: visible;
-        display: inline-block;
-    }
-    >>> .el-menu.el-menu--popup.el-menu--popup-right-start .el-menu-item{
-        text-align: left;
-        padding-left: 30px !important;
-    }
-    /*>>> .menu .el-submenu__title,>>> .el-menu-item{*/
-    /*padding:0!important;*/
-    /*font-family: PingFangSC-Regular;*/
-    /*}*/
-
-    >>> .menu .el-submenu__title i,.menu .el-submenu__title{
-        color:rgba(255,255,255,0.6)!important;
-    }
-    >>> .is-active .el-submenu__title i{
-        color:#fff;
-    }
-    >>> .el-submenu__title {
-        color:#fff;
-    }
-    >>> .menu .el-menu {
-        background: transparent;
-        border: 0;
-    }
-    >>> .el-menu--popup{
-        padding:0;
-    }
-    >>> .thin .el-icon-arrow-right{
-        display:none;
-    }
-    >>> .menu .thin .el-submenu [class^=el-icon-],.menu .thin .el-menu-item [class^=el-icon-]{
-        margin-right:0;
-    }
-    >>> .el-menu--vertical{
-        margin-left: -5px;
     }
 </style>
 <style>
