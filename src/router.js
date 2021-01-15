@@ -192,6 +192,88 @@ export default new Router({
                 name: 'equipment-deviceManage',
                 meta: [{name: '维护管理', parentName: '训练模拟器材管理', path: '/equipment-deviceManage'}],
                 component: () => import('./views/equipmentManager/deviceManage.vue')
+            },
+            {
+                path: '/guarantee-purchase', 
+                name: 'guarantee-purchase',
+                meta: [{name: '采购申报', parentName: '训练教学保障装备管理', path: '/guarantee-purchase'}],
+                component: () => import('./views/guaranteeManager/purchase.vue')
+            },{
+                path: '/guarantee-reviewPlan',
+                name: 'guarantee-reviewPlan',
+                meta: [{name: '计划审核', parentName: '训练教学保障装备管理', path: '/guarantee-reviewPlan'}],
+                component: () => import('./views/guaranteeManager/reviewPlan.vue')
+            },{
+                path: '/guarantee-warehousing', 
+                name: 'guarantee-warehousing',
+                meta: [{name: '入库登记', parentName: '训练教学保障装备管理', path: '/guarantee-warehousing'}],
+                component: () => import('./views/guaranteeManager/warehousing.vue')
+            },
+            {
+                path: '/guarantee-equipment', 
+                name: 'guarantee-equipment',
+                meta: [{name: '在库设备', parentName: '训练教学保障装备管理', path: '/guarantee-equipment'}],
+                component: () => import('./views/guaranteeManager/equipment.vue')
+            },
+            {
+                path: '/guarantee-pleaseRecord', 
+                name: 'guarantee-pleaseRecord',
+                meta: [{name: '请领记录', parentName: '训练教学保障装备管理', path: '/guarantee-pleaseRecord'}],
+                component: () => import('./views/guaranteeManager/pleaseRecord.vue')
+            },
+            {
+                path: '/guarantee-pleaseCheck', 
+                name: 'guarantee-pleaseCheck',
+                meta: [{name: '请领审核', parentName: '训练教学保障装备管理', path: '/guarantee-pleaseCheck'}],
+                component: () => import('./views/guaranteeManager/pleaseCheck.vue')
+            },
+            {
+                path: '/guarantee-borrowRecord', 
+                name: 'guarantee-borrowRecord',
+                meta: [{name: '借用记录', parentName: '训练教学保障装备管理', path: '/guarantee-borrowRecord'}],
+                component: () => import('./views/guaranteeManager/borrowRecord.vue')
+            },
+            {
+                path: '/guarantee-borrowCheck', 
+                name: 'guarantee-borrowCheck',
+                meta: [{name: '借用审核', parentName: '训练教学保障装备管理', path: '/guarantee-borrowCheck'}],
+                component: () => import('./views/guaranteeManager/borrowCheck.vue')
+            },
+            {
+                path: '/guarantee-repairRecord', 
+                name: 'guarantee-repairRecord',
+                meta: [{name: '维修记录',parentName: '训练教学保障装备管理', path: '/guarantee-repairRecord'}],
+                component: () => import('./views/guaranteeManager/repairRecord.vue')
+            },
+            {
+                path: '/guarantee-repairCheck', 
+                name: 'guarantee-repairCheck',
+                meta: [{name: '维修审核', parentName: '训练教学保障装备管理', path: '/guarantee-repairCheck'}],
+                component: () => import('./views/guaranteeManager/repairCheck.vue')
+            },
+            {
+                path: '/guarantee-scrapRecord', 
+                name: 'guarantee-scrapRecord',
+                meta: [{name: '报废记录', parentName: '训练教学保障装备管理', path: '/guarantee-scrapRecord'}],
+                component: () => import('./views/guaranteeManager/scrapRecord.vue')
+            },
+            {
+                path: '/guarantee-scrapCheck', 
+                name: 'guarantee-scrapCheck',
+                meta: [{name: '报废审核', parentName: '训练教学保障装备管理', path: '/guarantee-scrapCheck'}],
+                component: () => import('./views/guaranteeManager/scrapCheck.vue')
+            },
+            {
+                path: '/guarantee-inventoryLog', 
+                name: 'guarantee-inventoryLog',
+                meta: [{name: '盘点日志', parentName: '训练教学保障装备管理', path: '/guarantee-nventoryLog'}],
+                component: () => import('./views/guaranteeManager/inventoryLog.vue')
+            },
+            {
+                path: '/guarantee-deviceManage', 
+                name: 'guarantee-deviceManage',
+                meta: [{name: '维护管理', parentName: '训练教学保障装备管理', path: '/guarantee-deviceManage'}],
+                component: () => import('./views/guaranteeManager/deviceManage.vue')
             }
         ]
         },
