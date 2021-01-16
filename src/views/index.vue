@@ -616,8 +616,38 @@ export default {
               url: "guarantee-deviceManage",
               parentId: 3,
               children: [],
+            },{
+              menuId: '23',
+              name: '申报入库',
+              url: 'object-index',
+              parentId: 1,
+              children: []
             },
-          ],
+            {
+              id: 4,
+              menuId: '24',
+              name: '申报审核',
+              url: 'object-examine',
+              parentId: 1,
+              children: []
+            },
+            // {
+            //   id: 4,
+            //   menuId: '24',
+            //   name: '入库记录',
+            //   url: 'knowledge-rkRecord',
+            //   parentId: 1,
+            //   children: []
+            // },
+            // {
+            //   id: 5,
+            //   menuId: '25',
+            //   name: '知识检索',
+            //   url: 'knowledge-retrieval',
+            //   parentId: 1,
+            //   children: []
+            // }
+          ]
         },
         {
           id: 17,

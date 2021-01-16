@@ -274,8 +274,61 @@ export default new Router({
                 name: 'guarantee-deviceManage',
                 meta: [{name: '维护管理', parentName: '训练教学保障装备管理', path: '/guarantee-deviceManage'}],
                 component: () => import('./views/guaranteeManager/deviceManage.vue')
-            }
-        ]
+            }]
         },
+        {
+          path: '/knowledge-delRecord',
+          name: 'knowledge-delRecord',
+          meta: [{
+            name: '法规删除记录',
+            path: '/knowledge-delRecord'
+          }],
+          component: () => import('./views/StateKnowledge/delRecord.vue')
+        },
+        {
+          path: '/knowledge-retrieval',
+          name: 'knowledge-retrieval',
+          meta: [{
+            name: '知识检索',
+            path: '/knowledge-retrieval'
+          }],
+          component: () => import('./views/StateKnowledge/retrieval.vue')
+        },
+        {
+          path: '/object-index',
+          name: 'object-index',
+          meta: [{
+            name: '申报入库',
+            path: '/object-index'
+          }],
+          component: () => import('./views/objectManage/index.vue')
+        },
+        {
+          path: '/object-delRecord',
+          name: 'object-delRecord',
+          meta: [{
+            name: '申报删除记录',
+            path: '/object-delRecord'
+          }],
+          component: () => import('./views/objectManage/delRecord.vue')
+        },
+        {
+          path: '/object-rkRecord',
+          name: 'object-rkRecord',
+          meta: [{
+            name: '项目导入',
+            path: '/object-rkRecord'
+          }],
+          component: () => import('./views/objectManage/rkRecord.vue')
+        },
+        {
+          path: '/object-examine',
+          name: 'object-examine',
+          meta: [{
+            name: '申报审核',
+            path: '/object-examine'
+          }],
+          component: () => import('./views/objectManage/examine.vue')
+        }
     ]
 })
