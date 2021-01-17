@@ -274,7 +274,280 @@ export default new Router({
                 name: 'guarantee-deviceManage',
                 meta: [{name: '维护管理', parentName: '训练教学保障装备管理', path: '/guarantee-deviceManage'}],
                 component: () => import('./views/guaranteeManager/deviceManage.vue')
-            }]
+            },
+            
+            {
+                path: '/information-purchase', 
+                name: 'information-purchase',
+                meta: [{name: '采购申报', parentName: '训练信息资源管理', path: '/information-purchase'}],
+                component: () => import('./views/informationManager/purchase.vue')
+            },
+            {
+                path: '/information-reviewPlan',
+                name: 'information-reviewPlan',
+                meta: [{name: '计划审核', parentName: '训练信息资源管理', path: '/information-reviewPlan'}],
+                component: () => import('./views/informationManager/reviewPlan.vue')
+            },{
+                path: '/information-warehousing', 
+                name: 'information-warehousing',
+                meta: [{name: '入库登记', parentName: '训练信息资源管理', path: '/information-warehousing'}],
+                component: () => import('./views/informationManager/warehousing.vue')
+            },
+            {
+                path: '/information-equipment', 
+                name: 'information-equipment',
+                meta: [{name: '库存信息', parentName: '训练信息资源管理', path: '/information-equipment'}],
+                component: () => import('./views/informationManager/equipment.vue')
+            },
+           
+
+            {
+                path: '/teaching-purchase', 
+                name: 'teaching-purchase',
+                meta: [{name: '采购申报', parentName: '教材管理', path: '/teaching-purchase'}],
+                component: () => import('./views/teachingManager/purchase.vue')
+            },{
+                path: '/teaching-reviewPlan',
+                name: 'teaching-reviewPlan',
+                meta: [{name: '计划审核', parentName: '教材管理', path: '/teaching-reviewPlan'}],
+                component: () => import('./views/teachingManager/reviewPlan.vue')
+            },{
+                path: '/teaching-warehousing', 
+                name: 'teaching-warehousing',
+                meta: [{name: '入库登记', parentName: '教材管理', path: '/teaching-warehousing'}],
+                component: () => import('./views/teachingManager/warehousing.vue')
+            },
+            {
+                path: '/teaching-equipment', 
+                name: 'teaching-equipment',
+                meta: [{name: '在库设备', parentName: '教材管理', path: '/teaching-equipment'}],
+                component: () => import('./views/teachingManager/equipment.vue')
+            },
+            {
+                path: '/teaching-pleaseRecord', 
+                name: 'teaching-pleaseRecord',
+                meta: [{name: '请领记录', parentName: '教材管理', path: '/teaching-pleaseRecord'}],
+                component: () => import('./views/teachingManager/pleaseRecord.vue')
+            },
+            {
+                path: '/teaching-pleaseCheck', 
+                name: 'teaching-pleaseCheck',
+                meta: [{name: '请领审核', parentName: '教材管理', path: '/teaching-pleaseCheck'}],
+                component: () => import('./views/teachingManager/pleaseCheck.vue')
+            },
+            {
+                path: '/teaching-borrowRecord', 
+                name: 'teaching-borrowRecord',
+                meta: [{name: '借用记录', parentName: '教材管理', path: '/teaching-borrowRecord'}],
+                component: () => import('./views/teachingManager/borrowRecord.vue')
+            },
+            {
+                path: '/teaching-borrowCheck', 
+                name: 'teaching-borrowCheck',
+                meta: [{name: '借用审核', parentName: '教材管理', path: '/teaching-borrowCheck'}],
+                component: () => import('./views/teachingManager/borrowCheck.vue')
+            },
+            {
+                path: '/teaching-repairRecord', 
+                name: 'teaching-repairRecord',
+                meta: [{name: '维修记录',parentName: '教材管理', path: '/teaching-repairRecord'}],
+                component: () => import('./views/teachingManager/repairRecord.vue')
+            },
+            {
+                path: '/teaching-repairCheck', 
+                name: 'teaching-repairCheck',
+                meta: [{name: '维修审核', parentName: '教材管理', path: '/teaching-repairCheck'}],
+                component: () => import('./views/teachingManager/repairCheck.vue')
+            },
+            {
+                path: '/teaching-scrapRecord', 
+                name: 'teaching-scrapRecord',
+                meta: [{name: '报废记录', parentName: '教材管理', path: '/teaching-scrapRecord'}],
+                component: () => import('./views/teachingManager/scrapRecord.vue')
+            },
+            {
+                path: '/teaching-scrapCheck', 
+                name: 'teaching-scrapCheck',
+                meta: [{name: '报废审核', parentName: '教材管理', path: '/teaching-scrapCheck'}],
+                component: () => import('./views/teachingManager/scrapCheck.vue')
+            },
+            {
+                path: '/teaching-inventoryLog', 
+                name: 'teaching-inventoryLog',
+                meta: [{name: '盘点日志', parentName: '教材管理', path: '/teaching-nventoryLog'}],
+                component: () => import('./views/teachingManager/inventoryLog.vue')
+            },
+            {
+                path: '/teaching-deviceManage', 
+                name: 'teaching-deviceManage',
+                meta: [{name: '维护管理', parentName: '教材管理', path: '/teaching-deviceManage'}],
+                component: () => import('./views/teachingManager/deviceManage.vue')
+            },
+            {
+                path: '/map-purchase', 
+                name: 'map-purchase',
+                meta: [{name: '采购申报', parentName: '地图管理', path: '/map-purchase'}],
+                component: () => import('./views/mapManager/purchase.vue')
+            },{
+                path: '/map-reviewPlan',
+                name: 'map-reviewPlan',
+                meta: [{name: '计划审核', parentName: '地图管理', path: '/map-reviewPlan'}],
+                component: () => import('./views/mapManager/reviewPlan.vue')
+            },{
+                path: '/map-warehousing', 
+                name: 'map-warehousing',
+                meta: [{name: '入库登记', parentName: '地图管理', path: '/map-warehousing'}],
+                component: () => import('./views/mapManager/warehousing.vue')
+            },
+            {
+                path: '/map-equipment', 
+                name: 'map-equipment',
+                meta: [{name: '在库设备', parentName: '地图管理', path: '/map-equipment'}],
+                component: () => import('./views/mapManager/equipment.vue')
+            },
+            {
+                path: '/map-pleaseRecord', 
+                name: 'map-pleaseRecord',
+                meta: [{name: '请领记录', parentName: '地图管理', path: '/map-pleaseRecord'}],
+                component: () => import('./views/mapManager/pleaseRecord.vue')
+            },
+            {
+                path: '/map-pleaseCheck', 
+                name: 'map-pleaseCheck',
+                meta: [{name: '请领审核', parentName: '地图管理', path: '/map-pleaseCheck'}],
+                component: () => import('./views/mapManager/pleaseCheck.vue')
+            },
+            {
+                path: '/map-borrowRecord', 
+                name: 'map-borrowRecord',
+                meta: [{name: '借用记录', parentName: '地图管理', path: '/map-borrowRecord'}],
+                component: () => import('./views/mapManager/borrowRecord.vue')
+            },
+            {
+                path: '/map-borrowCheck', 
+                name: 'map-borrowCheck',
+                meta: [{name: '借用审核', parentName: '地图管理', path: '/map-borrowCheck'}],
+                component: () => import('./views/mapManager/borrowCheck.vue')
+            },
+            {
+                path: '/map-repairRecord', 
+                name: 'map-repairRecord',
+                meta: [{name: '维修记录',parentName: '地图管理', path: '/map-repairRecord'}],
+                component: () => import('./views/mapManager/repairRecord.vue')
+            },
+            {
+                path: '/map-repairCheck', 
+                name: 'map-repairCheck',
+                meta: [{name: '维修审核', parentName: '地图管理', path: '/map-repairCheck'}],
+                component: () => import('./views/mapManager/repairCheck.vue')
+            },
+            {
+                path: '/map-scrapRecord', 
+                name: 'map-scrapRecord',
+                meta: [{name: '报废记录', parentName: '地图管理', path: '/map-scrapRecord'}],
+                component: () => import('./views/mapManager/scrapRecord.vue')
+            },
+            {
+                path: '/map-scrapCheck', 
+                name: 'map-scrapCheck',
+                meta: [{name: '报废审核', parentName: '地图管理', path: '/map-scrapCheck'}],
+                component: () => import('./views/mapManager/scrapCheck.vue')
+            },
+            {
+                path: '/map-inventoryLog', 
+                name: 'map-inventoryLog',
+                meta: [{name: '盘点日志', parentName: '地图管理', path: '/map-nventoryLog'}],
+                component: () => import('./views/mapManager/inventoryLog.vue')
+            },
+            {
+                path: '/map-deviceManage', 
+                name: 'map-deviceManage',
+                meta: [{name: '维护管理', parentName: '地图管理', path: '/map-deviceManage'}],
+                component: () => import('./views/mapManager/deviceManage.vue')
+            },
+            {
+                path: '/stationery-purchase', 
+                name: 'stationery-purchase',
+                meta: [{name: '采购申报', parentName: '文具与低值易耗品管理', path: '/stationery-purchase'}],
+                component: () => import('./views/stationeryManager/purchase.vue')
+            },{
+                path: '/stationery-reviewPlan',
+                name: 'stationery-reviewPlan',
+                meta: [{name: '计划审核', parentName: '文具与低值易耗品管理', path: '/stationery-reviewPlan'}],
+                component: () => import('./views/stationeryManager/reviewPlan.vue')
+            },{
+                path: '/stationery-warehousing', 
+                name: 'stationery-warehousing',
+                meta: [{name: '入库登记', parentName: '文具与低值易耗品管理', path: '/stationery-warehousing'}],
+                component: () => import('./views/stationeryManager/warehousing.vue')
+            },
+            {
+                path: '/stationery-equipment', 
+                name: 'stationery-equipment',
+                meta: [{name: '在库设备', parentName: '文具与低值易耗品管理', path: '/stationery-equipment'}],
+                component: () => import('./views/stationeryManager/equipment.vue')
+            },
+            {
+                path: '/stationery-pleaseRecord', 
+                name: 'stationery-pleaseRecord',
+                meta: [{name: '请领记录', parentName: '文具与低值易耗品管理', path: '/stationery-pleaseRecord'}],
+                component: () => import('./views/stationeryManager/pleaseRecord.vue')
+            },
+            {
+                path: '/stationery-pleaseCheck', 
+                name: 'stationery-pleaseCheck',
+                meta: [{name: '请领审核', parentName: '文具与低值易耗品管理', path: '/stationery-pleaseCheck'}],
+                component: () => import('./views/stationeryManager/pleaseCheck.vue')
+            },
+            {
+                path: '/stationery-borrowRecord', 
+                name: 'stationery-borrowRecord',
+                meta: [{name: '借用记录', parentName: '文具与低值易耗品管理', path: '/stationery-borrowRecord'}],
+                component: () => import('./views/stationeryManager/borrowRecord.vue')
+            },
+            {
+                path: '/stationery-borrowCheck', 
+                name: 'stationery-borrowCheck',
+                meta: [{name: '借用审核', parentName: '文具与低值易耗品管理', path: '/stationery-borrowCheck'}],
+                component: () => import('./views/stationeryManager/borrowCheck.vue')
+            },
+            {
+                path: '/stationery-repairRecord', 
+                name: 'stationery-repairRecord',
+                meta: [{name: '维修记录',parentName: '文具与低值易耗品管理', path: '/stationery-repairRecord'}],
+                component: () => import('./views/stationeryManager/repairRecord.vue')
+            },
+            {
+                path: '/stationery-repairCheck', 
+                name: 'stationery-repairCheck',
+                meta: [{name: '维修审核', parentName: '文具与低值易耗品管理', path: '/stationery-repairCheck'}],
+                component: () => import('./views/stationeryManager/repairCheck.vue')
+            },
+            {
+                path: '/mstationeryap-scrapRecord', 
+                name: 'stationery-scrapRecord',
+                meta: [{name: '报废记录', parentName: '文具与低值易耗品管理', path: '/stationery-scrapRecord'}],
+                component: () => import('./views/stationeryManager/scrapRecord.vue')
+            },
+            {
+                path: '/stationery-scrapCheck', 
+                name: 'stationery-scrapCheck',
+                meta: [{name: '报废审核', parentName: '文具与低值易耗品管理', path: '/stationery-scrapCheck'}],
+                component: () => import('./views/stationeryManager/scrapCheck.vue')
+            },
+            {
+                path: '/stationery-inventoryLog', 
+                name: 'stationery-inventoryLog',
+                meta: [{name: '盘点日志', parentName: '文具与低值易耗品管理', path: '/stationery-nventoryLog'}],
+                component: () => import('./views/stationeryManager/inventoryLog.vue')
+            },
+            {
+                path: '/stationery-deviceManage', 
+                name: 'stationery-deviceManage',
+                meta: [{name: '维护管理', parentName: '文具与低值易耗品管理', path: '/stationery-deviceManage'}],
+                component: () => import('./views/stationeryManager/deviceManage.vue')
+            },
+        ]
         },
         {
           path: '/knowledge-delRecord',
