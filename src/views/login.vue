@@ -7,32 +7,33 @@
         font-size: 33px;
         padding: 120px 0;
       "
-      >教学保障管理系统</el-header
-    >
+      >教学保障管理系统</el-header>
     <div class="login-content">
-      <el-form ref="form" :model="form">
-        <el-form-item style="text-align: center">
-        <el-input placeholder="账户" v-model="form.name" >
-          <i slot="prefix" class="el-icon-user" style="color: #5cb6ff;margin-left:5px"></i>
-        </el-input>
+      <el-form :model="loginForm" :rules="loginFormFieldRules" ref="loginForm">
+        <el-form-item>
+          <el-input v-model="loginForm.u_name" placeholder="请输入账号">
+            <i slot="prefix" class="el-icon-s-custom icon"></i
+          ></el-input>
         </el-form-item>
-         <el-form-item style="margin-top:20px">
-        <el-input placeholder="密码" v-model="form.name">
-          <i slot="prefix" class="el-icon-lock" style="color: #5cb6ff;margin-left:5px"></i>
-        </el-input>
-         </el-form-item>
-        <el-form-item style="margin-top:50px">
-          <el-button type="primary" @click="submitForm('ruleForm')" style="width:100%"
-            >登陆</el-button
+        <el-form-item>
+          <el-input v-model="loginForm.u_passwd" placeholder="请输入密码">
+            <i slot="prefix" class="el-icon-unlock icon"></i>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            style="width: 100%;margin-top:20px"
+            @click="submitForm('loginForm')"
+            >登录</el-button
           >
         </el-form-item>
       </el-form>
     </div>
     <div class="login-list">
       <el-row :gutter="20">
-        <el-col v-for="item in mainList" :key="item.id" :span="6"
-          ><div style="margin-top:13px">{{ item.name }}</div></el-col
-        >
+        <el-col v-for="item in mainFunctionButtonList" :key="item.id" :span="6"
+          ><div>{{ item.name }}</div></el-col>
       </el-row>
     </div>
   </div>
@@ -51,14 +52,38 @@ export default {
         password: "",
       },
       mainList: [],
+      flag: false,
+      loginForm: {
+        u_name: "",
+        u_passwd: "",
+      },
+      mainFunctionButtonList: [],
+      loginFormFieldRules: {
+        u_name: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        u_passwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      },
     };
   },
   methods: {
     submitForm() {
       this.$router.replace("./main");
+      this.loading = true
+      let params = this.loginForm
+      let url = '/trmslogin'
+      Http.login(params).then(res => {
+          this.logoutDialog = false
+          // removeStorage('ifLogin')
+          // removeStorage('token')
+          // delCookie('token')
+          // this.$router.push('/login')
+          this.$router.push('/main')
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
-    getMainList() {
-      this.mainList = [
+    getMainFunctionButtonList() {
+      this.mainFunctionButtonList = [
         {
           id: 1,
           name: "法规知识",
@@ -111,7 +136,7 @@ export default {
     },
   },
   created() {
-    this.getMainList();
+    this.getMainFunctionButtonList();
   },
 };
 </script>
@@ -123,6 +148,17 @@ export default {
 .login-list {
  width:650px;
   line-height: 22px;
+  /* padding: 200px 600px; */
+  line-height: 40px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.65);
+  margin: 0 auto;
+  /* margin-top: 20vh; */
+}
+.content-bottom {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
   text-align: center;
   font-size: 14px;
   margin: 0 auto;

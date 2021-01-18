@@ -14,19 +14,31 @@ axios.defaults.timeout = 15000
 axios.defaults.withCredentials = true
 axios.defaults.responseType = 'json'
 axios.defaults.headers.common['Cache-Control'] = 'no-cache'
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.get['If-Modified-Since'] = '0'
 axios.defaults.cache = false
+
 // http response 拦截器
 axios.interceptors.response.use(
     response => {
         // 接口拦截，用户未登陆
-        if (response.data.type === 'no_login') {
+        if(  response.data === undefined  || response.data === null 
+            || response.data.login_status === undefined || response.data.login_status === null 
+            || response.data.code === undefined ){
+               
+            localStorage.removeItem('aegeanUserInfo')
+            // top.location.href = top.location.href.split('/#/')[0] + '/#/login'
+            top.location.reload()
+            return
+        }
+        
+        if (response.data.login_status === 'not_login') {
             localStorage.removeItem('aegeanUserInfo')
             // top.location.href = top.location.href.split('/#/')[0] + '/#/login'
             top.location.reload()
             return
         // 接口拦截，后端抛出错误信息
-        } else if(response.data.code !== 200){
+        } else if(response.data.code !== '0000'){
             Message.error(response.data.message || '系统异常！');
             return Promise.reject(response.data)
         } else {

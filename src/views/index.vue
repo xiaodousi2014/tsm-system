@@ -94,6 +94,8 @@
             <el-button size="mini" >退出</el-button>
             <!-- <el-dropdown @command="handleLogout">
             <span class="el-dropdown-link">
+            <el-dropdown @command="handleLogout">
+              <span class="el-dropdown-link">
                 测试账号<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -168,6 +170,38 @@
           </div>
       
       </el-container>
+        <div style="height: 50px;width: 100%;"></div>
+        <div>
+          <el-breadcrumb
+            separator="/"
+            style="z-index: 2;
+            background: #ffffff;
+            padding: 0 24px;
+            border-bottom: none;"
+          >
+            <!-- <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item> -->
+            <el-breadcrumb-item
+              v-for="(item, index) in $route.meta"
+              :key="index"
+              :to="{ path: item.path }"
+            >{{ item.name }}</el-breadcrumb-item>
+          </el-breadcrumb>
+          <div style="height: 100%;">
+            <!-- <h1 class="title"
+                v-show="$route.path === '/index'">
+              园区用户管理系统 欢迎您！
+            </h1>
+            <p style="font-size: 12px; color: #a8a8a8"
+               v-show="$route.path === '/index'"></p>
+            <div class="home-img"
+                 :style="{ backgroundImage: 'url(' + homeBg + ')' }"
+                 v-show="$route.path === '/index'"></div> -->
+            <router-view />
+          </div>
+        </div>
+      <!-- </el-main> -->
+    <!-- </el-container> -->
+
     <el-dialog
       title="修改密码"
       :visible.sync="modificationDialog"
@@ -180,7 +214,10 @@
         ref="modificationPassword"
         label-width="100px"
       >
-        <el-form-item label="原密码：" prop="password">
+        <el-form-item
+          label="原密码："
+          prop="password"
+        >
           <el-input
             @focus="inputChange"
             v-model="modificationPassword.password"
@@ -191,6 +228,15 @@
           >
         </el-form-item>
         <el-form-item label="新密码：" prop="newpasswordOne">
+          <span
+            class="passwordError"
+            v-show="oldpasswordError"
+          >原密码有误</span>
+        </el-form-item>
+        <el-form-item
+          label="新密码："
+          prop="newpasswordOne"
+        >
           <el-input
             @input="inputChange"
             v-model="modificationPassword.newpasswordOne"
@@ -211,6 +257,7 @@
         <el-button type="primary" @click="modificationSuccess">确 定</el-button>
       </span>
     </el-dialog>
+     
     <el-dialog
       title="温馨提示"
       :visible.sync="logoutDialog"
@@ -232,8 +279,8 @@
 </template>
 
 <script>
-// import { setStorage, getStorage,getStorageJson, removeStorage, encrypt,delCookie } from '@/config/Utils'
-// import { getMenuList, isPassword, updatePassword ,logout} from '@/api/getApi'
+import router from "@/router/index";
+
 export default {
   data() {
     return {
@@ -616,411 +663,37 @@ export default {
               url: "guarantee-deviceManage",
               parentId: 3,
               children: [],
+            },{
+              menuId: '23',
+              name: '申报入库',
+              url: 'object-index',
+              parentId: 1,
+              children: []
             },
-          ]
-        },
-          {
-          id: 4,
-          menuId: '41',
-          name: "训练信息资源管理",
-          url: "subApp4",
-          parentId: "",
-          children: [
             {
-              id: 2,
-              menuId: "42",
-              name: "采购申报",
-              url: "information-purchase",
-              parentId: 4,
-              children: [],
-            },
-             {
-              id: 3,
-              menuId: "43",
-              name: "计划审核",
-              url: "information-reviewPlan",
-              parentId: 4,
-              children: [],
-            },
-             {
               id: 4,
-              menuId: "44",
-              name: "入库登记",
-              url: "information-warehousing",
-              parentId: 4,
-              children: [],
+              menuId: '24',
+              name: '申报审核',
+              url: 'object-examine',
+              parentId: 1,
+              children: []
             },
-             {
-              id: 5, 
-              menuId: "45",
-              name: "库存信息",
-              url: "information-equipment",
-              parentId: 4,
-              children: [],
-            }]
-           
-          },
-            {
-          id: 5,
-          menuId: '51',
-          name: "教材管理",
-          url: "subApp5",
-          parentId: "",
-          children: [
-            {
-              id: 2,
-              menuId: "32",
-              name: "采购申报",
-              url: "teaching-purchase",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 3,
-              menuId: "33",
-              name: "计划审核",
-              url: "teaching-reviewPlan",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 4,
-              menuId: "34",
-              name: "入库登记",
-              url: "teaching-warehousing",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 5, 
-              menuId: "35",
-              name: "在库设备",
-              url: "teaching-equipment",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 6, 
-              menuId: "36",
-              name: "请领记录",
-              url: "teaching-pleaseRecord",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 7, 
-              menuId: "37",
-              name: "请领审核",
-              url: "teaching-pleaseCheck",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 8, 
-              menuId: "38",
-              name: "借用记录",
-              url: "teaching-borrowRecord",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 9, 
-              menuId: "39",
-              name: "借用审核",
-              url: "teaching-borrowCheck",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 10, 
-              menuId: "30",
-              name: "维修记录",
-              url: "teaching-repairRecord",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 11, 
-              menuId: "31",
-              name: "维修审核",
-              url: "teaching-repairCheck",
-              parentId: 5,
-              children: [],
-            },
-              {
-              id: 12, 
-              menuId: "42",
-              name: "报废记录",
-              url: "teaching-scrapRecord",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 13, 
-              menuId: "43",
-              name: "报废审核",
-              url: "teaching-scrapCheck",
-              parentId: 5,
-              children: [],
-            },
-             {
-              id: 14, 
-              menuId: "44",
-              name: "盘点日志",
-              url: "teaching-inventoryLog",
-              parentId: 5,
-              children: [],
-            },
-              {
-              id: 15, 
-              menuId: "45",
-              name: "维护管理",
-              url: "teaching-deviceManage",
-              parentId: 5,
-              children: [],
-            },
-          ]
-        },
-         {
-          id: 6,
-          menuId: '61',
-          name: "地图管理",
-          url: "subApp6",
-          parentId: "",
-          children: [
-            {
-              id: 2,
-              menuId: "32",
-              name: "采购申报",
-              url: "map-purchase",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 3,
-              menuId: "33",
-              name: "计划审核",
-              url: "map-reviewPlan",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 4,
-              menuId: "34",
-              name: "入库登记",
-              url: "map-warehousing",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 5, 
-              menuId: "35",
-              name: "在库设备",
-              url: "map-equipment",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 6, 
-              menuId: "36",
-              name: "请领记录",
-              url: "map-pleaseRecord",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 7, 
-              menuId: "37",
-              name: "请领审核",
-              url: "map-pleaseCheck",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 8, 
-              menuId: "38",
-              name: "借用记录",
-              url: "map-borrowRecord",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 9, 
-              menuId: "39",
-              name: "借用审核",
-              url: "map-borrowCheck",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 10, 
-              menuId: "30",
-              name: "维修记录",
-              url: "map-repairRecord",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 11, 
-              menuId: "31",
-              name: "维修审核",
-              url: "map-repairCheck",
-              parentId: 6,
-              children: [],
-            },
-              {
-              id: 12, 
-              menuId: "42",
-              name: "报废记录",
-              url: "map-scrapRecord",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 13, 
-              menuId: "43",
-              name: "报废审核",
-              url: "map-scrapCheck",
-              parentId: 6,
-              children: [],
-            },
-             {
-              id: 14, 
-              menuId: "44",
-              name: "盘点日志",
-              url: "map-inventoryLog",
-              parentId: 6,
-              children: [],
-            },
-              {
-              id: 15, 
-              menuId: "45",
-              name: "维护管理",
-              url: "map-deviceManage",
-              parentId: 6,
-              children: [],
-            },
-          ]
-        },
-            {
-          id: 7,
-          menuId: '71',
-          name: "文具与低值易耗品管理",
-          url: "subApp7",
-          parentId: "",
-          children: [
-            {
-              id: 2,
-              menuId: "32",
-              name: "采购申报",
-              url: "stationery-purchase",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 3,
-              menuId: "33",
-              name: "计划审核",
-              url: "stationery-reviewPlan",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 4,
-              menuId: "34",
-              name: "入库登记",
-              url: "stationery-warehousing",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 5, 
-              menuId: "35",
-              name: "在库设备",
-              url: "stationery-equipment",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 6, 
-              menuId: "36",
-              name: "请领记录",
-              url: "stationery-pleaseRecord",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 7, 
-              menuId: "37",
-              name: "请领审核",
-              url: "stationery-pleaseCheck",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 8, 
-              menuId: "38",
-              name: "借用记录",
-              url: "stationery-borrowRecord",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 9, 
-              menuId: "39",
-              name: "借用审核",
-              url: "stationery-borrowCheck",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 10, 
-              menuId: "30",
-              name: "维修记录",
-              url: "stationery-repairRecord",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 11, 
-              menuId: "31",
-              name: "维修审核",
-              url: "stationery-repairCheck",
-              parentId: 7,
-              children: [],
-            },
-              {
-              id: 12, 
-              menuId: "42",
-              name: "报废记录",
-              url: "stationery-scrapRecord",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 13, 
-              menuId: "43",
-              name: "报废审核",
-              url: "stationery-scrapCheck",
-              parentId: 7,
-              children: [],
-            },
-             {
-              id: 14, 
-              menuId: "44",
-              name: "盘点日志",
-              url: "stationery-inventoryLog",
-              parentId: 7,
-              children: [],
-            },
-              {
-              id: 15, 
-              menuId: "45",
-              name: "维护管理",
-              url: "stationery-deviceManage",
-              parentId: 7,
-              children: [],
-            },
+            // {
+            //   id: 4,
+            //   menuId: '24',
+            //   name: '入库记录',
+            //   url: 'knowledge-rkRecord',
+            //   parentId: 1,
+            //   children: []
+            // },
+            // {
+            //   id: 5,
+            //   menuId: '25',
+            //   name: '知识检索',
+            //   url: 'knowledge-retrieval',
+            //   parentId: 1,
+            //   children: []
+            // }
           ]
         },
         {
@@ -1041,6 +714,9 @@ export default {
           ],
         },
       ],
+      openRouter:[],
+      homeBg: "",
+      menuList: [],
       userName: "",
       modificationDialog: false,
       oldpasswordError: false,
@@ -1077,6 +753,17 @@ export default {
       },
     };
   },
+
+  // 获取侧边栏菜单结构
+  created() {
+    // 注,这只是一个临时路由，之后会用接口代替 
+    // 这个参数是router文件夹里面存储的参数
+    this.menuList = router.options.routes[3].children;
+
+    // 获取开始时传递的数据 
+    this.openRouter=[this.$route.matched[1].path] 
+  },
+
   methods: {
     handleLogout() {
         this.logoutDialog = true
@@ -1228,6 +915,14 @@ export default {
 }
 .el-dropdown-menu {
     z-index: 30000 !important;
+}
+.el-header {
+  line-height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
 }
 .el-header .el-dropdown {
     color: #fff;
@@ -1404,9 +1099,18 @@ body > .el-container {
     line-height: 40px !important;
     // border-radius: 8px;
     color: #fff !important;
+  min-width: inherit !important;
+  background-color: #000d17 !important;
+  // padding: 0 !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  color: #fff !important;
 }
 .el-menu-item:hover {
-  background-color: #1890FF !important;
+  background-color: #1890ff !important;
+}
+.el-menu-item.is-active {
+  background-color: #1890ff !important;
 }
 /deep/.el-submenu__title {
     line-height: 40px;
@@ -1418,7 +1122,7 @@ body > .el-container {
     padding-left: 10px !important;
 }
 /deep/.el-submenu__title:hover {
-  background-color: #1890FF !important;
+  background-color: #1890ff !important;
 }
 /deep/.el-submenu__title:active {
   background-color: #fff !important;
@@ -1475,4 +1179,17 @@ body > .el-container {
   top: 100%;
   left: 0;
 }
+
+/*解决表格错位，必须加在index.html或APP.vue中 cak*/
+body .el-table th.gutter {
+  display: table-cell !important;
+}
+
+body .el-table colgroup.gutter {
+  display: table-cell !important;
+}
 </style>
+ 
+<!-- 解决表格错位问题  cak 
+<style  src="@/styles/fromAlignment.css"></style> 
+-->
