@@ -56,9 +56,10 @@ export default new Router({
     path: '/index',
     name: 'main-index',
     component: () => import('@/views/index.vue'),
-    meta: {
-      name: '菜单页',
-    },
+    // meta: {
+    //   name: '菜单页',
+    // },
+    meta: [{name: '菜单页', parentName: '登录页', path: '/index'}],
 
     children: [
       legalKnowledge,//法规总览

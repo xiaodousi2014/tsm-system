@@ -852,7 +852,7 @@ export default {
   // 获取侧边栏菜单结构
   created() {
       console.log(this.$route.meta)
-      debugger
+      // debugger
     // this.getUserName()
     // try {
     //   getMenuList()
