@@ -1,7 +1,6 @@
 <template>
-  <div >
+  <div class="bodyCommon">
     <div class="top-menu">
-      <span style="font-size: 20px;font-weight:900;">申报入库</span>
 
       <div class="top-menu-but">
         <el-button type="primary" class="btnWidth"
@@ -172,6 +171,15 @@ export default {
   },
 }
 </script>
+<style >
+.bodyCommon {
+  margin-left: 24px;
+  margin-top: 12px;
+  margin-right: 64px;
+  background: #fff;
+  padding: 10px;
+}
+</style>
 <style lang="less" scoped>
 .type-sele {
   width: 120px;

@@ -64,7 +64,7 @@ export default new Router({
     children: [
       legalKnowledge,//法规总览
       projcetManage,//项目管理
-      teachingEquipment,//教学设备
+      teachingEquipment,//设备管理
       teachingMaterialManage,//教材管理
       mapManage,//地图管理
       consumablesManage,//易耗品维护
@@ -74,7 +74,6 @@ export default new Router({
       fieldMaintain,//场地维护
       baseInfo,//基础信息
       systemManage,//系统管理
-      
 
       {
         path: '/demo',

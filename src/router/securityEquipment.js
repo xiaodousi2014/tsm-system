@@ -37,7 +37,18 @@ export default {
    meta: [{name: '在库设备', parentName: '保障设备', path: '/storage-equipment'}],
    component: () => import('@/views/securityEquipment/storageEquipment/index.vue')
   },
-
+  {
+    path: 'receive-record',
+    name: 'security-equipment-receive-record',
+    meta: [{name: '请领记录', parentName: '保障设备', path: '/declare-in-stock'}],
+    component: () => import('@/views/securityEquipment/receiveRecord/index.vue')
+   },
+   {
+    path: 'receive-examine',
+    name: 'security-equipment-receive-examine',
+    meta: [{name: '请领审核', parentName: '保障设备', path: '/declare-in-stock'}],
+    component: () => import('@/views/securityEquipment/receiveExamine/index.vue')
+   },
   {
    path: 'borrow-record',
    name: 'security-equipment-borrow-record',
