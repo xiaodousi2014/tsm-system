@@ -1,7 +1,7 @@
 //基础信息
 import layout from '@/layout/index';
 export default {
-    path: '/base-info',
+    path: '/company',
     component: layout,
     meta: {
         name: '基础数据',

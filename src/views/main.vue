@@ -22,72 +22,98 @@
         </el-row> -->
           <el-row :gutter="20">
             <el-col :span="8">
-              <div
-                class="grid-content bg1 bg-purple"
-                @click="onRouter('/state-knowledge')"
-              >
+              <div class="grid-content bg1 bg-purple" @click="onRouter('/doc')">
                 法规知识
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content bg2 bg-purple"
-               @click="onRouter('/projcet-manage')"
-              >项目管理</div>
+              <div class="grid-content bg2 bg-purple" @click="onRouter('/pm')">
+                项目管理
+              </div>
             </el-col>
             <el-col :span="4">
-              <div class="grid-content bg3 bg-purple"
-              @click="onRouter('/teaching-equipment')"
-              >教学设备</div>
+              <div
+                class="grid-content bg3 bg-purple"
+                @click="onRouter('/device')"
+              >
+                教学设备
+              </div>
             </el-col>
             <el-col :span="4">
-              <div class="grid-content bg4 bg-purple"
-               @click="onRouter('/simulation-equipment')"
-              >模拟器械</div>
+              <div
+                class="grid-content bg4 bg-purple"
+                @click="onRouter('/trainingdevice')"
+              >
+                模拟器械
+              </div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="8">
-              <div class="grid-content bg5 bg-purple"
-              @click="onRouter('/teaching-material-manage')"
-              >教材管理</div>
+              <div
+                class="grid-content bg5 bg-purple"
+                @click="onRouter('/material')"
+              >
+                教材管理
+              </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content bg6 bg-purple"
-               @click="onRouter('/map-manage')"
-              >地图管理</div>
+              <div
+                class="grid-content bg6 bg-purple"
+                @click="onRouter('/maps')"
+              >
+                地图管理
+              </div>
             </el-col>
             <el-col :span="4">
-              <div class="grid-content bg7 bg-purple"
-              @click="onRouter('/consumables-manage')"
-              >易耗品管理</div>
+              <div
+                class="grid-content bg7 bg-purple"
+                @click="onRouter('/stationery')"
+              >
+                易耗品管理
+              </div>
             </el-col>
             <el-col :span="4">
-              <div class="grid-content bg8 bg-purple"
-              @click="onRouter('/security-equipment')"
-              >保障设备</div>
+              <div
+                class="grid-content bg8 bg-purple"
+                @click="onRouter('/equipment')"
+              >
+                保障设备
+              </div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="4">
-              <div class="grid-content bg9 bg-purple"
-                @click="onRouter('/field-maintain')"
-              >训练场地</div>
+              <div
+                class="grid-content bg9 bg-purple"
+                @click="onRouter('/site')"
+              >
+                训练场地
+              </div>
             </el-col>
             <el-col :span="4">
-              <div class="grid-content bg10 bg-purple"
-               @click="onRouter('/system-manage')"
-              >系统管理</div>
+              <div
+                class="grid-content bg10 bg-purple"
+                @click="onRouter('/system')"
+              >
+                系统管理
+              </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content bg11 bg-purple"
-              @click="onRouter('/base-info')"
-              >基础信息
-                   </div>
+              <div
+                class="grid-content bg11 bg-purple"
+                @click="onRouter('/company')"
+              >
+                基础信息
+              </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content bg12 bg-purple"
-               @click="onRouter('/information-resources')"
-              >信息资源</div>
+              <div
+                class="grid-content bg12 bg-purple"
+                @click="onRouter('/information')"
+              >
+                信息资源
+              </div>
             </el-col>
           </el-row>
         </div>
@@ -101,41 +127,43 @@
   </div>
 </template>
 <script>
-import Http from "../api/api";
-// import tableCustom from '../components/tableCustom'
-import dropMenuOnUser from "../components/dropMenu.vue";
+import Http from '../api/api'
+import dropMenuOnUser from '../components/dropMenu.vue'
 
-import router from "@/router/index";
+import router from '@/router/index'
 
 export default {
-  name: "main-list",
+  name: 'main-list',
   components: { dropMenuOnUser },
   data() {
     return {
       form: {
-        name: "",
-        password: "",
+        name: '',
+        password: '',
       },
       mainList: [],
-    };
+    }
   },
   created() {
-    this.getMainList();
+    this.getMainList()
   },
 
   methods: {
     onRouter(routerName) {
-      let routeList = router.options.routes[3].children;
-      // 前端静态操作，根据大类来读取小类，并且直接跳转
-      routeList.forEach((val) => { 
-        if (val.path == routerName) {
-          if (val.children && val.children.length > 0) {
-            this.$router.push({ name: val.children[0].name });
-          } else {
-            this.$router.push({ path: routerName });
-          }
-        }
-      });
+      this.$router.push(routerName)
+
+      return
+      //   let routeList = router.options.routes[3].children
+      //   // 前端静态操作，根据大类来读取小类，并且直接跳转
+      //   routeList.forEach((val) => {
+      //     if (val.path == routerName) {
+      //       if (val.children && val.children.length > 0) {
+      //         this.$router.push({ name: val.children[0].name })
+      //       } else {
+      //         this.$router.push({ path: routerName })
+      //       }
+      //     }
+      //   })
 
       // this.$router.push({name:""});
     },
@@ -145,68 +173,68 @@ export default {
       this.mainList = [
         {
           id: 1,
-          name: "法规知识",
-          path: "index",
+          name: '法规知识',
+          path: 'index',
         },
         {
           id: 2,
-          name: "项目管理",
-          path: "index",
+          name: '项目管理',
+          path: 'index',
         },
         {
           id: 3,
-          name: "教学设备",
-          path: "index",
+          name: '教学设备',
+          path: 'index',
         },
         {
           id: 4,
-          name: "模拟器械",
-          path: "index",
+          name: '模拟器械',
+          path: 'index',
         },
         {
           id: 5,
-          name: "教材管理",
-          path: "index",
+          name: '教材管理',
+          path: 'index',
         },
         {
           id: 6,
-          name: "地图管理",
-          path: "index",
+          name: '地图管理',
+          path: 'index',
         },
         {
           id: 7,
-          name: "易耗品管理",
-          path: "index",
+          name: '易耗品管理',
+          path: 'index',
         },
         {
           id: 8,
-          name: "教学装备",
-          path: "index",
+          name: '教学装备',
+          path: 'index',
         },
         {
           id: 9,
-          name: "训练场地",
-          path: "index",
+          name: '训练场地',
+          path: 'index',
         },
         {
           id: 10,
-          name: "系统管理",
-          path: "index",
+          name: '系统管理',
+          path: 'index',
         },
         {
           id: 11,
-          name: "基础信息",
-          path: "index",
+          name: '基础信息',
+          path: 'index',
         },
         {
           id: 12,
-          name: "信息资源",
-          path: "index",
+          name: '信息资源',
+          path: 'index',
         },
-      ];
+      ]
     },
   },
-};
+}
 </script>
 <style scoped>
 .home {
@@ -339,7 +367,7 @@ export default {
   text-align: center;
   width: 100%;
   margin: 0 auto;
-  margin-top:20px;
+  margin-top: 20px;
   height: 20px;
   font-size: 14px;
   font-family: PingFangSC-Regular, PingFang SC;

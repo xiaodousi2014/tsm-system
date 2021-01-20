@@ -1,9 +1,9 @@
 <template>
   <div class="manage">
-      <!-- <el-header>
+    <!-- <el-header>
          <span style="color: #fff;font-size:26px">教学保障管理系统</span>
           <div class="user-box"> -->
-            <!-- <i class="icon-icon_renwu iconfont"></i>
+    <!-- <i class="icon-icon_renwu iconfont"></i>
             <span style="color: #fff;"></span>
             <i class="el-icon-caret-bottom"></i>
               <div class="users">
@@ -16,10 +16,10 @@
                   <p>注销</p>
                 </div>
               </div> -->
-              <!-- <span style="color: #fff">测试账号</span>
+    <!-- <span style="color: #fff">测试账号</span>
              <el-button type="primary" size="mini" >退出</el-button> -->
 
-            <!-- <el-dropdown @command="handleLogout">
+    <!-- <el-dropdown @command="handleLogout">
                 <span class="el-dropdown-link">
                     测试账号<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
@@ -31,59 +31,58 @@
         </el-header> -->
     <el-container class="main-container">
       <el-aside width="208px">
-          <!-- <h1 style="font-size：30px;">教学保障管理系统</h1> -->
-         
-            <el-menu
-                unique-opened
-                router
-                :default-active="$route.path.split('/')[2]"
-                class="el-menu-vertical-demo"
-                background-color="#001529"
-                    text-color="#000"
-                    active-text-color="#fff">
-                    
-          <div style="line-height: 68px;    text-align: center;color: #fff;font-size:20px">教学保障管理系统</div>
-                <template v-for="parent in menuList">
-                    <el-menu-item
-                    class="is-active"
-                    v-if="parent.children.length === 0"
-                    :index="parent.url"
-                    :key="parent.url"
-                    >
-                    {{ parent.name }}
-                    </el-menu-item>
-                    <el-submenu
-                    v-if="parent.children.length !== 0"
-                    :index="parent.url"
-                    :key="parent.menuId"
-                    >
-                    <template slot="title">
-                        <i class="el-icon-location"></i>
-                        <span>{{ parent.name }}</span>
-                    </template>
-                    <el-menu-item
-                   
-                        v-for="child in parent.children"
-                        :index="child.url"
-                        :key="child.menuId"
-                         @click="getRouter(parent,child)"
-                        
-                    >
-                        {{ child.name }}
-                    </el-menu-item>
-                    </el-submenu>
-                </template>
-            </el-menu>
+        <el-menu
+          unique-opened
+          router
+          :default-active="$route.path.split('/')[2]"
+          class="el-menu-vertical-demo"
+          background-color="#001529"
+          text-color="#000"
+          active-text-color="#fff"
+        >
+          <div
+            style="line-height: 68px;    text-align: center;color: #fff;font-size:20px"
+          >
+            教学保障管理系统
+          </div>
+          <template v-for="parent in menuList">
+            <el-menu-item
+              class="is-active"
+              v-if="parent.children.length === 0"
+              :index="parent.url"
+              :key="parent.url"
+            >
+              {{ parent.name }}
+            </el-menu-item>
+            <el-submenu
+              v-if="parent.children.length !== 0"
+              :index="parent.url"
+              :key="parent.menuId"
+            >
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>{{ parent.name }}</span>
+              </template>
+              <el-menu-item
+                v-for="child in parent.children"
+                :index="child.url"
+                :key="child.menuId"
+                @click="getRouter(parent, child)"
+              >
+                {{ child.name }}
+              </el-menu-item>
+            </el-submenu>
+          </template>
+        </el-menu>
 
-                <!-- aside 侧边栏 -->
-     </el-aside>
-        
+        <!-- aside 侧边栏 -->
+      </el-aside>
 
-        <el-header>
-          <div class="user-box">
-            <!-- <span style="color: #fff;"></span> -->
-            <i class="el-icon-caret-bottom"></i>
-            <!-- <div class="users">
+      <el-header>
+        <div class="user-box">
+          <!-- <span style="color: #fff;"></span> -->
+          <i class="el-icon-caret-bottom"></i>
+          <!-- <div class="users">
             <div class="userDiv one" @click="showModificationDialog">
                 <i class="icon-icon_mima iconfont"></i>
                 <p>修改密码</p>
@@ -93,41 +92,43 @@
                 <p>注销</p>
             </div>
             </div> -->
-            <span>测试账号</span>
-            <span style="padding-right: 10px">2020.11.11 15:20 登录</span>
-            <el-button size="mini" >退出</el-button>
-           
-          </div>
+          <span>测试账号</span>
+          <span style="padding-right: 10px">2020.11.11 15:20 登录</span>
+          <el-button size="mini">退出</el-button>
+        </div>
 
-        
-            <div style="text-align: left;line-height: 20px;position: relative;margin-top: 40px;">
-               <span>{{ $route.meta[0].parentName }}</span>/<span>{{ $route.meta[0].name }}</span>
-                <div style="font-size:20px;font-weight:bold; margin-top: 15px;">{{ $route.meta[0].name }}</div>
-             
-            </div>
-        </el-header>
-      
-          <!-- <el-main> -->
-          <div style="background: #f0f2f5; height: calc(100% - 105px);width: calc(100% - 208px);position:absolute;left:208px;top:105px">
-            
-            <div style="height: 100%;border-radius: 8px;">
-                    <h1 class="title" v-show="$route.path === '/index'">
-                    园区用户管理系统 欢迎您！
-                </h1>
-                <p
-                    style="font-size: 12px; color: #a8a8a8"
-                    v-show="$route.path === '/index'"
-                ></p>
-                <div
-                    class="home-img"
-                    :style="{ backgroundImage: 'url(' + homeBg + ')' }"
-                    v-show="$route.path === '/index'"
-                ></div>
-                <router-view />
-            </div>
+        <div
+          style="text-align: left;line-height: 20px;position: relative;margin-top: 40px;"
+        >
+          <span>{{ $route.meta[0].parentName }}</span
+          >/<span>{{ $route.meta[0].name }}</span>
+          <div style="font-size:20px;font-weight:bold; margin-top: 15px;">
+            {{ $route.meta[0].name }}
           </div>
-      
-      </el-container>
+        </div>
+      </el-header>
+
+      <!-- <el-main> -->
+      <div
+        style="background: #f0f2f5; height: calc(100% - 105px);width: calc(100% - 208px);position:absolute;left:208px;top:105px"
+      >
+        <div style="height: 100%;border-radius: 8px;">
+          <h1 class="title" v-show="$route.path === '/index'">
+            园区用户管理系统 欢迎您！
+          </h1>
+          <p
+            style="font-size: 12px; color: #a8a8a8"
+            v-show="$route.path === '/index'"
+          ></p>
+          <div
+            class="home-img"
+            :style="{ backgroundImage: 'url(' + homeBg + ')' }"
+            v-show="$route.path === '/index'"
+          ></div>
+          <router-view />
+        </div>
+      </div>
+    </el-container>
 
     <el-dialog
       title="修改密码"
@@ -141,10 +142,7 @@
         ref="modificationPassword"
         label-width="100px"
       >
-        <el-form-item
-          label="原密码："
-          prop="password"
-        >
+        <el-form-item label="原密码：" prop="password">
           <el-input
             @focus="inputChange"
             v-model="modificationPassword.password"
@@ -155,15 +153,11 @@
           >
         </el-form-item>
         <el-form-item label="新密码：" prop="newpasswordOne">
-          <span
-            class="passwordError"
-            v-show="oldpasswordError"
-          >原密码有误</span>
+          <span class="passwordError" v-show="oldpasswordError"
+            >原密码有误</span
+          >
         </el-form-item>
-        <el-form-item
-          label="新密码："
-          prop="newpasswordOne"
-        >
+        <el-form-item label="新密码：" prop="newpasswordOne">
           <el-input
             @input="inputChange"
             v-model="modificationPassword.newpasswordOne"
@@ -184,7 +178,7 @@
         <el-button type="primary" @click="modificationSuccess">确 定</el-button>
       </span>
     </el-dialog>
-     
+
     <el-dialog
       title="温馨提示"
       :visible.sync="logoutDialog"
@@ -206,958 +200,941 @@
 </template>
 
 <script>
-import router from "@/router/index";
+import router from '@/router/index'
 
 export default {
   data() {
     return {
-      homeBg: "",
+      homeBg: '',
       menuList: [
         {
-          id: 15,
-          menuId: "300001",
-          name: "测试字符串长速使用",
-          url: "subApp",
-          parentId: "",
-          children: [
-            {
-              id: 16,
-              menuId: "300011",
-              name: "演播室（电教设备）",
-              url: "demo",
-              parentId: "300001",
-              children: [],
-            },
-          ],
-        },
-           {
           id: 8,
           menuId: '41',
-          name: "设备管理",
-          url: "teaching-equipment/",
-          parentId: "",
+          name: '设备管理',
+          url: 'device/',
+          parentId: '',
           children: [
             {
               id: 2,
-              menuId: "42",
-              name: "采购申报",
-              url: "plan-declare",
+              menuId: '42',
+              name: '采购申报',
+              url: 'plan-declare',
               parentId: 8,
               children: [],
             },
-             {
+            {
               id: 3,
-              menuId: "43",
-              name: "计划审核",
-              url: "plan-examine",
+              menuId: '43',
+              name: '计划审核',
+              url: 'plan-examine',
               parentId: 8,
               children: [],
             },
-             {
+            {
               id: 4,
-              menuId: "44",
-              name: "入库登记",
-              url: "in-stock-register",
+              menuId: '44',
+              name: '入库登记',
+              url: 'in-stock-register',
               parentId: 8,
               children: [],
             },
-             {
-              id: 5, 
-              menuId: "45",
-              name: "在库设备",
-              url: "storage-equipment",
+            {
+              id: 5,
+              menuId: '45',
+              name: '在库设备',
+              url: 'storage-equipment',
               parentId: 8,
               children: [],
             },
-             {
-              id: 6, 
-              menuId: "46",
-              name: "请领记录",
-              url: "receive-record",
+            {
+              id: 6,
+              menuId: '46',
+              name: '请领记录',
+              url: 'receive-record',
               parentId: 8,
               children: [],
             },
-             {
-              id: 7, 
-              menuId: "47",
-              name: "请领审核",
-              url: "receive-examine",
+            {
+              id: 7,
+              menuId: '47',
+              name: '请领审核',
+              url: 'receive-examine',
               parentId: 8,
               children: [],
             },
-             {
-              id: 8, 
-              menuId: "48",
-              name: "借用记录",
-              url: "borrow-record",
+            {
+              id: 8,
+              menuId: '48',
+              name: '借用记录',
+              url: 'borrow-record',
               parentId: 8,
               children: [],
             },
-             {
-              id: 9, 
-              menuId: "49",
-              name: "借用审核",
-              url: "borrow-examine",
+            {
+              id: 9,
+              menuId: '49',
+              name: '借用审核',
+              url: 'borrow-examine',
               parentId: 8,
               children: [],
             },
-             {
-              id: 10, 
-              menuId: "411",
-              name: "维修记录",
-              url: "repair-record",
+            {
+              id: 10,
+              menuId: '411',
+              name: '维修记录',
+              url: 'repair-record',
               parentId: 8,
               children: [],
             },
-             {
-              id: 11, 
-              menuId: "422",
-              name: "维修审核",
-              url: "repair-examine",
+            {
+              id: 11,
+              menuId: '422',
+              name: '维修审核',
+              url: 'repair-examine',
               parentId: 8,
               children: [],
             },
-              {
-              id: 12, 
-              menuId: "433",
-              name: "报废记录",
-              url: "scrap-record",
+            {
+              id: 12,
+              menuId: '433',
+              name: '报废记录',
+              url: 'scrap-record',
               parentId: 8,
               children: [],
             },
-             {
-              id: 13, 
-              menuId: "444",
-              name: "报废审核",
-              url: "scrap-examine",
+            {
+              id: 13,
+              menuId: '444',
+              name: '报废审核',
+              url: 'scrap-examine',
               parentId: 8,
               children: [],
             },
-             {
-              id: 14, 
-              menuId: "455",
-              name: "盘点日志",
-              url: "inventory-journal",
+            {
+              id: 14,
+              menuId: '455',
+              name: '盘点日志',
+              url: 'inventory-journal',
               parentId: 8,
               children: [],
             },
-              {
-              id: 15, 
-              menuId: "456",
-              name: "维护管理",
-              url: "maintain-manage",
+            {
+              id: 15,
+              menuId: '456',
+              name: '维护管理',
+              url: 'maintain-manage',
               parentId: 8,
               children: [],
-            }
-          ]
+            },
+          ],
         },
-          {
+        {
           id: 2,
           menuId: '21',
-          name: "训练模拟器材管理",
-          url: "simulation-equipment/",
-          parentId: "",
+          name: '训练模拟器材管理',
+          url: 'trainingdevice/',
+          parentId: '',
           children: [
             {
               id: 2,
-              menuId: "22",
-              name: "采购申报",
-              url: "plan-declare",
+              menuId: '22',
+              name: '采购申报',
+              url: 'plan-declare',
               parentId: 2,
               children: [],
             },
-             {
+            {
               id: 3,
-              menuId: "23",
-              name: "计划审核",
-              url: "plan-examine",
+              menuId: '23',
+              name: '计划审核',
+              url: 'plan-examine',
               parentId: 2,
               children: [],
             },
-             {
+            {
               id: 4,
-              menuId: "24",
-              name: "入库登记",
-              url: "in-stock-register",
+              menuId: '24',
+              name: '入库登记',
+              url: 'in-stock-register',
               parentId: 2,
               children: [],
             },
-             {
-              id: 5, 
-              menuId: "25",
-              name: "在库设备",
-              url: "storage-equipment",
+            {
+              id: 5,
+              menuId: '25',
+              name: '在库设备',
+              url: 'storage-equipment',
               parentId: 2,
               children: [],
             },
-             {
-              id: 6, 
-              menuId: "26",
-              name: "请领记录",
-              url: "plaese-record",
+            {
+              id: 6,
+              menuId: '26',
+              name: '请领记录',
+              url: 'plaese-record',
               parentId: 2,
               children: [],
             },
-             {
-              id: 7, 
-              menuId: "27",
-              name: "请领审核",
-              url: "plaese-examine",
+            {
+              id: 7,
+              menuId: '27',
+              name: '请领审核',
+              url: 'plaese-examine',
               parentId: 2,
               children: [],
             },
-             {
-              id: 8, 
-              menuId: "28",
-              name: "借用记录",
-              url: "borrow-record",
+            {
+              id: 8,
+              menuId: '28',
+              name: '借用记录',
+              url: 'borrow-record',
               parentId: 2,
               children: [],
             },
-             {
-              id: 9, 
-              menuId: "29",
-              name: "借用审核",
-              url: "borrow-examine",
+            {
+              id: 9,
+              menuId: '29',
+              name: '借用审核',
+              url: 'borrow-examine',
               parentId: 2,
               children: [],
             },
-             {
-              id: 10, 
-              menuId: "30",
-              name: "维修记录",
-              url: "repair-record",
+            {
+              id: 10,
+              menuId: '30',
+              name: '维修记录',
+              url: 'repair-record',
               parentId: 2,
               children: [],
             },
-             {
-              id: 11, 
-              menuId: "31",
-              name: "维修审核",
-              url: "repair-examine",
+            {
+              id: 11,
+              menuId: '31',
+              name: '维修审核',
+              url: 'repair-examine',
               parentId: 2,
               children: [],
             },
-              {
-              id: 12, 
-              menuId: "32",
-              name: "报废记录",
-              url: "scrap-record",
+            {
+              id: 12,
+              menuId: '32',
+              name: '报废记录',
+              url: 'scrap-record',
               parentId: 2,
               children: [],
             },
-             {
-              id: 13, 
-              menuId: "33",
-              name: "报废审核",
-              url: "scrap-examine",
+            {
+              id: 13,
+              menuId: '33',
+              name: '报废审核',
+              url: 'scrap-examine',
               parentId: 2,
               children: [],
             },
-             {
-              id: 14, 
-              menuId: "34",
-              name: "盘点日志",
-              url: "inventory-journal",
+            {
+              id: 14,
+              menuId: '34',
+              name: '盘点日志',
+              url: 'inventory-journal',
               parentId: 2,
               children: [],
             },
-              {
-              id: 15, 
-              menuId: "35",
-              name: "维护管理",
-              url: "maintain-manage",
+            {
+              id: 15,
+              menuId: '35',
+              name: '维护管理',
+              url: 'maintain-manage',
               parentId: 2,
               children: [],
             },
           ],
         },
-         {
+        {
           id: 3,
           menuId: '31',
-          name: "训练教学保障装备管理",
-          url: "security-equipment/",
-          parentId: "",
+          name: '训练教学保障装备管理',
+          url: 'equipment/',
+          parentId: '',
           children: [
             {
               id: 2,
-              menuId: "32",
-              name: "采购申报",
-              url: "plan-declare",
+              menuId: '32',
+              name: '采购申报',
+              url: 'plan-declare',
               parentId: 3,
               children: [],
             },
-             {
+            {
               id: 3,
-              menuId: "33",
-              name: "计划审核",
-              url: "plan-examine",
+              menuId: '33',
+              name: '计划审核',
+              url: 'plan-examine',
               parentId: 3,
               children: [],
             },
-             {
+            {
               id: 4,
-              menuId: "34",
-              name: "入库登记",
-              url: "in-stock-register",
+              menuId: '34',
+              name: '入库登记',
+              url: 'in-stock-register',
               parentId: 3,
               children: [],
             },
-             {
-              id: 5, 
-              menuId: "35",
-              name: "在库设备",
-              url: "storage-equipment",
+            {
+              id: 5,
+              menuId: '35',
+              name: '在库设备',
+              url: 'storage-equipment',
               parentId: 3,
               children: [],
             },
-             {
-              id: 6, 
-              menuId: "36",
-              name: "请领记录",
-              url: "plaese-record",
+            {
+              id: 6,
+              menuId: '36',
+              name: '请领记录',
+              url: 'plaese-record',
               parentId: 3,
               children: [],
             },
-             {
-              id: 7, 
-              menuId: "37",
-              name: "请领审核",
-              url: "plaese-examine",
+            {
+              id: 7,
+              menuId: '37',
+              name: '请领审核',
+              url: 'plaese-examine',
               parentId: 3,
               children: [],
             },
-             {
-              id: 8, 
-              menuId: "38",
-              name: "借用记录",
-              url: "borrow-record",
+            {
+              id: 8,
+              menuId: '38',
+              name: '借用记录',
+              url: 'borrow-record',
               parentId: 3,
               children: [],
             },
-             {
-              id: 9, 
-              menuId: "39",
-              name: "借用审核",
-              url: "borrow-examine",
+            {
+              id: 9,
+              menuId: '39',
+              name: '借用审核',
+              url: 'borrow-examine',
               parentId: 3,
               children: [],
             },
-             {
-              id: 10, 
-              menuId: "30",
-              name: "维修记录",
-              url: "repair-record",
+            {
+              id: 10,
+              menuId: '30',
+              name: '维修记录',
+              url: 'repair-record',
               parentId: 3,
               children: [],
             },
-             {
-              id: 11, 
-              menuId: "31",
-              name: "维修审核",
-              url: "repair-examine",
+            {
+              id: 11,
+              menuId: '31',
+              name: '维修审核',
+              url: 'repair-examine',
               parentId: 3,
               children: [],
             },
-              {
-              id: 12, 
-              menuId: "42",
-              name: "报废记录",
-              url: "scrap-record",
+            {
+              id: 12,
+              menuId: '42',
+              name: '报废记录',
+              url: 'scrap-record',
               parentId: 3,
               children: [],
             },
-             {
-              id: 13, 
-              menuId: "43",
-              name: "报废审核",
-              url: "scrap-examine",
+            {
+              id: 13,
+              menuId: '43',
+              name: '报废审核',
+              url: 'scrap-examine',
               parentId: 3,
               children: [],
             },
-             {
-              id: 14, 
-              menuId: "44",
-              name: "盘点日志",
-              url: "inventory-journal",
+            {
+              id: 14,
+              menuId: '44',
+              name: '盘点日志',
+              url: 'inventory-journal',
               parentId: 3,
               children: [],
             },
-              {
-              id: 15, 
-              menuId: "45",
-              name: "维护管理",
-              url: "maintain-manage",
+            {
+              id: 15,
+              menuId: '45',
+              name: '维护管理',
+              url: 'maintain-manage',
               parentId: 3,
               children: [],
             },
-          ]
+          ],
         },
-         {
+        {
           id: 5,
           menuId: '51',
-          name: "信息管理",
-          url: "information-resources/",
-          parentId: "",
+          name: '信息管理',
+          url: 'information/',
+          parentId: '',
           children: [
             {
               id: 2,
-              menuId: "52",
-              name: "采购申报",
-              url: "plan-declare",
+              menuId: '52',
+              name: '采购申报',
+              url: 'plan-declare',
               parentId: 5,
               children: [],
             },
-             {
+            {
               id: 3,
-              menuId: "53",
-              name: "计划审核",
-              url: "plan-examine",
+              menuId: '53',
+              name: '计划审核',
+              url: 'plan-examine',
               parentId: 5,
               children: [],
             },
-             {
+            {
               id: 4,
-              menuId: "54",
-              name: "信息资源登记",
-              url: "information",
+              menuId: '54',
+              name: '信息资源登记',
+              url: 'information',
               parentId: 5,
               children: [],
             },
-             {
-              id: 5, 
-              menuId: "55",
-              name: "库存管理",
-              url: "stock-manage",
+            {
+              id: 5,
+              menuId: '55',
+              name: '库存管理',
+              url: 'stock-manage',
               parentId: 5,
               children: [],
-            }
-          ]
+            },
+          ],
         },
-         {
+        {
           id: 4,
           menuId: '41',
-          name: "教材管理",
-          url: "teaching-material-manage/",
-          parentId: "",
+          name: '教材管理',
+          url: 'material/',
+          parentId: '',
           children: [
             {
               id: 2,
-              menuId: "42",
-              name: "采购申报",
-              url: "plan-declare",
+              menuId: '42',
+              name: '采购申报',
+              url: 'plan-declare',
               parentId: 4,
               children: [],
             },
-             {
+            {
               id: 3,
-              menuId: "43",
-              name: "计划审核",
-              url: "plan-examine",
+              menuId: '43',
+              name: '计划审核',
+              url: 'plan-examine',
               parentId: 4,
               children: [],
             },
-             {
+            {
               id: 4,
-              menuId: "44",
-              name: "入库登记",
-              url: "in-stock-register",
+              menuId: '44',
+              name: '入库登记',
+              url: 'in-stock-register',
               parentId: 4,
               children: [],
             },
-             {
-              id: 5, 
-              menuId: "45",
-              name: "在库设备",
-              url: "storage-equipment",
+            {
+              id: 5,
+              menuId: '45',
+              name: '在库设备',
+              url: 'storage-equipment',
               parentId: 4,
               children: [],
             },
-             {
-              id: 6, 
-              menuId: "46",
-              name: "请领记录",
-              url: "receive-record",
+            {
+              id: 6,
+              menuId: '46',
+              name: '请领记录',
+              url: 'receive-record',
               parentId: 4,
               children: [],
             },
-             {
-              id: 7, 
-              menuId: "47",
-              name: "请领审核",
-              url: "receive-examine",
+            {
+              id: 7,
+              menuId: '47',
+              name: '请领审核',
+              url: 'receive-examine',
               parentId: 4,
               children: [],
             },
-             {
-              id: 8, 
-              menuId: "48",
-              name: "借用记录",
-              url: "borrow-record",
+            {
+              id: 8,
+              menuId: '48',
+              name: '借用记录',
+              url: 'borrow-record',
               parentId: 4,
               children: [],
             },
-             {
-              id: 9, 
-              menuId: "49",
-              name: "借用审核",
-              url: "borrow-examine",
+            {
+              id: 9,
+              menuId: '49',
+              name: '借用审核',
+              url: 'borrow-examine',
               parentId: 4,
               children: [],
             },
-             {
-              id: 10, 
-              menuId: "411",
-              name: "维修记录",
-              url: "repair-record",
+            {
+              id: 10,
+              menuId: '411',
+              name: '维修记录',
+              url: 'repair-record',
               parentId: 4,
               children: [],
             },
-             {
-              id: 11, 
-              menuId: "422",
-              name: "维修审核",
-              url: "repair-examine",
+            {
+              id: 11,
+              menuId: '422',
+              name: '维修审核',
+              url: 'repair-examine',
               parentId: 4,
               children: [],
             },
-              {
-              id: 12, 
-              menuId: "433",
-              name: "报废记录",
-              url: "scrap-record",
+            {
+              id: 12,
+              menuId: '433',
+              name: '报废记录',
+              url: 'scrap-record',
               parentId: 4,
               children: [],
             },
-             {
-              id: 13, 
-              menuId: "444",
-              name: "报废审核",
-              url: "scrap-examine",
+            {
+              id: 13,
+              menuId: '444',
+              name: '报废审核',
+              url: 'scrap-examine',
               parentId: 4,
               children: [],
             },
-             {
-              id: 14, 
-              menuId: "455",
-              name: "盘点日志",
-              url: "inventory-journal",
+            {
+              id: 14,
+              menuId: '455',
+              name: '盘点日志',
+              url: 'inventory-journal',
               parentId: 4,
               children: [],
             },
-              {
-              id: 15, 
-              menuId: "456",
-              name: "维护管理",
-              url: "maintain-manage",
+            {
+              id: 15,
+              menuId: '456',
+              name: '维护管理',
+              url: 'maintain-manage',
               parentId: 4,
               children: [],
-            }
-          ]
+            },
+          ],
         },
-         {
+        {
           id: 6,
           menuId: '41',
-          name: "地图管理",
-          url: "map-manage/",
-          parentId: "",
+          name: '地图管理',
+          url: 'maps/',
+          parentId: '',
           children: [
             {
               id: 2,
-              menuId: "42",
-              name: "采购申报",
-              url: "plan-declare",
+              menuId: '42',
+              name: '采购申报',
+              url: 'plan-declare',
               parentId: 6,
               children: [],
             },
-             {
+            {
               id: 3,
-              menuId: "43",
-              name: "计划审核",
-              url: "plan-examine",
+              menuId: '43',
+              name: '计划审核',
+              url: 'plan-examine',
               parentId: 6,
               children: [],
             },
-             {
+            {
               id: 4,
-              menuId: "44",
-              name: "入库登记",
-              url: "in-stock-register",
+              menuId: '44',
+              name: '入库登记',
+              url: 'in-stock-register',
               parentId: 6,
               children: [],
             },
-             {
-              id: 5, 
-              menuId: "45",
-              name: "在库设备",
-              url: "storage-equipment",
+            {
+              id: 5,
+              menuId: '45',
+              name: '在库设备',
+              url: 'storage-equipment',
               parentId: 6,
               children: [],
             },
-             {
-              id: 6, 
-              menuId: "46",
-              name: "请领记录",
-              url: "receive-record",
+            {
+              id: 6,
+              menuId: '46',
+              name: '请领记录',
+              url: 'receive-record',
               parentId: 6,
               children: [],
             },
-             {
-              id: 7, 
-              menuId: "47",
-              name: "请领审核",
-              url: "receive-examine",
+            {
+              id: 7,
+              menuId: '47',
+              name: '请领审核',
+              url: 'receive-examine',
               parentId: 6,
               children: [],
             },
-             {
-              id: 8, 
-              menuId: "48",
-              name: "借用记录",
-              url: "borrow-record",
+            {
+              id: 8,
+              menuId: '48',
+              name: '借用记录',
+              url: 'borrow-record',
               parentId: 6,
               children: [],
             },
-             {
-              id: 9, 
-              menuId: "49",
-              name: "借用审核",
-              url: "borrow-examine",
+            {
+              id: 9,
+              menuId: '49',
+              name: '借用审核',
+              url: 'borrow-examine',
               parentId: 6,
               children: [],
             },
-             {
-              id: 10, 
-              menuId: "411",
-              name: "维修记录",
-              url: "repair-record",
+            {
+              id: 10,
+              menuId: '411',
+              name: '维修记录',
+              url: 'repair-record',
               parentId: 6,
               children: [],
             },
-             {
-              id: 11, 
-              menuId: "422",
-              name: "维修审核",
-              url: "repair-examine",
+            {
+              id: 11,
+              menuId: '422',
+              name: '维修审核',
+              url: 'repair-examine',
               parentId: 6,
               children: [],
             },
-              {
-              id: 12, 
-              menuId: "433",
-              name: "报废记录",
-              url: "scrap-record",
+            {
+              id: 12,
+              menuId: '433',
+              name: '报废记录',
+              url: 'scrap-record',
               parentId: 6,
               children: [],
             },
-             {
-              id: 13, 
-              menuId: "444",
-              name: "报废审核",
-              url: "scrap-examine",
+            {
+              id: 13,
+              menuId: '444',
+              name: '报废审核',
+              url: 'scrap-examine',
               parentId: 6,
               children: [],
             },
-             {
-              id: 14, 
-              menuId: "455",
-              name: "盘点日志",
-              url: "inventory-journal",
+            {
+              id: 14,
+              menuId: '455',
+              name: '盘点日志',
+              url: 'inventory-journal',
               parentId: 6,
               children: [],
             },
-              {
-              id: 15, 
-              menuId: "456",
-              name: "维护管理",
-              url: "maintain-manage",
+            {
+              id: 15,
+              menuId: '456',
+              name: '维护管理',
+              url: 'maintain-manage',
               parentId: 6,
               children: [],
-            }
-          ]
+            },
+          ],
         },
-               {
+        {
           id: 7,
           menuId: '41',
-          name: "易耗品管理",
-          url: "consumables-manage/",
-          parentId: "",
+          name: '易耗品管理',
+          url: 'stationery/',
+          parentId: '',
           children: [
             {
               id: 2,
-              menuId: "42",
-              name: "采购申报",
-              url: "plan-declare",
+              menuId: '42',
+              name: '采购申报',
+              url: 'plan-declare',
               parentId: 7,
               children: [],
             },
-             {
+            {
               id: 3,
-              menuId: "43",
-              name: "计划审核",
-              url: "plan-examine",
+              menuId: '43',
+              name: '计划审核',
+              url: 'plan-examine',
               parentId: 7,
               children: [],
             },
-             {
+            {
               id: 4,
-              menuId: "44",
-              name: "入库登记",
-              url: "in-stock-register",
+              menuId: '44',
+              name: '入库登记',
+              url: 'in-stock-register',
               parentId: 7,
               children: [],
             },
-             {
-              id: 5, 
-              menuId: "45",
-              name: "在库设备",
-              url: "storage-equipment",
+            {
+              id: 5,
+              menuId: '45',
+              name: '在库设备',
+              url: 'storage-equipment',
               parentId: 7,
               children: [],
             },
-             {
-              id: 6, 
-              menuId: "46",
-              name: "请领记录",
-              url: "receive-record",
+            {
+              id: 6,
+              menuId: '46',
+              name: '请领记录',
+              url: 'receive-record',
               parentId: 7,
               children: [],
             },
-             {
-              id: 7, 
-              menuId: "47",
-              name: "请领审核",
-              url: "receive-examine",
+            {
+              id: 7,
+              menuId: '47',
+              name: '请领审核',
+              url: 'receive-examine',
               parentId: 7,
               children: [],
             },
-             {
-              id: 8, 
-              menuId: "48",
-              name: "借用记录",
-              url: "borrow-record",
+            {
+              id: 8,
+              menuId: '48',
+              name: '借用记录',
+              url: 'borrow-record',
               parentId: 7,
               children: [],
             },
-             {
-              id: 9, 
-              menuId: "49",
-              name: "借用审核",
-              url: "borrow-examine",
+            {
+              id: 9,
+              menuId: '49',
+              name: '借用审核',
+              url: 'borrow-examine',
               parentId: 7,
               children: [],
             },
-             {
-              id: 10, 
-              menuId: "411",
-              name: "维修记录",
-              url: "repair-record",
+            {
+              id: 10,
+              menuId: '411',
+              name: '维修记录',
+              url: 'repair-record',
               parentId: 7,
               children: [],
             },
-             {
-              id: 11, 
-              menuId: "422",
-              name: "维修审核",
-              url: "repair-examine",
+            {
+              id: 11,
+              menuId: '422',
+              name: '维修审核',
+              url: 'repair-examine',
               parentId: 7,
               children: [],
             },
-              {
-              id: 12, 
-              menuId: "433",
-              name: "报废记录",
-              url: "scrap-record",
+            {
+              id: 12,
+              menuId: '433',
+              name: '报废记录',
+              url: 'scrap-record',
               parentId: 7,
               children: [],
             },
-             {
-              id: 13, 
-              menuId: "444",
-              name: "报废审核",
-              url: "scrap-examine",
+            {
+              id: 13,
+              menuId: '444',
+              name: '报废审核',
+              url: 'scrap-examine',
               parentId: 7,
               children: [],
             },
-             {
-              id: 14, 
-              menuId: "455",
-              name: "盘点日志",
-              url: "inventory-journal",
+            {
+              id: 14,
+              menuId: '455',
+              name: '盘点日志',
+              url: 'inventory-journal',
               parentId: 7,
               children: [],
             },
-              {
-              id: 15, 
-              menuId: "456",
-              name: "维护管理",
-              url: "maintain-manage",
+            {
+              id: 15,
+              menuId: '456',
+              name: '维护管理',
+              url: 'maintain-manage',
               parentId: 7,
               children: [],
-            }
-          ]
+            },
+          ],
         },
-         
+
         {
           id: 17,
-          menuId: "300022",
-          name: "训练场地管理",
-          url: "subApp17",
-          parentId: "",
+          menuId: '300022',
+          name: '训练场地管理',
+          url: 'site/',
+          parentId: '',
           children: [
             {
               id: 18,
-              menuId: "300023",
-              name: "使用计划",
-              url: "UsePlan",
-              parentId: "300022",
+              menuId: '300023',
+              name: '使用计划',
+              url: 'UsePlan',
+              parentId: '300022',
               children: [],
             },
           ],
         },
       ],
-      openRouter:[],
-      homeBg: "",
-      userName: "",
+      openRouter: [],
+      homeBg: '',
+      userName: '',
       modificationDialog: false,
       oldpasswordError: false,
       passwordError: false,
       logoutDialog: false,
       loading: false,
-      msg: "",
+      msg: '',
       clickMenu: false,
       modificationPassword: {
-        password: "",
-        newpasswordOne: "",
-        newpasswordTwo: "",
+        password: '',
+        newpasswordOne: '',
+        newpasswordTwo: '',
       },
       rules: {
         password: [
-          { required: true, message: "请输入原密码", trigger: "blur" },
+          { required: true, message: '请输入原密码', trigger: 'blur' },
         ],
         newpasswordOne: [
-          { required: true, message: "请输入新密码", trigger: "blur" },
+          { required: true, message: '请输入新密码', trigger: 'blur' },
           {
             pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[])+$)([^(0-9a-zA-Z)]|[]|[a-zA-Z]|[0-9]){6,}$/,
-            message: "不低于6位，数字、大小写、符号两种或以上",
-            trigger: "blur",
+            message: '不低于6位，数字、大小写、符号两种或以上',
+            trigger: 'blur',
           },
         ],
         newpasswordTwo: [
-          { required: true, message: "请再次输入新密码", trigger: "blur" },
+          { required: true, message: '请再次输入新密码', trigger: 'blur' },
           {
             pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[])+$)([^(0-9a-zA-Z)]|[]|[a-zA-Z]|[0-9]){6,}$/,
-            message: "不低于6位，数字、大小写、符号两种或以上",
-            trigger: "blur",
+            message: '不低于6位，数字、大小写、符号两种或以上',
+            trigger: 'blur',
           },
         ],
       },
-    };
+    }
   },
 
   // 获取侧边栏菜单结构
   created() {
-    // 注,这只是一个临时路由，之后会用接口代替 
+    // 注,这只是一个临时路由，之后会用接口代替
     // 这个参数是router文件夹里面存储的参数
-    this.menuList = router.options.routes[3].children;
+    this.menuList = router.options.routes[3].children
 
-    // 获取开始时传递的数据 
-    this.openRouter=[this.$route.matched[1].path] 
+    // 获取开始时传递的数据
+    this.openRouter = [this.$route.matched[1].path]
   },
 
   methods: {
     getRouter(parent, child) {
-     console.log(parent);
-     console.log(child)
+      console.log(parent)
+      console.log(child)
     },
     handleLogout() {
-        this.logoutDialog = true
+      this.logoutDialog = true
     },
     enterLogout() {
-      this.loading = true;
+      this.loading = true
       logout()
         .then((res) => {
-          this.logoutDialog = false;
-          removeStorage("ifLogin");
-          removeStorage("token");
-          delCookie("token");
-          this.$router.push("/login");
+          this.logoutDialog = false
+          removeStorage('ifLogin')
+          removeStorage('token')
+          delCookie('token')
+          this.$router.push('/login')
         })
         .finally(() => {
-          this.loading = false;
-        });
+          this.loading = false
+        })
     },
     showLogout() {
-      this.logoutDialog = true;
+      this.logoutDialog = true
     },
     showModificationDialog() {
-      this.modificationDialog = true;
+      this.modificationDialog = true
     },
     modificationSuccess() {
       this.$refs.modificationPassword.validate((valid) => {
         if (valid) {
-          let user = { ...this.modificationPassword };
-          let password = user.password;
-          let encryptPassword = encrypt(password);
-          let users = getStorage("ifLogin");
-          let mobile = users.mobile;
+          let user = { ...this.modificationPassword }
+          let password = user.password
+          let encryptPassword = encrypt(password)
+          let users = getStorage('ifLogin')
+          let mobile = users.mobile
           let data = {
             password: encryptPassword,
             mobile: mobile,
-          };
+          }
           isPassword(data).then((res) => {
-            let { code, msg } = res;
-            console.log(res);
+            let { code, msg } = res
+            console.log(res)
             if (code === 200) {
-              this.updateUserPassword();
+              this.updateUserPassword()
             } else {
-              this.oldpasswordError = true;
+              this.oldpasswordError = true
               // this.$refs.modificationPassword.resetFields()
             }
-          });
+          })
         }
-      });
+      })
     },
     getUserName() {
-      const user = getStorage("ifLogin");
-      const name = user.employeeName;
-      this.userName = name;
+      const user = getStorage('ifLogin')
+      const name = user.employeeName
+      this.userName = name
     },
     updateUserPassword() {
-      let user = { ...this.modificationPassword };
-      let users = getStorage("ifLogin");
-      let mobile = users.mobile;
+      let user = { ...this.modificationPassword }
+      let users = getStorage('ifLogin')
+      let mobile = users.mobile
       let data = {
         mobile: mobile,
         password: encrypt(user.newpasswordOne),
-      };
+      }
       if (user.newpasswordOne !== user.newpasswordTwo) {
-        this.msg = "两次输入密码不一致";
-        this.passwordError = true;
-        return false;
+        this.msg = '两次输入密码不一致'
+        this.passwordError = true
+        return false
       } else {
         updatePassword(data).then((res) => {
           if (res.code === 200) {
-            this.$refs.modificationPassword.resetFields();
-            this.$message.success("密码已修改，请重新登录");
-            removeStorage("ifLogin");
-            this.$router.push("/login");
+            this.$refs.modificationPassword.resetFields()
+            this.$message.success('密码已修改，请重新登录')
+            removeStorage('ifLogin')
+            this.$router.push('/login')
           } else {
-            this.msg = res.msg;
-            this.passwordError = true;
+            this.msg = res.msg
+            this.passwordError = true
           }
-        });
+        })
       }
     },
     inputChange() {
-      this.passwordError = false;
-      this.oldpasswordError = false;
+      this.passwordError = false
+      this.oldpasswordError = false
     },
   },
   // 获取侧边栏菜单结构
   created() {
-      console.log(this.$route.meta)
-      // debugger
+    console.log(this.$route.meta)
+    // debugger
     // this.getUserName()
     // try {
     //   getMenuList()
@@ -1203,12 +1180,10 @@ export default {
     //   console.log(err)
     // }
   },
-};
+}
 </script>
 
 <style lang="less" scoped>
-
-
 .manage {
   height: 100%;
   .main-container {
@@ -1219,7 +1194,7 @@ export default {
   }
 }
 .el-dropdown-menu {
-    z-index: 30000 !important;
+  z-index: 30000 !important;
 }
 .el-header {
   line-height: 50px;
@@ -1230,15 +1205,15 @@ export default {
   z-index: 3;
 }
 .el-header .el-dropdown {
-    color: #fff;
+  color: #fff;
 }
 .el-header {
-    position: absolute;
-    left: 210px;
-    top: 0px;
-    width: calc(100% - 210px);
-    height: 105px !important;
-    line-height: 140px;
+  position: absolute;
+  left: 210px;
+  top: 0px;
+  width: calc(100% - 210px);
+  height: 105px !important;
+  line-height: 140px;
 }
 .el-header {
   color: #333;
@@ -1248,7 +1223,7 @@ export default {
     top: 0;
     line-height: 50px;
     right: 20px;
-    color:#000000;
+    color: #000000;
     li {
       margin-left: 20px;
       float: left;
@@ -1321,7 +1296,7 @@ export default {
   h1 {
     color: #fff;
     text-align: center;
-   background-color: rgb(0, 21, 41);
+    background-color: rgb(0, 21, 41);
     line-height: 60px;
     a {
       color: #fff;
@@ -1334,7 +1309,7 @@ export default {
     font-size: 14px;
   }
   .el-menu {
-     height: calc(100% - 60px);
+    height: calc(100% - 60px);
     border-right: none;
     width: 208px;
   }
@@ -1346,10 +1321,10 @@ export default {
   color: #000;
   padding: 0 !important;
   .el-breadcrumb {
-      margin: 0;
+    margin: 0;
   }
   .el-breadcrumb__item {
-          height: 40px;
+    height: 40px;
     line-height: 40px;
   }
   .title {
@@ -1389,21 +1364,21 @@ body > .el-container {
   color: #444444;
 }
 .el-menu {
-    padding: 0 0px 0 0px;
+  padding: 0 0px 0 0px;
 }
 /deep/ .el-menu--inline {
-    padding-left: 0px !important;
+  padding-left: 0px !important;
 }
 .el-menu-item {
-    padding-left: 42px !important;
-    min-width: inherit !important;
-    background-color:#001529 !important;
-    padding:0 !important;
-    height: 40px !important;
-    text-align: center !important;
-    line-height: 40px !important;
-    // border-radius: 8px;
-    color: #fff !important;
+  padding-left: 42px !important;
+  min-width: inherit !important;
+  background-color: #001529 !important;
+  padding: 0 !important;
+  height: 40px !important;
+  text-align: center !important;
+  line-height: 40px !important;
+  // border-radius: 8px;
+  color: #fff !important;
   min-width: inherit !important;
   background-color: #000d17 !important;
   // padding: 0 !important;
@@ -1418,13 +1393,13 @@ body > .el-container {
   background-color: #1890ff !important;
 }
 /deep/.el-submenu__title {
-    line-height: 40px;
-    height: 40px;
-    // border-radius: 8px;
-    padding: 0;
-    margin: 10px 0;
-    color: #fff !important;
-    padding-left: 10px !important;
+  line-height: 40px;
+  height: 40px;
+  // border-radius: 8px;
+  padding: 0;
+  margin: 10px 0;
+  color: #fff !important;
+  padding-left: 10px !important;
 }
 /deep/.el-submenu__title:hover {
   background-color: #1890ff !important;
@@ -1433,10 +1408,10 @@ body > .el-container {
   background-color: #fff !important;
 }
 .el-submenu:focus {
-  background-color: #1890FF !important;
+  background-color: #1890ff !important;
 }
 .el-menu-item.is-active {
-  background-color:#1890FF !important;
+  background-color: #1890ff !important;
 }
 /deep/ .el-submenu__icon-arrow {
   color: #fff;
@@ -1468,9 +1443,9 @@ body > .el-container {
 .logo {
   //   background: #0181d0 url('../assets/logo.png') no-repeat 50%;
   background-size: 128px auto;
-    line-height: 60px;
-    height: 60px;
-    background-color: #409eff;
+  line-height: 60px;
+  height: 60px;
+  background-color: #409eff;
 }
 /deep/.el-button--primary:hover {
   background-color: #3d85cc;
@@ -1494,7 +1469,3 @@ body .el-table colgroup.gutter {
   display: table-cell !important;
 }
 </style>
- 
-<!-- 解决表格错位问题  cak 
-<style  src="@/styles/fromAlignment.css"></style> 
--->

@@ -2,30 +2,30 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-// 法规总览
-import legalKnowledge from "@/router/legalKnowledge";
+// 法规知识
+import doc from "@/router/StateKnowledge";
 // 项目管理
-import projcetManage from "@/router/projcetManage";
-// 系统管理
-import systemManage from "@/router/systemManage";
-// 基础信息
-import baseInfo from "@/router/baseInfo";
-// 教学设备
-import teachingEquipment from "@/router/teachingEquipment.js";
-// 模拟器械
-import simulationEquipment from "@/router/simulationEquipment.js";
-// 保障设备
-import securityEquipment from "@/router/securityEquipment.js";
-// 信息资源
-import informationResources from "@/router/informationResources.js";
+import pm from "@/router/projcetManager";
+// 设备管理-教学设备
+import device from "@/router/deviceManage.js";
+// 训练模拟器材管理-模拟器械
+import trainingdevice from "@/router/equipmentManager.js";
+// 训练教学保障装备管理-保障装备
+import equipment from "@/router/supportEquipmentManager.js";
+// 训练信息资源管理-信息资源
+import information from "@/router/informationManager.js";
 // 教材管理
-import teachingMaterialManage from "@/router/teachingMaterialManage.js";
-// 地图管理 
-import mapManage from "@/router/mapManage.js";
-// 易耗品管理
-import consumablesManage from "@/router/consumablesManage"
-// 场地维护
-import fieldMaintain from "@/router/fieldMaintain"
+import material from "@/router/textbookManager.js";
+// 地图管理
+import maps from "@/router/mapManager.js";
+// 文具与低值易耗品管理-易耗品管理
+import stationery from "@/router/consumablesManager.js";
+// 训练场地管理-场地维护
+import site from "@/router/siteManagemer.js";
+// 基础信息-基础信息
+import company from "@/router/baseInfo.js";
+// 系统管理-系统管理
+import system from "@/router/systemManager.js";
 
 /* eslint-disable */
 export default new Router({
@@ -62,47 +62,18 @@ export default new Router({
     meta: [{name: '菜单页', parentName: '登录页', path: '/index'}],
 
     children: [
-      legalKnowledge,//法规总览
-      projcetManage,//项目管理
-      teachingEquipment,//设备管理
-      teachingMaterialManage,//教材管理
-      mapManage,//地图管理
-      consumablesManage,//易耗品维护
-      informationResources,//信息资源
-      simulationEquipment,//模拟器械
-      securityEquipment,//保障设备 
-      fieldMaintain,//场地维护
-      baseInfo,//基础信息
-      systemManage,//系统管理
-
-      {
-        path: '/demo',
-        name: 'demo',
-        meta: {
-          name: '子应用管理',
-          path: '/demo'
-        },
-        component: () => import('@/views/Demo.vue')
-      }, 
-
-      {
-        path: '/UsePlan',
-        name: 'UsePlan',
-        meta: {
-          name: '使用计划',
-          path: '/UsePlan'
-        },
-        component: () => import('@/views/TrainingFieldM/UsePlan.vue')
-      }, {
-        path: '/classifiedDisplay',
-        name: 'ClassifiedDisplay',
-        meta: {
-          name: '分类显示',
-          path: '/ClassifiedDisplay'
-        },
-        component: () => import('@/views/statuteKnow/classifiedDisplay.vue')
-      },
- 
+        doc,//法规总览
+        pm,//项目管理
+        device,//设备管理
+        trainingdevice,//训练模拟器材管理
+        equipment,//训练教学保障装备管理
+        information,//训练信息资源管理
+        material,//教材管理
+        maps,//地图管理
+        stationery,//文具与低值易耗品管理 
+        site,//训练场地管理
+        company,//基础信息
+        system,//系统管理
     ]
   },
   ]
