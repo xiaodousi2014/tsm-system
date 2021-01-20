@@ -22,19 +22,19 @@
         </el-row> -->
           <el-row :gutter="20">
             <el-col :span="8">
-              <div class="grid-content bg1 bg-purple" @click="onRouter('/doc')">
+              <div class="grid-content bg1 bg-purple" @click="onRouter('/doc/overview')">
                 法规知识
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="grid-content bg2 bg-purple" @click="onRouter('/pm')">
+              <div class="grid-content bg2 bg-purple" @click="onRouter('/pm/declare-in-stock')">
                 项目管理
               </div>
             </el-col>
             <el-col :span="4">
               <div
                 class="grid-content bg3 bg-purple"
-                @click="onRouter('/device')"
+                @click="onRouter('/device/plan-declare')"
               >
                 教学设备
               </div>
@@ -42,7 +42,7 @@
             <el-col :span="4">
               <div
                 class="grid-content bg4 bg-purple"
-                @click="onRouter('/trainingdevice')"
+                @click="onRouter('/trainingdevice/plan-declare')"
               >
                 模拟器械
               </div>
@@ -52,7 +52,7 @@
             <el-col :span="8">
               <div
                 class="grid-content bg5 bg-purple"
-                @click="onRouter('/material')"
+                @click="onRouter('/material/plan-declare')"
               >
                 教材管理
               </div>
@@ -60,7 +60,7 @@
             <el-col :span="8">
               <div
                 class="grid-content bg6 bg-purple"
-                @click="onRouter('/maps')"
+                @click="onRouter('/maps/plan-declare')"
               >
                 地图管理
               </div>
@@ -68,7 +68,7 @@
             <el-col :span="4">
               <div
                 class="grid-content bg7 bg-purple"
-                @click="onRouter('/stationery')"
+                @click="onRouter('/stationery/plan-declare')"
               >
                 易耗品管理
               </div>
@@ -76,7 +76,7 @@
             <el-col :span="4">
               <div
                 class="grid-content bg8 bg-purple"
-                @click="onRouter('/equipment')"
+                @click="onRouter('/equipment/plan-declare')"
               >
                 保障设备
               </div>
@@ -86,7 +86,7 @@
             <el-col :span="4">
               <div
                 class="grid-content bg9 bg-purple"
-                @click="onRouter('/site')"
+                @click="onRouter('/site/field')"
               >
                 训练场地
               </div>
@@ -94,7 +94,7 @@
             <el-col :span="4">
               <div
                 class="grid-content bg10 bg-purple"
-                @click="onRouter('/system')"
+                @click="onRouter('/system/role-manage')"
               >
                 系统管理
               </div>
@@ -102,7 +102,7 @@
             <el-col :span="8">
               <div
                 class="grid-content bg11 bg-purple"
-                @click="onRouter('/company')"
+                @click="onRouter('/company/student-manage')"
               >
                 基础信息
               </div>
@@ -110,7 +110,7 @@
             <el-col :span="8">
               <div
                 class="grid-content bg12 bg-purple"
-                @click="onRouter('/information')"
+                @click="onRouter('/information/plan-declare')"
               >
                 信息资源
               </div>

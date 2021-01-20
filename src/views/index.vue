@@ -209,7 +209,7 @@ export default {
       menuList: [
         {
           id: 8,
-          menuId: '41',
+          menuId: '81',
           name: '设备管理',
           url: 'device/',
           parentId: '',
@@ -734,7 +734,7 @@ export default {
         },
         {
           id: 6,
-          menuId: '41',
+          menuId: '61',
           name: '地图管理',
           url: 'maps/',
           parentId: '',
@@ -855,7 +855,7 @@ export default {
         },
         {
           id: 7,
-          menuId: '41',
+          menuId: '71',
           name: '易耗品管理',
           url: 'stationery/',
           parentId: '',
