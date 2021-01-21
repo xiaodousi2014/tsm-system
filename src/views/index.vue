@@ -38,7 +38,6 @@
       <el-aside width="208px">
         <el-menu
           unique-opened
-          router
           :default-active="$route.path.split('/')[2]"
           class="el-menu-vertical-demo"
           background-color="#001529"
@@ -986,7 +985,7 @@ export default {
               id: 18,
               menuId: '300023',
               name: '使用计划',
-              url: 'UsePlan',
+              url: 'use-plan',
               parentId: '300022',
               children: [],
             },
@@ -1036,7 +1035,7 @@ export default {
   created() {
     // 注,这只是一个临时路由，之后会用接口代替
     // 这个参数是router文件夹里面存储的参数
-    this.menuList = router.options.routes[3].children
+    // this.menuList = router.options.routes[3].children
 
     // 获取开始时传递的数据
     this.openRouter = [this.$route.matched[1].path]
@@ -1044,8 +1043,11 @@ export default {
 
   methods: {
     getRouter(parent, child) {
+      debugger
       console.log(parent)
       console.log(child)
+
+      this.$router.push('/' + parent.url + child.url)
     },
     handleLogout() {
       this.logoutDialog = true
