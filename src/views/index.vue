@@ -30,6 +30,11 @@
           </div>
         </el-header> -->
     <el-container class="main-container">
+      <div
+        style="line-height: 68px;    text-align: center;color: #fff;font-size:20px;width: 208px;background: #000;"
+      >
+        教学保障管理系统
+      </div>
       <el-aside width="208px">
         <el-menu
           unique-opened
@@ -40,11 +45,6 @@
           text-color="#000"
           active-text-color="#fff"
         >
-          <div
-            style="line-height: 68px;    text-align: center;color: #fff;font-size:20px"
-          >
-            教学保障管理系统
-          </div>
           <template v-for="parent in menuList">
             <el-menu-item
               class="is-active"
