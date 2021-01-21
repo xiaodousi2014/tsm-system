@@ -1370,12 +1370,11 @@ body > .el-container {
   padding-left: 0px !important;
 }
 .el-menu-item {
-  padding-left: 42px !important;
+  padding-left: 38px !important;
   min-width: inherit !important;
   background-color: #001529 !important;
-  padding: 0 !important;
   height: 40px !important;
-  text-align: center !important;
+  //   text-align: center !important;
   line-height: 40px !important;
   // border-radius: 8px;
   color: #fff !important;
