@@ -978,7 +978,7 @@ export default {
           id: 17,
           menuId: '300022',
           name: '训练场地管理',
-          url: 'site/',
+          url: '/site/',
           parentId: '',
           children: [
             {
