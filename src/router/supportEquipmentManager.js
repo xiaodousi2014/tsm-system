@@ -14,7 +14,7 @@ export default {
         component: () => import('@/views/supportEquipmentManager/planDeclare/index.vue')
        },
        {
-        path: '/plan-examine',
+        path: 'plan-examine',
         name: 'security-equipment-plan-examine',
        
         meta: [{name: '计划审核', parentName: '保障装备'}],
@@ -22,7 +22,7 @@ export default {
        },
      
        {
-        path: '/in-stock-register',
+        path: 'in-stock-register',
         name: 'security-equipment-in-stock-register',
        
         meta: [{name: '入库登记', parentName: '保障装备'}],
@@ -30,33 +30,33 @@ export default {
        },
      
        {
-        path: '/storage-equipment',
+        path: 'storage-equipment',
         name: 'security-equipment-storage-equipment',
         
         meta: [{name: '在库设备', parentName: '保障装备'}],
         component: () => import('@/views/supportEquipmentManager/storageEquipment/index.vue')
        },
        {
-         path: '/receive-record',
+         path: 'receive-record',
          name: 'security-equipment-receive-record',
          meta: [{name: '请领记录', parentName: '保障装备'}],
          component: () => import('@/views/supportEquipmentManager/receiveRecord/index.vue')
         },
         {
-         path: '/receive-examine',
+         path: 'receive-examine',
          name: 'security-equipment-receive-examine',
          meta: [{name: '请领审核', parentName: '保障装备'}],
          component: () => import('@/views/supportEquipmentManager/receiveExamine/index.vue')
         },
        {
-        path: '/borrow-record',
+        path: 'borrow-record',
         name: 'security-equipment-borrow-record',
        
         meta: [{name: '借用记录', parentName: '保障装备'}],
         component: () => import('@/views/supportEquipmentManager/borrowRecord/index.vue')
        },
        {
-        path: '/borrow-examine',
+        path: 'borrow-examine',
         name: 'security-equipment-borrow-examine',
         
         meta: [{name: '借用审核', parentName: '保障装备'}],
@@ -64,7 +64,7 @@ export default {
        },
      
        {
-        path: '/repair-record',
+        path: 'repair-record',
         name: 'security-equipment-repair-record',
        
         meta: [{name: '维修记录', parentName: '保障装备'}],
@@ -72,7 +72,7 @@ export default {
        },
      
        {
-        path: '/repair-examine',
+        path: 'repair-examine',
         name: 'security-equipment-repair-examine',
        
         meta: [{name: '维修审核', parentName: '保障装备'}],
@@ -80,14 +80,14 @@ export default {
        },
      
        {
-        path: '/scrap-record',
+        path: 'scrap-record',
         name: 'security-equipment-scrap-record',
         
         meta: [{name: '报废记录', parentName: '保障装备'}],
         component: () => import('@/views/supportEquipmentManager/scrapRecord/index.vue')
        },
        {
-        path: '/scrap-examine',
+        path: 'scrap-examine',
         name: 'security-equipment-scrap-examine',
        
         meta: [{name: '报废审核', parentName: '保障装备'}],
@@ -95,14 +95,14 @@ export default {
        },
      
        {
-        path: '/inventory-journal',
+        path: 'inventory-journal',
         name: 'security-equipment-inventory-journal',
        
         meta: [{name: '盘点日志', parentName: '保障装备'}],
         component: () => import('@/views/supportEquipmentManager/inventoryJournal/index.vue')
        },
        {
-        path: '/maintain-manage',
+        path: 'maintain-manage',
         name: 'security-equipment-maintain-manage',
        
         meta: [{name: '维护管理', parentName: '保障装备'}],

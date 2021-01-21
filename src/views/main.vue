@@ -86,7 +86,7 @@
             <el-col :span="4">
               <div
                 class="grid-content bg9 bg-purple"
-                @click="onRouter('/site/field')"
+                @click="onRouter('/site/plan-declare')"
               >
                 训练场地
               </div>

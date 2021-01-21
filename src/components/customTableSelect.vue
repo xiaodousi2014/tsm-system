@@ -63,7 +63,7 @@
 <style lang="less" scoped>
   .showIcon {
   text-align: right;
-  padding-right: 20px;
+  
   font-size:25px;
   position: relative;
   .selectList {

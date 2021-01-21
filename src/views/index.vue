@@ -38,7 +38,7 @@
       <el-aside width="208px">
         <el-menu
           unique-opened
-          :default-active="$route.path.split('/')[2]"
+          :default-active="$route.path"
           class="el-menu-vertical-demo"
           background-color="#001529"
           text-color="#000"
@@ -64,7 +64,7 @@
               </template>
               <el-menu-item
                 v-for="child in parent.children"
-                :index="child.url"
+                :index='setIndex(parent, child)'
                 :key="child.menuId"
                 @click="getRouter(parent, child)"
               >
@@ -210,7 +210,7 @@ export default {
           id: 8,
           menuId: '81',
           name: '设备管理',
-          url: 'device/',
+          url: '/device/',
           parentId: '',
           children: [
             {
@@ -331,7 +331,7 @@ export default {
           id: 2,
           menuId: '21',
           name: '训练模拟器材管理',
-          url: 'trainingdevice/',
+          url: '/trainingdevice/',
           parentId: '',
           children: [
             {
@@ -370,7 +370,7 @@ export default {
               id: 6,
               menuId: '26',
               name: '请领记录',
-              url: 'plaese-record',
+              url: 'receive-record',
               parentId: 2,
               children: [],
             },
@@ -378,7 +378,7 @@ export default {
               id: 7,
               menuId: '27',
               name: '请领审核',
-              url: 'plaese-examine',
+              url: 'receive-examine',
               parentId: 2,
               children: [],
             },
@@ -452,7 +452,7 @@ export default {
           id: 3,
           menuId: '31',
           name: '训练教学保障装备管理',
-          url: 'equipment/',
+          url: '/equipment/',
           parentId: '',
           children: [
             {
@@ -491,7 +491,7 @@ export default {
               id: 6,
               menuId: '36',
               name: '请领记录',
-              url: 'plaese-record',
+              url: 'receive-record',
               parentId: 3,
               children: [],
             },
@@ -499,7 +499,7 @@ export default {
               id: 7,
               menuId: '37',
               name: '请领审核',
-              url: 'plaese-examine',
+              url: 'receive-examine',
               parentId: 3,
               children: [],
             },
@@ -573,7 +573,7 @@ export default {
           id: 5,
           menuId: '51',
           name: '信息管理',
-          url: 'information/',
+          url: '/information/',
           parentId: '',
           children: [
             {
@@ -614,7 +614,7 @@ export default {
           id: 4,
           menuId: '41',
           name: '教材管理',
-          url: 'material/',
+          url: '/material/',
           parentId: '',
           children: [
             {
@@ -735,7 +735,7 @@ export default {
           id: 6,
           menuId: '61',
           name: '地图管理',
-          url: 'maps/',
+          url: '/maps/',
           parentId: '',
           children: [
             {
@@ -856,7 +856,7 @@ export default {
           id: 7,
           menuId: '71',
           name: '易耗品管理',
-          url: 'stationery/',
+          url: '/stationery/',
           parentId: '',
           children: [
             {
@@ -1042,12 +1042,15 @@ export default {
   },
 
   methods: {
+    setIndex(parent, child) {
+      return parent.url + child.url;
+    },
     getRouter(parent, child) {
-      debugger
+      // debugger
       console.log(parent)
       console.log(child)
 
-      this.$router.push('/' + parent.url + child.url)
+      this.$router.push(parent.url + child.url)
     },
     handleLogout() {
       this.logoutDialog = true

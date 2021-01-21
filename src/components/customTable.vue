@@ -1,5 +1,5 @@
 <template>
-  <div class="ClassifiedDisplay padding20">
+  <div class="ClassifiedDisplay">
     <el-table  border id="el-table" style="width: 100%"  :data="tableData"  @selection-change="handleSelectionChange">
       <!-- 动态循环的列表 -->
         <el-table-column
