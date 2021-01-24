@@ -9,6 +9,7 @@
       >
         <el-col :md="4" :sm="6" :xs="12">
           <el-select
+            size="small"
             v-model="it.code"
             placeholder="请选择"
             style="display: block; width: 100%"
@@ -24,7 +25,7 @@
           </el-select>
         </el-col>
         <el-col :md="2" :sm="3" :xs="6" v-if="it.code">
-          <el-select placeholder="请选择" v-model="it.oneSelect">
+          <el-select placeholder="请选择" v-model="it.oneSelect"   size="small">
             <el-option
               v-for="(item, index) in oneSelect"
               :key="index"
@@ -58,7 +59,7 @@
           ></el-input>
         </el-col>
         <el-col :md="2" :sm="3" :xs="6" v-if="it.code">
-          <el-select placeholder="请选择" v-model="it.twoSelect">
+          <el-select placeholder="请选择" v-model="it.twoSelect"   size="small">
             <el-option
               v-for="(item, index) in twoSelect"
               :key="index"

@@ -31,7 +31,7 @@
         </el-header> -->
     <el-container class="main-container">
       <div
-        style="line-height: 68px;    text-align: center;color: #fff;font-size:20px;width: 208px;background: #000;"
+        style="line-height: 68px;    text-align: center;color: #fff;font-size:20px;width: 208px;background: #001529;"
       >
         教学保障管理系统
       </div>
@@ -78,9 +78,9 @@
       </el-aside>
 
       <el-header>
-        <div class="user-box">
+        <div class="user-box" style="color:#666">
           <!-- <span style="color: #fff;"></span> -->
-          <i class="el-icon-caret-bottom"></i>
+          <i class="el-icon-bell iconfont"></i>
           <!-- <div class="users">
             <div class="userDiv one" @click="showModificationDialog">
                 <i class="icon-icon_mima iconfont"></i>
@@ -91,16 +91,16 @@
                 <p>注销</p>
             </div>
             </div> -->
-          <span>测试账号</span>
-          <span style="padding-right: 10px">2020.11.11 15:20 登录</span>
+          <span style="font-size:14px;color:#000;margin-left:20px">测试账号</span>
+          <span style="padding:0 10px;font-size:14px">2020.11.11 15:20 登录</span>
           <el-button size="mini">退出</el-button>
         </div>
 
         <div
           style="text-align: left;line-height: 20px;position: relative;margin-top: 40px;"
         >
-          <span>{{ $route.meta[0].parentName }}</span
-          >/<span>{{ $route.meta[0].name }}</span>
+          <span style="color:#666">{{ $route.meta[0].parentName }}</span
+          >/<span style="color:#666">{{ $route.meta[0].name }}</span>
           <div style="font-size:20px;font-weight:bold; margin-top: 15px;">
             {{ $route.meta[0].name }}
           </div>
@@ -1452,7 +1452,7 @@ body > .el-container {
   background-color: #409eff;
 }
 /deep/.el-button--primary:hover {
-  background-color: #3d85cc;
+  // background-color: #3d85cc;
 }
 .passwordError {
   color: #f56c6c;

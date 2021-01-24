@@ -19,7 +19,7 @@
                                 <el-select v-if="item.type==2" v-model="item.value"
                                            :placeholder="item.placeholder || '请选择'">
                                     <el-option v-for="(data,idx) in item.optionList" :label="data.label"
-                                               :value="data.value"></el-option>
+                                               :value="data.value" :key="idx"></el-option>
                                 </el-select>
                                 <el-date-picker
                                     v-if="item.type==3"
