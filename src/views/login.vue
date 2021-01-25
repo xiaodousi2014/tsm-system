@@ -7,7 +7,8 @@
         font-size: 33px;
         padding: 120px 0;
       "
-      >教学保障管理系统</el-header>
+      >教学保障管理系统</el-header
+    >
     <div class="login-content">
       <el-form :model="loginForm" :rules="loginFormFieldRules" ref="loginForm">
         <el-form-item>
@@ -33,44 +34,45 @@
     <div class="login-list">
       <el-row :gutter="20">
         <el-col v-for="item in mainFunctionButtonList" :key="item.id" :span="6"
-          ><div>{{ item.name }}</div></el-col>
+          ><div>{{ item.name }}</div></el-col
+        >
       </el-row>
     </div>
   </div>
 </template>
 <script>
-import Http from "../api/api";
-// import tableCustom from '../components/tableCustom'
+import Http from '../api/api'
 
 export default {
-  name: "login",
+  name: 'login',
   components: {},
   data() {
     return {
       form: {
-        name: "",
-        password: "",
+        name: '',
+        password: '',
       },
       mainList: [],
       flag: false,
       loginForm: {
-        u_name: "",
-        u_passwd: "",
+        u_name: '',
+        u_passwd: '',
       },
       mainFunctionButtonList: [],
       loginFormFieldRules: {
-        u_name: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        u_passwd: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        u_name: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+        u_passwd: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       },
-    };
+    }
   },
   methods: {
     submitForm() {
-      this.$router.replace("./main");
+      this.$router.replace('./main')
       this.loading = true
       let params = this.loginForm
       let url = '/trmslogin'
-      Http.login(params).then(res => {
+      Http.login(params)
+        .then((res) => {
           this.logoutDialog = false
           // removeStorage('ifLogin')
           // removeStorage('token')
@@ -86,59 +88,59 @@ export default {
       this.mainFunctionButtonList = [
         {
           id: 1,
-          name: "法规知识",
+          name: '法规知识',
         },
         {
           id: 2,
-          name: "项目管理",
+          name: '项目管理',
         },
         {
           id: 3,
-          name: "教学设备",
+          name: '教学设备',
         },
         {
           id: 4,
-          name: "模拟器械",
+          name: '模拟器械',
         },
         {
           id: 5,
-          name: "教材管理",
+          name: '教材管理',
         },
         {
           id: 6,
-          name: "地图管理",
+          name: '地图管理',
         },
         {
           id: 7,
-          name: "易耗品管理",
+          name: '易耗品管理',
         },
         {
           id: 8,
-          name: "教学装备",
+          name: '教学装备',
         },
         {
           id: 9,
-          name: "训练场地",
+          name: '训练场地',
         },
         {
           id: 10,
-          name: "系统管理",
+          name: '系统管理',
         },
         {
           id: 11,
-          name: "基础信息",
+          name: '基础信息',
         },
         {
           id: 12,
-          name: "信息资源",
+          name: '信息资源',
         },
-      ];
+      ]
     },
   },
   created() {
-    this.getMainFunctionButtonList();
+    this.getMainFunctionButtonList()
   },
-};
+}
 </script>
 <style scoped>
 .login-content {
@@ -146,7 +148,7 @@ export default {
   margin: 50px auto;
 }
 .login-list {
- width:650px;
+  width: 650px;
   line-height: 22px;
   /* padding: 200px 600px; */
   line-height: 40px;

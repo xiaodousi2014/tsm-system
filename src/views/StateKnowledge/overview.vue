@@ -1,31 +1,25 @@
 <template>
   <div >
-    <div class="top-menu">
-      <span style="font-size: 20px;font-weight:900;">法规总览</span>
 
-      <div class="top-menu-but">
-        <el-button type="primary" class="btnWidth"
-                  @click="dialogVisible = true">检索</el-button>
-        <el-button class="btnSty" @click="addForm">新增</el-button>
-        <el-button class="btnSty" @click="addForm">编辑</el-button>
-        <el-button class="btnSty" @click="addForm">删除</el-button>
-        <el-button class="btnSty">导入</el-button>
-        <el-button type="primary" class="btnWidth" style="padding:12px 0;">上传附件</el-button>
-        <el-button type="primary" class="btnWidth" style="padding:12px 0;" @click="goDelectPage">删除记录</el-button>
-      </div>
-    </div>
-    
-    <div class="marginTo14 marginLeftAndRight paddingBtm20 my-el-table">
+    <div class="my-el-table content_box">
       <div class="menu-type">
-        法规分类：&nbsp;&nbsp;
-        <!-- <el-cascader
-          v-model="value"
-          :options="options"
-          @change="clickType"></el-cascader> -->
-        <div :class="['type-btn', value==item.value && 'type-btn-checked']" 
-              v-for="item in options" 
-              :key="item.value"
-              @click="clickType(item.value)">{{item.label}}</div>
+        <div>
+          <span>法规分类：&nbsp;&nbsp;</span>
+          <div :class="['type-btn', value==item.value && 'type-btn-checked']"
+               v-for="item in options"
+               :key="item.value"
+               @click="clickType(item.value)">{{item.label}}</div>
+        </div>
+        <div class="top-menu-but">
+          <el-button type="primary" class="btnWidth"
+                     @click="dialogVisible = true">检索</el-button>
+          <el-button class="btnSty" @click="addForm">新增</el-button>
+          <el-button class="btnSty" @click="addForm">编辑</el-button>
+          <el-button class="btnSty" @click="addForm">删除</el-button>
+          <el-button class="btnSty" @click="goPage(1)">导入</el-button>
+          <el-button type="primary" class="btnWidth" style="padding:12px 0;">上传附件</el-button>
+          <el-button type="primary" class="btnWidth" style="padding:12px 0;" @click="goDelectPage">删除记录</el-button>
+        </div>
       </div>
       <el-table :data="tableData3"
                 id="el-table"
@@ -62,7 +56,7 @@
       <TreeComp />
     </div> -->
 
-    <el-dialog title="提示"
+    <el-dialog v-if="dialogVisible" title="提示"
                :visible.sync="dialogVisible"
                center
                width="1184px">
@@ -181,7 +175,12 @@ export default {
       .catch(function () {})
     },
     goDelectPage() {
-      this.$router.push('/knowledge-delRecord')
+      this.$router.push('/doc/in-stock-record-del')
+    },
+    goPage(flag) {
+      if (flag === 1) {
+        this.$router.push('/doc/in-stock-record')
+      }
     }
   },
 }
@@ -211,8 +210,6 @@ export default {
 .el-mini-btn {
   padding: 5px 12px;
 }
-.menu-type{
-  padding: 24px;
   .type-btn{
     height: 22px;
     width: 59px;
@@ -227,5 +224,5 @@ export default {
     color: #ffffff;
     border-radius: 2px;
   }
-}
+
 </style>

@@ -163,9 +163,9 @@ export default {
     },
     goPage(flag) {
       if(flag==1){
-        this.$router.push('/object-rkRecord')
+        this.$router.push('/pm/declare-in-stock-import')
       }else if(flag==2){
-        this.$router.push('/object-delRecord')
+        this.$router.push('/pm/declare-in-stock-delete')
       }
     }
   },

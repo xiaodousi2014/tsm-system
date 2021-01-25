@@ -559,15 +559,15 @@ export default {
 
       // 表格列名
       tableLabel: [
-        { label: "名称", prop: "a", width: "" },
+        { label: "名称", prop: "name", width: "" },
         { label: "组织机构", prop: "b", width: "" },
-        { label: "学号", prop: "c", width: "" },
+        { label: "学号", prop: "student_no", width: "" },
         { label: "班级", prop: "d", width: "" },
-        { label: "学院代码", prop: "e", width: "" },
-        { label: "专业代码", prop: "f", width: "" },
-        { label: "学籍状态", prop: "g", width: "" },
-        { label: "出生年月", prop: "year", width: "98px" },
-        { label: "修改日期", prop: "date", width: "98px" },
+        { label: "学院代码", prop: "school_code", width: "" },
+        { label: "专业代码", prop: "profession_code", width: "" },
+        { label: "学籍状态", prop: "enrollment_status", width: "" },
+        { label: "出生年月", prop: "birthday", width: "98px" },
+        { label: "修改日期", prop: "modified_time", width: "98px" },
       ],
       // 分页
       pagination: {
@@ -651,8 +651,7 @@ export default {
         ) {
           this.tableDataPage.push(val);
         }
-      });
-      console.log("读取处理完毕的数据");
+      }); 
     },
 
     // 分页功能

@@ -1,7 +1,7 @@
 <template>
   <div >
     <div class="top-menu">
-      <span style="font-size: 20px;font-weight:900;">已结项目</span>
+      <span style="font-size: 20px;font-weight:900;">经费报销登记</span>
     </div>
     
     <div class="marginTo14 marginLeftAndRight paddingBtm20 my-el-table">

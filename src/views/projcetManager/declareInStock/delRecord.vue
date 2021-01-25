@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-import Pagination from '../../components/pagination'
+import Pagination from '@/components/pagination'
 
 let id = 1000
 

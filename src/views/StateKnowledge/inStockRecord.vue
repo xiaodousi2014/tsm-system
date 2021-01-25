@@ -1,158 +1,148 @@
 <template>
-  <div class=''>
+  <div >
     <div class="top-menu">
-      <span style="font-size: 20px;font-weight:900;">知识检索</span>
+      <span style="font-size: 20px;font-weight:900;">入库记录</span>
 
       <div class="top-menu-but">
-        <el-button type="primary"
-                   class="btnWidth"
-                   style="padding:12px 0;" @click="submit">主要按钮</el-button>
+        <el-button type="primary" class="btnWidth"
+                  @click="dialogVisible = true">检索</el-button>
+        <el-button type="primary" class="btnWidth" style="padding:12px 0;">上传附件</el-button>
+        <el-button class="btnSty">撤销操作</el-button>
       </div>
     </div>
 
-    <div class="marginTo14 marginLeftAndRight paddingBtm20">
-      <div v-for="(item,index) in valList" :key="item.key">
-        {{item.key}}
-        <el-select v-model="item.val1"
-          class="select-sty"
-                    placeholder="请选择">
-            <el-option v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-            </el-option>
-          </el-select>
-          <el-select v-model="item.val2"
-          class="select-sty"
-                    placeholder="请选择">
-            <el-option v-for="item in options2"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-            </el-option>
-          </el-select>
-          <el-input v-model="item.valinp" class="select-sty"/>
-          <el-select v-model="item.val3"
-          class="select-sty"
-                    placeholder="请选择">
-            <el-option v-for="item in options3"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-            </el-option>
-          </el-select>
-          <el-button @click="deleteItem(item.key)" size="mini">删除</el-button>
-          <br/>
-          <el-button @click="add" v-if="index === valList.length-1" size="mini">添加</el-button>
-      </div>
-      
+    <div class="marginTo14 marginLeftAndRight paddingBtm20 my-el-table">
+      <el-table :data="tableData3"
+                id="el-table"
+                style="width: 100%">
+        <!-- 动态循环的列表 -->
+        <template v-for="(item, index) in tableLabel">
+          <el-table-column :key="index"
+                           :prop="item.prop"
+                           :label="item.label">
+          </el-table-column>
+        </template>
+        <!-- 固定的列：从业人员 -->
+        <el-table-column label="操作"
+                         width="200px">
+          <template slot-scope="scope">
+            <el-button type="text"
+                       size="small">编辑</el-button>
+            <el-button type="text"
+                       size="small">删除</el-button>
+            <el-button type="text"
+                       size="small">上传附件</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <Pagination :pagination="pagination" />
     </div>
 
+    <div>
+      <el-upload class="upload-demo"
+                 action="https://jsonplaceholder.typicode.com/posts/"
+                 :on-preview="handlePreview"
+                 :on-remove="handleRemove"
+                 :before-remove="beforeRemove"
+                 multiple
+                 :limit="1"
+                 :on-exceed="handleExceed"
+                 :file-list="fileList">
+        <el-button size="small"
+                   type="primary">点击上传</el-button>
+        <div slot="tip"
+             class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>
+    </div>
   </div>
 </template>
-
 <script>
-let valInfo = {
-  val1:'1',
-  val2:'1',
-  valinp: '',
-  val3:'1',
-  key: 1
-}
+import Pagination from '../../components/pagination'
+
+let id = 1000
+
 export default {
-  components: {},
+  name: 'rkRecord',
+  components: { Pagination },
   data() {
     return {
-      valList: [],
-      value: '',
-      value1: '1',
-      value2: '',
-      value3: '',
-      key: 1,
-      options: [
+      tableData3: [
         {
-          value: '1',
-          label: '文件名'
+          id: '1',
+          number: '112',
+          a: '这是个数据',
+          b: '这是个数据',
         },
         {
-          value: '2',
-          label: '文件类型'
+          id: '2',
+          number: '113',
+          a: '这是个数据',
+          b: '这是个数据',
         },
-        {
-          value: '3',
-          label: '承接人'
-        }
       ],
-      options2: [
-        {
-          value: '1',
-          label: '等于'
-        },
-        {
-          value: '2',
-          label: '不等于'
-        },
-        {
-          value: '3',
-          label: '小于'
-        },
-        {
-          value: '4',
-          label: '大于'
-        },
-        {
-          value: '5',
-          label: '包含'
-        },
-        {
-          value: '6',
-          label: '不包含'
-        }
+      tableLabel: [
+        { label: '登记时间', prop: 'id' },
+        { label: '文件名称', prop: 'number' },
+        { label: '操作人员', prop: 'a' },
+        { label: '操作事件', prop: 'b' },
+        { label: '附件', prop: 'b' },
+        { label: '备注', prop: 'b' }
       ],
-      options3: [
-        {
-          value: '1',
-          label: '并且'
-        },
-        {
-          value: '2',
-          label: '或'
-        },
-        {
-          value: '3',
-          label: '非'
-        }
-      ]
+      pagination: {
+        pageNum: 1,
+        pageSize: 10,
+        total: 200,
+      },
+      fileList: [],
     }
   },
-  computed: {},
-  watch: {},
   created() {},
   mounted() {
-    this.valList.push(valInfo)
+    console.log('----')
   },
   methods: {
-    add() {
-      console.log('111')
-      this.key++
-      let item = Object.assign({},valInfo)
-      item.key = this.key
-      this.valList.push(item)
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
     },
-    deleteItem(key){
-      let index = this.valList.findIndex(v=>v.key==key)
-      this.valList.splice(index,1)
-      console.log(index)
+    handlePreview(file) {
+      console.log(file)
     },
-    submit() {
-      console.log(this.valList)
-    }
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
+          files.length + fileList.length
+        } 个文件`
+      )
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
   },
 }
 </script>
-
-<style lang='less' scoped>
-.select-sty{
+<style lang="less" scoped>
+.type-sele {
   width: 120px;
+}
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+.el-mini-input {
+  height: 25px;
+  line-height: 25px;
+  width: 120px;
+  /deep/ .el-input__inner {
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+  }
+}
+.el-mini-btn {
+  padding: 5px 12px;
 }
 </style>
