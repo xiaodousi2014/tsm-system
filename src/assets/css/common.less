@@ -1,5 +1,6 @@
 html {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -14,31 +15,42 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+    Microsoft YaHei, SimSun, sans-serif;
   font-size: 14px;
   overflow: hidden;
 }
 
-div, p, h1, h2, h3, h4, h5, h6, li, ul, ol {
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+ul,
+ol {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
 }
 
-a{
+a {
   color: #333;
   text-decoration: none;
 }
 
-i{
-  font-style: normal
+i {
+  font-style: normal;
 }
-table{
+table {
   border-collapse: collapse;
   border-spacing: 0;
 }
@@ -46,48 +58,52 @@ table{
 .padding20 {
   padding: 10px 20px;
   background: white;
-  margin-top: 12px;
-  margin-left: 10px;
-  margin-right: 64px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 /** 滚动条 **/
-::-webkit-scrollbar { /*滚动条整体样式*/
+::-webkit-scrollbar {
+  /*滚动条整体样式*/
   width: 0px; /*高宽分别对应横竖滚动条的尺寸*/
   height: 0px;
 }
 
-::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
-  background: rgba(0, 0, 0, 0.10);
+::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-track { /*滚动条里面轨道*/
+::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
   background: transparent;
 }
 
-.warning-color{
-  color:@warning-color;
+.warning-color {
+  color: @warning-color;
 }
-.el-step__line{
+.el-step__line {
   background-color: @grey-border!important;
 }
-.el-button--primary{
-   background-color:#0091FF!important;
+.el-button--primary {
+  background-color: #0091ff !important;
   //  border:0!important;
-   background: #fff!important;
-   color: #0091FF!important;
+  background: #fff !important;
+  color: #0091ff !important;
 }
-.el-button--primary:hover,.el-button--primary:focus{
-   background-color:#0091FF!important;
-   background-color:#0091FF!important;
-   background: #0091FF!important;
-   color:#fff!important;
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: #0091ff !important;
+  background-color: #0091ff !important;
+  background: #0091ff !important;
+  color: #fff !important;
 }
-.el-button--primary:active{
-   background-color:#0091FF!important;
-   background-color:#0091FF!important;
-   background: #0091FF!important;
-   color:#fff!important;
+.el-button--primary:active {
+  background-color: #0091ff !important;
+  background-color: #0091ff !important;
+  background: #0091ff !important;
+  color: #fff !important;
 }
 // .el-button--primary.is-disabled{
 //    background-color:transparent!important;
@@ -96,47 +112,48 @@ table{
 //    color: rgba(255,255,255,0.5)!important;
 // }
 
-.el-button.main_button{
-  border-color:@theme-color;
-  color:@theme-color;
+.el-button.main_button {
+  border-color: @theme-color;
+  color: @theme-color;
 }
 
-.main_font,.el-button--text{
-  color:@aux-color!important;
+.main_font,
+.el-button--text {
+  color: @aux-color!important;
 }
 
 /* 卡片阴影显示处理 */
-.el-card{
-  margin: 0 20px 20px!important;
+.el-card {
+  margin: 0 20px 20px !important;
 }
-.el-card__body{
-  padding:30px!important;
+.el-card__body {
+  padding: 30px !important;
 }
 
 /**----按钮样式----**/
-.el-button--text + .el-button--text{
-  margin-left: 15px!important;
+.el-button--text + .el-button--text {
+  margin-left: 15px !important;
 }
-
 
 /**----dialog样式修改-----**/
-.el-dialog__header{
-  padding:30px 30px 10px 30px!important;
+.el-dialog__header {
+  padding: 30px 30px 10px 30px !important;
 }
-.el-dialog__body{
-  padding:30px!important;
+.el-dialog__body {
+  padding: 30px !important;
 }
-.el-dialog__headerbtn{
-  top:30px!important;
-  right:30px!important;
+.el-dialog__headerbtn {
+  top: 30px !important;
+  right: 30px !important;
 }
-.el-dialog__footer{
-  padding:10px 30px 30px 30px!important;
+.el-dialog__footer {
+  padding: 10px 30px 30px 30px !important;
 }
 
-.el-select{
-  width:100%;
+.el-select {
+  width: 100%;
 }
-.el-message,.el-message--error{
-  top: 20px!important;
+.el-message,
+.el-message--error {
+  top: 20px !important;
 }
