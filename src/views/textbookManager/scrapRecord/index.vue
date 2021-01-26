@@ -3,128 +3,95 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button type="primary" icon="el-icon-edit" size="small">检索</el-button>
-<el-button type="primary" icon="el-icon-search" size="small" @click="onReturn()">归还</el-button>
-<el-button type="primary" icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
+      <el-button  icon="el-icon-edit" size="small">检索</el-button>
+<el-button  icon="el-icon-search" size="small" @click="onReturn()">归还</el-button>
+<el-button  icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
 
     </div>
     <custom-search :searchList = searchList></custom-search>
     <custom-table-select
       :list="tableAllIist"
     ></custom-table-select>
-    <custom-table :tableAllIist = tableAllIist :tableData = tableData3 @selectTableList= selectTableList></custom-table>
+    <custom-table :tableAllIist = tableAllIist :tableData = tableData @selectTableList= selectTableList></custom-table>
     <!-- 分页 -->
     <div class="pagination" >
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page.sync="query.pageNo"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="query.limit"
-        layout="total,prev, pager, next,sizes"
-        :total="total"
-        border
-      ></el-pagination>
+       <Pagination
+        ref="Pagination"
+        @getSizeChange="getSizeChange"
+        @getCurrentChange="getCurrentChange"
+        :pagination="query"
+        :total='total'
+      />
     </div>
   </div>
 </template>
 <script>
+import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from "../../../api/api";
+import Http from '@/api/textbookManager/scrapRecord'
 import customTable from '../../../components/customTable'
 export default {
   name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable},
+  components: { customTableSelect, customSearch, customTable, Pagination},
   data() {
     return {
       query: {
-         limit: 1,
-         pageNo: 10
+        orderField: 'id',
+        orderOrient: '2',
+        indexArray: [],
+        pageNum: 1,
+        pageCount: 10,
       },
       total: 0,
-      tableData3: [
-        {
-          id: "1",
-          number: "112",
-          a: "这是个数据",
-          b: "这是个数据",
-          c: "这是个数据",
-          d: "这是个数据",
-          e: "这是个数据",
-          f: "这是个数据",
-          g: "这是个数据",
-          h: "这是个数据",
-          j: "这是个数据",
-          k: "这是个数据",
-          l: "这是个数据",
-        },
-        {
-          id: "2",
-          number: "113",
-          a: "这是个数据1",
-          b: "这是个数据2",
-          c: "这是个数据3",
-          d: "这是个数据4",
-          e: "这是个数据5",
-          f: "这是个数据6",
-          g: "这是个数据7",
-          h: "这是个数据8",
-          j: "这是个数据9",
-          k: "这是个数据10",
-          l: "这是个数据",
-        },
-      ],
+     tableData: [],
       tableAllIist: [],
       searchList: [
-        {
-          name: "姓名",
-          type: "text",
-          code: "name",
-          value: "",
-        },
-        {
-          name: "性别",
-          type: "text",
-          code: "sex",
-          value: "",
-        },
-        {
-          name: "年龄",
-          type: "number",
-          code: "age",
-          value: "",
-        },
-        {
-          name: "出生日期",
-          type: "date",
-          code: "year",
-          value: "",
-        },
-        {
-          name: "爱好",
-          type: "text",
-          code: "like",
-          value: "",
-        },
-        {
-          name: "专业",
-          type: "text",
-          code: "object",
-          value: "",
-        },
-        {
-          name: "描述",
-          type: "text",
-          code: "remark",
-          value: "",
-        },
+       
+      
       ],
       multipleSelection: [],
     };
   },
+  mounted() {
+    this.getAllField()
+  },
   methods: {
+    getAllField() {
+      Http.getTableTitle()
+        .then((res) => {
+          if(res.code == '0000') {
+           if(res.data.filter.length) {
+             res.data.filter.forEach(item => {
+               item.checked = true;
+             });
+             this.tableAllIist = res.data.filter;
+             this.getTableList();
+          }
+          }
+        })
+        .catch(() => {})
+    },
+    getTableList() {
+       Http.getTableList(this.query)
+        .then((res) => {
+          if(res.code == '0000') {
+           if(res.data.searchList.length) {
+             this.tableData = res.data.searchList;
+             this.total = res.page.page_total;
+          }
+          }
+        })
+        .catch(() => {})
+    },
+      getCurrentChange(val) {
+      this.query.pageNum = val;
+      this.getTableList();
+    },
+    getSizeChange(val) {
+      this.query.pageCount = val;
+      this.getTableList();
+    },
     // 维修结算
     onRepairSettlement(){
       

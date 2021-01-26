@@ -9,10 +9,10 @@
       <template v-for="(item, index) in tableAllIist">
         
         <el-table-column
-          v-if="item.checked"
+          v-if="item.checked&& item.name != 'id'"
           :key="index"
-          :prop="item.code"
-          :label="item.name"
+          :prop="item.name"
+          :label="item.comment"
           width=""
         >
         </el-table-column>

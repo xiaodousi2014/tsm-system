@@ -2,8 +2,10 @@
   <div id="customTable"> <div class="showIcon"><i class="el-icon-menu" @click="showMoreList()"></i>
             <ul class="selectList" v-if="showContent">
        <!-- <el-checkbox-group v-model="checkedGroup" @change="handleCheckedCitiesChange"  size="medium"> -->
-         <li v-for="item in list" :key="item.code">
-           <el-checkbox  v-model="item.checked"  border>{{item.name}}</el-checkbox>
+         <li v-for="item in list" :key="item.name">
+           <template v-if="item.name != 'id'">
+           <el-checkbox  v-model="item.checked"  border>{{item.comment}}</el-checkbox>
+           </template>
        </li>
   <!-- </el-checkbox-group> -->
        

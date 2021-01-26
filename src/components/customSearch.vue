@@ -86,7 +86,7 @@
         </el-col>
       </el-row>
       <div class="search-button-block" style="margin-top: 20px">
-        <el-button size="small" type="primary">查 询</el-button>
+        <el-button size="small" >查 询</el-button>
         <el-button size="small">重 置</el-button>
       </div>
     </div>
