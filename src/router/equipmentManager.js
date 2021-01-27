@@ -15,13 +15,6 @@ export default {
   },
 
   {
-   path: 'plan-examine',
-   name: 'simulation-equipment-plan-examine',
-   meta: [{name: '计划审核', parentName: '模拟器械', path: '/declare-in-stock'}],
-   component: () => import('@/views/trainingdeviceManager/planExamine/index.vue')
-  },
-
-  {
    path: 'in-stock-register',
    name: 'simulation-equipment-in-stock-register',
    meta: [{name: '入库登记', parentName: '模拟器械', path: '/declare-in-stock'}],

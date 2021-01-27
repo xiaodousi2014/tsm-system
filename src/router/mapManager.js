@@ -16,13 +16,6 @@ export default {
   },
 
   {
-   path: 'plan-examine',
-   name: 'map-manage-plan-examine',
-   meta: [{name: '计划审核', parentName: '地图管理', path: '/overview'}],
-   component: () => import('@/views/mapManager/planExamine/index.vue')
-  },
-
-  {
    path: 'in-stock-register',
    name: 'map-manage-in-stock-register',
    meta: [{name: '入库登记', parentName: '地图管理', path: '/overview'}],

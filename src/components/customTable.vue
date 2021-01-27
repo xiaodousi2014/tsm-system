@@ -42,7 +42,9 @@ export default {
   },
   methods: {
       handleSelectionChange(val) {
+        console.log(val)
         this.multipleSelection = val;
+        this.$emit('selectTableList', this.multipleSelection)
       }
   },
   created() {

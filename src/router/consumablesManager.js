@@ -15,14 +15,6 @@ export default {
    meta: [{name: '计划申报', parentName: '易耗品管理', path: '/declare-in-stock'}],
    component: () => import('@/views/consumablesManager/planDeclare/index.vue')
   },
-
-  {
-   path: 'plan-examine',
-   name: 'consumables-manage-plan-examine',
-   meta: [{name: '计划审核', parentName: '易耗品管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/consumablesManager/planExamine/index.vue')
-  },
-
   {
    path: 'in-stock-register',
    name: 'consumables-manage-in-stock-register',

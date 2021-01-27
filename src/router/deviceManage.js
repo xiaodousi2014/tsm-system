@@ -14,14 +14,6 @@ export default {
    meta: [{name: '计划申报', parentName: '教学设备', path: '/declare-in-stock'}],
    component: () => import('@/views/deviceManage/planDeclare/index.vue')
   },
-
-  {
-   path: 'plan-examine',
-   name: 'teaching-equipment-plan-examine',
-   meta: [{name: '计划审核', parentName: '教学设备', path: '/declare-in-stock'}],
-   component: () => import('@/views/deviceManage/planExamine/index.vue')
-  },
-
   {
    path: 'in-stock-register',
    name: 'teaching-equipment-in-stock-register',
@@ -35,7 +27,12 @@ export default {
    meta: [{name: '在库设备', parentName: '教学设备', path: '/declare-in-stock'}],
    component: () => import('@/views/deviceManage/storageEquipment/index.vue')
   },
-
+  {
+    path: 'delete-list',
+    name: 'teaching-equipment-plan-declare',
+    meta: [{name: '删除列表', parentName: '教学设备', path: '/delete-list'}],
+    component: () => import('@/views/deviceManage/storageEquipment/deleteList.vue')
+   },
   {
    path: 'receive-record',
    name: 'teaching-equipment-receive-record',

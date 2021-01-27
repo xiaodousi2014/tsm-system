@@ -92,6 +92,22 @@ export default class Http {
         }
         return Http.send(config, loading)
     }
+    static delete(url, params = {}, loading) {
+        const config = {
+            method: 'delete',
+            url,
+            data: params
+        }
+        return Http.send(config, loading)
+    }
+    static put(url, params = {}, loading) {
+        const config = {
+            method: 'put',
+            url,
+            data: params
+        }
+        return Http.send(config, loading)
+    }
 
     static get(url, params = {}, loading) {
         let urlParams = []

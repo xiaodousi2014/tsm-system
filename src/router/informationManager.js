@@ -17,13 +17,6 @@ export default {
   },
 
   {
-   path: 'plan-examine',
-   name: 'information-resources-plan-examine',
-   meta: [{name: '计划审核', parentName: '信息资源', path: '/declare-in-stock'}],
-   component: () => import('@/views/informationManager/planExamine/index.vue')
-  },
-
-  {
    path: 'information',
    name: 'information-resources-information',
    meta: [{name: '信息资源登记', parentName: '信息资源', path: '/declare-in-stock'}],

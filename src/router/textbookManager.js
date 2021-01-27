@@ -15,13 +15,6 @@ export default {
    component: () => import('@/views/textbookManager/planDeclare/index.vue')
   },
   {
-   path: 'plan-examine',
-   name: 'teaching-material-manage-plan-examine',
-   meta: [{name: '计划审核', parentName: '教材管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/textbookManager/planExamine/index.vue')
-  },
-
-  {
    path: 'in-stock-register',
    name: 'teaching-material-manage-in-stock-register',
    meta: [{name: '入库登记', parentName: '教材管理', path: '/declare-in-stock'}],
@@ -60,20 +53,6 @@ export default {
    name: 'teaching-material-manage-borrow-examine',
    meta: [{name: '借用审核', parentName: '教材管理', path: '/declare-in-stock'}],
    component: () => import('@/views/textbookManager/borrowExamine/index.vue')
-  },
-
-  {
-   path: 'repair-record',
-   name: 'teaching-material-manage-repair-record',
-   meta: [{name: '维修记录', parentName: '教材管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/textbookManager/repairRecord/index.vue')
-  },
-
-  {
-   path: 'repair-examine',
-   name: 'teaching-material-manage-repair-examine',
-   meta: [{name: '维修审核', parentName: '教材管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/textbookManager/repairExamine/index.vue')
   },
 
   {

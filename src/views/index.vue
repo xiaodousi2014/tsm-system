@@ -222,14 +222,6 @@ export default {
               children: [],
             },
             {
-              id: 3,
-              menuId: '43',
-              name: '计划审核',
-              url: 'plan-examine',
-              parentId: 8,
-              children: [],
-            },
-            {
               id: 4,
               menuId: '44',
               name: '入库登记',
@@ -339,14 +331,6 @@ export default {
               menuId: '22',
               name: '采购申报',
               url: 'plan-declare',
-              parentId: 2,
-              children: [],
-            },
-            {
-              id: 3,
-              menuId: '23',
-              name: '计划审核',
-              url: 'plan-examine',
               parentId: 2,
               children: [],
             },
@@ -464,14 +448,6 @@ export default {
               children: [],
             },
             {
-              id: 3,
-              menuId: '33',
-              name: '计划审核',
-              url: 'plan-examine',
-              parentId: 3,
-              children: [],
-            },
-            {
               id: 4,
               menuId: '34',
               name: '入库登记',
@@ -585,14 +561,6 @@ export default {
               children: [],
             },
             {
-              id: 3,
-              menuId: '53',
-              name: '计划审核',
-              url: 'plan-examine',
-              parentId: 5,
-              children: [],
-            },
-            {
               id: 4,
               menuId: '54',
               name: '信息资源登记',
@@ -622,14 +590,6 @@ export default {
               menuId: '42',
               name: '采购申报',
               url: 'plan-declare',
-              parentId: 4,
-              children: [],
-            },
-            {
-              id: 3,
-              menuId: '43',
-              name: '计划审核',
-              url: 'plan-examine',
               parentId: 4,
               children: [],
             },
@@ -682,22 +642,6 @@ export default {
               children: [],
             },
             {
-              id: 10,
-              menuId: '411',
-              name: '维修记录',
-              url: 'repair-record',
-              parentId: 4,
-              children: [],
-            },
-            {
-              id: 11,
-              menuId: '422',
-              name: '维修审核',
-              url: 'repair-examine',
-              parentId: 4,
-              children: [],
-            },
-            {
               id: 12,
               menuId: '433',
               name: '报废记录',
@@ -743,14 +687,6 @@ export default {
               menuId: '42',
               name: '采购申报',
               url: 'plan-declare',
-              parentId: 6,
-              children: [],
-            },
-            {
-              id: 3,
-              menuId: '43',
-              name: '计划审核',
-              url: 'plan-examine',
               parentId: 6,
               children: [],
             },
@@ -864,14 +800,6 @@ export default {
               menuId: '42',
               name: '采购申报',
               url: 'plan-declare',
-              parentId: 7,
-              children: [],
-            },
-            {
-              id: 3,
-              menuId: '43',
-              name: '计划审核',
-              url: 'plan-examine',
               parentId: 7,
               children: [],
             },
@@ -1294,7 +1222,7 @@ export default {
   }
 }
 .el-aside {
-  height: 100%;
+  height: calc(100% - 68px);
   background-color: rgb(0, 21, 41);
   color: #333;
   text-align: left;

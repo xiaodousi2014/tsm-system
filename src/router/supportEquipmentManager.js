@@ -14,14 +14,6 @@ export default {
         component: () => import('@/views/supportEquipmentManager/planDeclare/index.vue')
        },
        {
-        path: 'plan-examine',
-        name: 'security-equipment-plan-examine',
-       
-        meta: [{name: '计划审核', parentName: '保障装备'}],
-        component: () => import('@/views/supportEquipmentManager/planExamine/index.vue')
-       },
-     
-       {
         path: 'in-stock-register',
         name: 'security-equipment-in-stock-register',
        
