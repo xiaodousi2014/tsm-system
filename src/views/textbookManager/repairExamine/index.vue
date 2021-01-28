@@ -29,7 +29,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/deviceManage'
+import Http from '@/api/textbookManager'
 import customTable from '../../../components/customTable'
 export default {
   name: "declareWarehousing",
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getAllField() {
-      Http.getBorrowTitle()
+      Http.getRepairTitle()
         .then((res) => {
           if(res.code == '0000') {
            if(res.data.filter.length) {
@@ -66,14 +66,14 @@ export default {
                item.checked = true;
              });
              this.tableAllIist = res.data.filter;
-             this.getBorrowList();
+             this.getTableList();
           }
           }
         })
         .catch(() => {})
     },
-    getBorrowList() {
-       Http.getBorrowList(this.query)
+    getTableList() {
+       Http.getRepairList(this.query)
         .then((res) => {
           if(res.code == '0000') {
            if(res.data.searchList.length) {
@@ -86,54 +86,16 @@ export default {
     },
       getCurrentChange(val) {
       this.query.pageNum = val;
-      this.getBorrowList();
+      this.getTableList();
     },
     getSizeChange(val) {
       this.query.pageCount = val;
-      this.getBorrowList();
-    },
-
-    // 提交
-    onSumit() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要提交的数据列！');
-       return
-     }
-    },
-    // 编辑
-    onEdit() {
-      if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要编辑的数据列！');
-       return
-     }
-     if(this.multipleSelection.length > 1) {
-       this.$message.warning('只能选择单个数据列编辑！');
-       return
-     }
-    },
-    // 删除
-    onDelete() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要删除的数据列！');
-       return
-     }
-      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-        this.$message.success('删除成功')
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
+      this.getTableList();
     },
     // table选中
     selectTableList(list) {
      this.multipleSelection = list;
-    },
+    }
   },
   created() {
   },

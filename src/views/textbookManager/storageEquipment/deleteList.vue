@@ -2,16 +2,6 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button icon="el-icon-edit" size="small">检索</el-button>
-      <el-button icon="el-icon-search" size="small" @click="onReturn()"
-        >归还</el-button
-      >
-      <el-button icon="el-icon-search" size="small" @click="onExport()"
-        >导出</el-button
-      >
-    </div>
-    <custom-search :searchList="searchList"></custom-search>
     <custom-table-select :list="tableAllIist"></custom-table-select>
     <custom-table
       :tableAllIist="tableAllIist"
@@ -27,6 +17,15 @@
         :pagination="query"
         :total="total"
       />
+    </div>
+    <div style="margin: 30px 0 20px 0; text-align: center">
+      <el-button size="small" @click="cancal()">取消</el-button>
+      <el-button
+        size="small"
+        @click="onRevoke()"
+        :disabled="!multipleSelection.length"
+        >撤销删除</el-button
+      >
     </div>
   </div>
 </template>
@@ -59,8 +58,11 @@ export default {
     this.getAllField();
   },
   methods: {
+    cancal() {
+      this.$router.push("storage-equipment");
+    },
     getAllField() {
-      Http.getInventoryTitle()
+      Http.getDeleteStorageTitle()
         .then((res) => {
           if (res.code == "0000") {
             if (res.data.filter.length) {
@@ -75,7 +77,7 @@ export default {
         .catch(() => {});
     },
     getTableList() {
-      Http.getInventoryList(this.query)
+      Http.getDeleteStorageList(this.query)
         .then((res) => {
           if (res.code == "0000") {
             if (res.data.searchList.length) {
@@ -94,41 +96,27 @@ export default {
       this.query.pageCount = val;
       this.getTableList();
     },
-    // 编辑
-    onEdit() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要编辑的数据列！");
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message.warning("只能选择单个数据列编辑！");
-        return;
-      }
-    },
-    // 删除
-    onDelete() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要删除的数据列！");
-        return;
-      }
-      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          this.$message.success("删除成功");
+
+    // 撤销操作
+    onRevoke() {
+      Http.putStorageList(this.multipleSelection)
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("撤销成功！");
+            this.getTableList();
+            this.multipleSelection = [];
+          }
         })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+        .catch(() => {});
+      //  this.$router.push('storage-equipment');
     },
     // table选中
     selectTableList(list) {
-      this.multipleSelection = list;
+      let query = [];
+      list.forEach((item) => {
+        query.push(item.id);
+      });
+      this.multipleSelection = query;
     },
   },
   created() {},

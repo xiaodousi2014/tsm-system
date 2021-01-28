@@ -29,7 +29,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/textbookManager/borrowExamine'
+import Http from '@/api/textbookManager'
 import customTable from '../../../components/customTable'
 export default {
   name: "declareWarehousing",
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getAllField() {
-      Http.getTableTitle()
+      Http.getBorrowTitle()
         .then((res) => {
           if(res.code == '0000') {
            if(res.data.filter.length) {
@@ -73,7 +73,7 @@ export default {
         .catch(() => {})
     },
     getTableList() {
-       Http.getTableList(this.query)
+       Http.getBorrowList(this.query)
         .then((res) => {
           if(res.code == '0000') {
            if(res.data.searchList.length) {
@@ -92,55 +92,6 @@ export default {
       this.query.pageCount = val;
       this.getTableList();
     },
-    // 维修结算
-    onRepairSettlement(){
-      
-    },
-    // 请领
-    onQingLing() {
-
-    },
-      // 借用
-    onBorrow() {
-
-    },
-      // 报修
-    onReport() {
-
-    },
-      // 报废
-    onScrap() {
-
-    },
-      // 盘点
-    onInventory() {
-
-    },
-      // 归还
-    onReturn() {
-
-    },
-
-    // 文件汇总
-    onDocumentSummary(){
-
-    },
-    // 处理意见
-    onHandlingOpinions() {
-
-    },
-    // 同意
-    onAgree() {
-
-    },
-    // 驳回
-    onReject() {
-
-    },
-    //导出
-    onExport() {
-
-    },
     // 上传附件
     onUploadAttachment() {
        if(!this.multipleSelection.length) {
@@ -149,20 +100,6 @@ export default {
      }
      if(this.multipleSelection.length > 1) {
        this.$message.warning('只能选择单个数据列上传附件！');
-       return
-     }
-    },
-    // 撤销操作
-    onRevoke() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要撤销操作的数据列！');
-       return
-     }
-    },
-    // 提交
-    onSumit() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要提交的数据列！');
        return
      }
     },
@@ -196,73 +133,12 @@ export default {
           });          
         });
     },
-    handleSizeChange() {
-
-    },
-    handleCurrentChange() {
-
-    },
     // table选中
     selectTableList(list) {
      this.multipleSelection = list;
     },
-    getAllTableList() {
-      this.tableAllIist = [
-        {
-          code: "a",
-          name: "北京",
-          checked: true,
-        },
-        {
-          code: "b",
-          name: "上海上海上海上海上海上海上海上海",
-          checked: true,
-        },
-        {
-          code: "c",
-          name: "成都",
-          checked: true,
-        },
-        {
-          code: "d",
-          name: "四川",
-          checked: true,
-        },
-        {
-          code: "e",
-          name: "俄罗斯",
-          checked: false,
-        },
-        {
-          code: "f",
-          name: "福建",
-          checked: true,
-        },
-        {
-          code: "g",
-          name: "广州",
-          checked: true,
-        },
-        {
-          code: "h",
-          name: "杭州",
-          checked: false,
-        },
-        {
-          code: "j",
-          name: "济南",
-          checked: true,
-        },
-        {
-          code: "k",
-          name: "河南",
-          checked: true,
-        },
-      ];
-    },
   },
   created() {
-    this.getAllTableList();
   },
 };
 </script>

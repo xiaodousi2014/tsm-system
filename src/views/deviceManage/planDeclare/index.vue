@@ -34,7 +34,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/deviceManage/planDeclare'
+import Http from '@/api/deviceManage'
 import customTable from '../../../components/customTable'
 import customUploadFile from '../../../components/customUploadFile'
 export default {
@@ -78,12 +78,12 @@ export default {
        this.$message.warning('请选择要撤销操作的数据列！');
        return
      }
-      Http.onRevoke(this.multipleSelection)
+      Http.onPlanRevoke(this.multipleSelection)
         .then((res) => {
           if(res.code == '0000') {
              this.$message.success('撤销成功！');
              this.multipleSelection = [];
-             this.getTableList();
+             this.getPlanList();
           }
         })
         .catch(() => {})
@@ -93,11 +93,11 @@ export default {
     },
      close() {
       this.exportModal = false;
-      this.getTableList();
+      this.getPlanList();
       // this.search(); 
     },
     getAllField() {
-      Http.getTableTitle()
+      Http.getPlanTitle()
         .then((res) => {
           if(res.code == '0000') {
            if(res.data.filter.length) {
@@ -105,14 +105,14 @@ export default {
                item.checked = true;
              });
              this.tableAllIist = res.data.filter;
-             this.getTableList();
+             this.getPlanList();
           }
           }
         })
         .catch(() => {})
     },
-    getTableList() {
-       Http.getTableList(this.query)
+    getPlanList() {
+       Http.getPlanList(this.query)
         .then((res) => {
           if(res.code == '0000') {
            if(res.data.searchList.length) {
@@ -125,79 +125,11 @@ export default {
     },
       getCurrentChange(val) {
       this.query.pageNum = val;
-      this.getTableList();
+      this.getPlanList();
     },
     getSizeChange(val) {
       this.query.pageCount = val;
-      this.getTableList();
-    },
-    // 维修结算
-    onRepairSettlement(){
-      
-    },
-    // 请领
-    onQingLing() {
-
-    },
-      // 借用
-    onBorrow() {
-
-    },
-      // 报修
-    onReport() {
-
-    },
-      // 报废
-    onScrap() {
-
-    },
-      // 盘点
-    onInventory() {
-
-    },
-      // 归还
-    onReturn() {
-
-    },
-
-    // 文件汇总
-    onDocumentSummary(){
-
-    },
-    // 处理意见
-    onHandlingOpinions() {
-
-    },
-    // 同意
-    onAgree() {
-
-    },
-    // 驳回
-    onReject() {
-
-    },
-    //导出
-    onExport() {
-
-    },
-    // 上传附件
-    onUploadAttachment() {
-       if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要上传附件的数据列！');
-       return
-     }
-     if(this.multipleSelection.length > 1) {
-       this.$message.warning('只能选择单个数据列上传附件！');
-       return
-     }
-    },
-    
-    // 提交
-    onSumit() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要提交的数据列！');
-       return
-     }
+      this.getPlanList();
     },
     // 编辑
     onEdit() {
@@ -209,32 +141,7 @@ export default {
        this.$message.warning('只能选择单个数据列编辑！');
        return
      }
-    },
-    // 删除
-    onDelete() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要删除的数据列！');
-       return
-     }
-      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-        this.$message.success('删除成功')
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
-    },
-    handleSizeChange() {
-
-    },
-    handleCurrentChange() {
-
-    },
+    }
   },
   created() {
   },
