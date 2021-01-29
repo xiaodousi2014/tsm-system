@@ -64,7 +64,7 @@
               </template>
               <el-menu-item
                 v-for="child in parent.children"
-                :index='setIndex(parent, child)'
+                :index="setIndex(parent, child)"
                 :key="child.menuId"
                 @click="getRouter(parent, child)"
               >
@@ -91,8 +91,12 @@
                 <p>注销</p>
             </div>
             </div> -->
-          <span style="font-size:14px;color:#000;margin-left:20px">测试账号</span>
-          <span style="padding:0 10px;font-size:14px">2020.11.11 15:20 登录</span>
+          <span style="font-size:14px;color:#000;margin-left:20px"
+            >测试账号</span
+          >
+          <span style="padding:0 10px;font-size:14px"
+            >2020.11.11 15:20 登录</span
+          >
           <el-button size="mini">退出</el-button>
         </div>
 
@@ -111,7 +115,9 @@
       <div
         style="background: #f0f2f5; height: calc(100% - 105px);width: calc(100% - 208px);position:absolute;left:208px;top:105px"
       >
-        <div style="height: 100%;border-radius: 8px;margin-top: 20px;overflow-y:scroll">
+        <div
+          style="height: 100%;border-radius: 8px;margin-top: 20px;overflow-y:scroll"
+        >
           <h1 class="title" v-show="$route.path === '/index'">
             园区用户管理系统 欢迎您！
           </h1>
@@ -910,10 +916,138 @@ export default {
           parentId: '',
           children: [
             {
-              id: 18,
+              id: 1,
               menuId: '300023',
               name: '使用计划',
               url: 'use-plan',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 2,
+              menuId: '300024',
+              name: '位置显示',
+              url: 'location-display',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 3,
+              menuId: '300026',
+              name: '训练基地',
+              url: 'training-base',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 4,
+              menuId: '300027',
+              name: '训练场地',
+              url: 'training-field',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 5,
+              menuId: '300028',
+              name: '保障用房',
+              url: 'room',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 6,
+              menuId: '300029',
+              name: '配置设施',
+              url: 'facilitie-config',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 7,
+              menuId: '300033',
+              name: '阵地工事',
+              url: 'fortification',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 8,
+              menuId: '300043',
+              name: '道路管网',
+              url: 'road-network',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 9,
+              menuId: '300053',
+              name: '军官训练中心',
+              url: 'officer-training-center',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 10,
+              menuId: '300063',
+              name: '教导机构',
+              url: 'teaching-institution',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 11,
+              menuId: '300073',
+              name: '普通教室',
+              url: 'classroom',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 12,
+              menuId: '300083',
+              name: '专业训练中心',
+              url: 'major-training-center',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 13,
+              menuId: '300093',
+              name: '图书馆',
+              url: 'library',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 14,
+              menuId: '300123',
+              name: '军体馆',
+              url: 'military-gymnasium',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 15,
+              menuId: '300223',
+              name: '演播室(电教设备)',
+              url: 'studio',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 16,
+              menuId: '300323',
+              name: '实验室管理',
+              url: 'laboratory-manage',
+              parentId: '300022',
+              children: [],
+            },
+            {
+              id: 17,
+              menuId: '300423',
+              name: '维护管理',
+              url: 'maintain-manage',
               parentId: '300022',
               children: [],
             },
@@ -971,7 +1105,7 @@ export default {
 
   methods: {
     setIndex(parent, child) {
-      return parent.url + child.url;
+      return parent.url + child.url
     },
     getRouter(parent, child) {
       // debugger
