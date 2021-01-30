@@ -3,8 +3,8 @@
             <ul class="selectList" v-if="showContent">
        <!-- <el-checkbox-group v-model="checkedGroup" @change="handleCheckedCitiesChange"  size="medium"> -->
          <li v-for="item in list" :key="item.name">
-           <template v-if="item.name != 'id'">
-           <el-checkbox  v-model="item.checked"  border>{{item.comment}}</el-checkbox>
+           <template v-if="item.display">
+           <el-checkbox  v-model="item.favorate"  border>{{item.comment}}</el-checkbox>
            </template>
        </li>
   <!-- </el-checkbox-group> -->
@@ -28,7 +28,7 @@
       return {
         //控制是否折叠
         showContent: false,
-         checkedGroup: [],
+        checkedGroup: [],
       }
     },
     watch: {
@@ -38,7 +38,7 @@
         this.showContent = !this.showContent;
         if(this.showContent && this.checkedGroup.length == 0) {
            this.list.forEach(item => {
-          if(item.checked) {
+          if(item.favorate) {
             this.checkedGroup.push(item.code);
           }
         })
@@ -49,9 +49,9 @@
       this.list.forEach(item => {
         this.checkedGroup.forEach(checked => {
           if(item.code == checked) {
-            item.checked = true;
+            item.favorate = true;
           } else {
-            item.checked = false
+            item.favorate = false
           }
         })
       })

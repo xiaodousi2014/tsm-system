@@ -14,7 +14,12 @@ export default {
    meta: [{name: '计划申报', parentName: '地图管理', path: '/overview'}],
    component: () => import('@/views/mapManager/planDeclare/index.vue')
   },
-
+  {
+    path: 'delete-list',
+    name: 'teaching-equipment-plan-declare',
+    meta: [{name: '删除列表', parentName: '地图管理', path: '/delete-list'}],
+    component: () => import('@/views/mapManager/storageEquipment/deleteList.vue')
+   },
   {
    path: 'in-stock-register',
    name: 'map-manage-in-stock-register',
@@ -50,25 +55,11 @@ export default {
    component: () => import('@/views/mapManager/borrowRecord/index.vue')
   },
   {
-   path: 'borrow-examine',
-   name: 'map-manage-borrow-examine',
-   meta: [{name: '借用审核', parentName: '地图管理', path: '/overview'}],
-   component: () => import('@/views/mapManager/borrowExamine/index.vue')
-  },
-
-  {
-   path: 'repair-record',
-   name: 'map-manage-repair-record',
-   meta: [{name: '维修记录', parentName: '地图管理', path: '/overview'}],
-   component: () => import('@/views/mapManager/repairRecord/index.vue')
-  },
-
-  {
-   path: 'repair-examine',
-   name: 'map-manage-repair-examine',
-   meta: [{name: '维修审核', parentName: '地图管理', path: '/overview'}],
-   component: () => import('@/views/mapManager/repairExamine/index.vue')
-  },
+    path: 'borrow-examine',
+    name: 'map-manage-borrow-examine',
+    meta: [{name: '借用审核', parentName: '地图管理', path: '/overview'}],
+    component: () => import('@/views/mapManager/borrowExamine/index.vue')
+   },
 
   {
    path: 'scrap-record',

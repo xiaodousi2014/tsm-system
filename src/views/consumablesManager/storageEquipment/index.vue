@@ -3,7 +3,15 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-edit" size="small">检索</el-button>
+      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+        >检索</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onCreate()"
+        >新增</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onEdit()"
+        >编辑</el-button
+      >
       <el-button icon="el-icon-search" size="small" @click="onDelete()"
         >删除</el-button
       >
@@ -13,17 +21,19 @@
       <el-button icon="el-icon-search" size="small" @click="onQingLing()"
         >请领</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onBorrow()"
-        >借用</el-button
-      >
-      <el-button icon="el-icon-search" size="small" @click="onRepair()"
-        >维修</el-button
-      >
       <el-button icon="el-icon-search" size="small" @click="onScrap()"
         >报废</el-button
       >
+      <el-button icon="el-icon-search" size="small" @click="onExport()"
+        >导出</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onInventory()"
+        >盘点</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onUploadFile()"
+        >上传附件</el-button
+      >
     </div>
-    <custom-search :searchList="searchList"></custom-search>
     <custom-table-select :list="tableAllIist"></custom-table-select>
     <custom-table
       :tableAllIist="tableAllIist"
@@ -50,20 +60,20 @@
         >
           <el-row>
             <el-col :span="8">
-              <el-form-item label="设备名称:" prop="manufacturer">
+              <el-form-item label="易耗品名称:" prop="manufacturer">
                 <el-input
                   disabled
-                  v-model.trim="item.device_name"
+                  v-model.trim="item.stationery_name"
                   maxlength="10"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="请领数量:" prop="deviceModel">
+              <el-form-item label="请领数量:" prop="stationeryModel">
                 <el-input
-                  disabled
                   v-model.trim="item.quantity"
                   maxlength="30"
+                  @change="changeNumber($event,item)"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -76,7 +86,7 @@
                 ></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+              <el-col :span="8">
               <el-form-item label="存放地点:" prop="costAmount">
                 <el-input
                   v-model.trim="item.locate_site"
@@ -111,36 +121,28 @@
         >
           <el-row>
             <el-col :span="8">
-              <el-form-item label="设备名称:" prop="manufacturer">
+              <el-form-item label="易耗品名称:" prop="manufacturer">
                 <el-input
                   disabled
-                  v-model.trim="item.device_name"
+                  v-model.trim="item.stationery_name"
                   maxlength="10"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="请领数量:" prop="deviceModel">
+              <el-form-item label="借用数量:" prop="stationeryModel">
                 <el-input
-                  disabled
                   v-model.trim="item.quantity"
                   maxlength="30"
+                  @change="borrowChange($event,item)"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="申请人:" prop="costAmount">
+              <el-form-item label="借用人:" prop="costAmount">
                 <el-input
                   disabled
                   v-model.trim="item.borrower"
-                  maxlength="10"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item label="存放地点:" prop="costAmount">
-                <el-input
-                  v-model.trim="item.locate_site"
                   maxlength="10"
                 ></el-input>
               </el-form-item>
@@ -154,7 +156,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="领用单位:" prop="costAmount">
+              <el-form-item label="借用单位:" prop="costAmount">
                 <el-input
                   v-model.trim="item.borrower_org"
                   maxlength="10"
@@ -162,7 +164,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="领用时间:" prop="costAmount">
+              <el-form-item label="借用时间:" prop="costAmount">
                 <el-date-picker
                   style="width: 100%"
                   v-model="item.borrower_time"
@@ -215,38 +217,71 @@
       </div>
     </el-dialog>
     <el-dialog :title="title" :visible.sync="repairModal" width="1024px">
-      <el-form
-        v-if="repairList.length"
-        ref="forms"
-        :model="repairList[0]"
-        label-width="130px"
-        style="padding-top: 20px"
-      >
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="维修项目名称:" prop="manufacturer">
-              <el-input
-                disabled
-                v-model.trim="repairList[0].device_name"
-                maxlength="10"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="维修内容:" prop="costAmount">
-              <el-input
-                v-model.trim="repairList[0].repair_content"
-                maxlength="10"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+       <div v-for="item in repairList" :key="item.id">
+        <el-form
+          ref="forms"
+          :model="item"
+          label-width="130px"
+          style="padding-top: 20px"
+        >
+          <el-row>
+            <el-col :span="8">
+              <el-form-item label="易耗品名称:" prop="manufacturer">
+                <el-input
+                  disabled
+                  v-model.trim="item.stationery_name"
+                  maxlength="10"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="报废数量:" prop="stationeryModel">
+                <el-input
+                  v-model.trim="item.quantity"
+                  maxlength="30"
+                  @change="changeNumber($event,item)"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="申请人:" prop="costAmount">
+                <el-input
+                  disabled
+                  v-model.trim="item.abolish_man"
+                  maxlength="10"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="repairModal = false">关 闭</el-button>
         <el-button type="primary" @click="onRepairSumit()">确 定</el-button>
       </div>
+    </el-dialog>
+    <el-dialog title="上传附件" :visible.sync="exportModal" width="500px">
+      <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
+    </el-dialog>
+    <el-dialog title="新增" :visible.sync="createModal" width="1100px">
+      <custom-create
+        @close="close"
+        :searchList="searchList"
+        @listCreate="listCreate"
+        :form="{}"
+      ></custom-create>
+    </el-dialog>
+    <el-dialog title="编辑" :visible.sync="editModal" width="1100px">
+      <custom-edit
+        @close="close"
+        :searchList="searchList"
+        :form="multipleSelectionInfo"
+        @listEdit="listEdit"
+      ></custom-edit>
+    </el-dialog>
+       <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+      <custom-search :searchList="searchList" @Search="Search"></custom-search>
     </el-dialog>
   </div>
 </template>
@@ -256,9 +291,20 @@ import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
 import Http from "@/api/consumablesManager";
 import customTable from "../../../components/customTable";
+import customUploadFile from "@/components/customUploadFile";
+import customCreate from "@/components/customCreate";
+import customEdit from "@/components/customEdit";
 export default {
   name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination },
+  components: {
+    customTableSelect,
+    customSearch,
+    customTable,
+    Pagination,
+    customUploadFile,
+    customCreate,
+    customEdit,
+  },
   data() {
     return {
       query: {
@@ -281,61 +327,215 @@ export default {
       borrowList: [],
       repairList: [],
       multipleSelection: [],
+      exportModal: false,
+      createModal: false,
+      editModal: false,
+      fileUrl: "",
+      multipleSelectionInfo: {},
+      searchModal: false,
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
-    // 报废
-    onScrap() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要报修的数据列！");
-        return;
+    borrowChange(event, item) {
+       if(Number(event)<=0) {
+        item.quantity = 1;
+      } else if(Number(event >= item.maxNumber)) {
+         item.quantity = item.maxNumber;
       }
-      Http.onStorageScrapSumit(this.multipleSelection)
+    },
+     changeNumber(event, item) {
+      if(Number(event)<=0) {
+        item.quantity = 1;
+      } else if(Number(event >= item.maxNumber)) {
+         item.quantity = item.maxNumber;
+      }
+     },
+     Search(event) {
+      this.query.indexArray = [];
+      this.query.indexArray = event;
+      this.searchModal = false;
+      this.getTableList();
+    },
+    listCreate(event) {
+      Http.onListCreate(event)
         .then((res) => {
           if (res.code == "0000") {
-            this.$message.success("报废成功！");
-            this.getTableList();
+            this.$message.success("创建成功！");
+            this.close();
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
-    // 报修
-    onRepair() {
+    onCreate() {
+      this.createModal = true;
+    },
+    onEdit() {
       if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要报修的数据列！");
+        this.$message.warning("请选择要编辑的数据列！");
         return;
       }
       if (this.multipleSelection.length > 1) {
-        this.$message.warning("报修数据列只能选择一条！");
+        this.$message.warning("编辑数据列只能选择一条！");
         return;
       }
-      this.repairModal = true;
+      this.editModal = true;
     },
-    onRepairSumit() {
-      Http.onStorageRepairSumit(this.repairList[0])
+    listEdit() {
+      Http.onListEdit(this.multipleSelectionInfo)
         .then((res) => {
           if (res.code == "0000") {
-            this.$message.success("请领成功！");
+            this.$message.success("编辑成功！");
+            this.close();
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    onCanBorrow() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要操作的数据列！");
+        return;
+      }
+      Http.onCanBorrow({ ids: this.multipleSelection })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("设置成功！");
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    // 上传附件
+    onUploadFile() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要编辑的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列编辑！");
+        return;
+      }
+      this.fileUrl = `http://10.8.145.43:8190/common/attachment/import?infoType=t_stationery&id=${this.multipleSelection[0]}`;
+      this.exportModal = true;
+    },
+    close() {
+      this.editModal = false;
+      this.createModal = false;
+      this.exportModal = false;
+      this.getTableList();
+      // this.search();
+    },
+    // 盘点
+    onInventory() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要盘点的数据列！");
+        return;
+      }
+      Http.onInventory({ ids: this.multipleSelection })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("盘点成功！");
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    // 导出
+    onExport() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要导出的数据列！");
+        return;
+      }
+      const link = document.createElement("a");
+      Http.getExport({ ids: this.multipleSelection, infoType: "t_stationery" })
+        .then((res) => {
+          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = "在库设备表.xlsx";
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    // 报废
+    // async onScrap() {
+    //   if (!this.multipleSelection.length) {
+    //     this.$message.warning("请选择要报废的数据列！");
+    //     return;
+    //   }
+    //   Http.checkedTrue({ ids: this.multipleSelection, type: 4 })
+    //     .then((res) => {
+    //       if (res.code == "0000") {
+    //         Http.onStorageScrapSumit(this.multipleSelection)
+    //           .then((res) => {
+    //             if (res.code == "0000") {
+    //               this.$message.success("报废成功！");
+    //               this.getTableList();
+    //             }
+    //           })
+    //           .catch((res) => {
+    //             this.$message.error(res.msg || "系统异常");
+    //           });
+    //       }
+    //     })
+    //     .catch((res) => {
+    //       this.$message.error(res.msg || "系统异常");
+    //     });
+    // },
+    // 报修
+    onScrap() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要报废的数据列！");
+        return;
+      }
+      Http.checkedTrue({ ids: this.multipleSelection, type: 3 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.title = "报修";
+            this.repairModal = true;
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    onRepairSumit() {
+      Http.onStorageScrapSumit(this.repairList)
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("操作成功！");
             this.getTableList();
             this.repairModal = false;
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     // 提交
     onQingLingSumit() {
       Http.onStorageQingLingSumit(this.form)
         .then((res) => {
           if (res.code == "0000") {
-            this.$message.success("请领成功！");
+            this.$message.success("操作成功！");
             this.getTableList();
             this.addInfoModal = false;
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     // 借用
     onBorrow() {
@@ -343,7 +543,16 @@ export default {
         this.$message.warning("请选择要借用的数据列！");
         return;
       }
-      this.borrowModal = true;
+      Http.checkedTrue({ ids: this.multipleSelection, type: 2 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.title = "借用";
+            this.borrowModal = true;
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     // 借用提交
     onBorrowSumit() {
@@ -355,7 +564,9 @@ export default {
             this.borrowModal = false;
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     // 请领
     onQingLing() {
@@ -363,7 +574,16 @@ export default {
         this.$message.warning("请选择要请领的数据列！");
         return;
       }
-      this.addInfoModal = true;
+      Http.checkedTrue({ ids: this.multipleSelection, type: 1 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.title = "请领";
+            this.addInfoModal = true;
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     // 撤销操作
     onRevoke() {
@@ -374,27 +594,34 @@ export default {
         .then((res) => {
           if (res.code == "0000") {
             if (res.data.filter.length) {
-              res.data.filter.forEach((item) => {
-                item.checked = true;
+              let list = res.data.filter.filter((item) => {
+                return item.display == true;
               });
-              this.tableAllIist = res.data.filter;
+              this.searchList = list;
               this.getTableList();
             }
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getTableList() {
       Http.getStorageList(this.query)
         .then((res) => {
           if (res.code == "0000") {
+            this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
             if (res.data.searchList.length) {
               this.tableData = res.data.searchList;
               this.total = res.page.page_total;
             }
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getCurrentChange(val) {
       this.query.pageNum = val;
@@ -403,18 +630,6 @@ export default {
     getSizeChange(val) {
       this.query.pageCount = val;
       this.getTableList();
-    },
-
-    // 编辑
-    onEdit() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要编辑的数据列！");
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message.warning("只能选择单个数据列编辑！");
-        return;
-      }
     },
     // 删除
     onDelete() {
@@ -445,7 +660,9 @@ export default {
             this.getTableList();
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     // table选中
     selectTableList(list) {
@@ -454,14 +671,16 @@ export default {
         query.push(item.id);
       });
       this.multipleSelection = query;
+      this.multipleSelectionInfo = list[0];
       this.form = [];
       list.forEach((item) => {
         let query = {
-          device_id: item.id,
-          device_name: item.name,
+          stationery_id: item.id,
+          stationery_name: item.stationery_name,
           receiver: "111",
           quantity: "1",
-          locate_site: "",
+          maxNumber: item.inventory,
+           locate_site: "",
           receiver_tel: "",
         };
         this.form.push(query);
@@ -469,26 +688,28 @@ export default {
       this.borrowList = [];
       list.forEach((item) => {
         let query = {
-          device_id: item.id,
-          device_name: item.name,
+          stationery_id: item.id,
+          stationery_name: item.stationery_name,
           borrower: "111",
           quantity: "1",
-          locate_site: "",
           borrower_org: "",
           borrower_time: "",
           borrower_tel: "",
           course_name: "",
           return_man: "",
           return_time: "",
+           maxNumber: item.inventory
         };
         this.borrowList.push(query);
       });
       this.repairList = [];
       list.forEach((item) => {
         let query = {
-          device_id: item.id,
-          device_name: item.name,
-          repair_content: "",
+          stationery_id: item.id,
+          stationery_name: item.stationery_name,
+          abolish_man: "111",
+          quantity: "1",
+          maxNumber: item.inventory
         };
         this.repairList.push(query);
       });

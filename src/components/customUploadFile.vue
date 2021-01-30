@@ -75,9 +75,9 @@ export default {
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
       const isLt2M = file.size / 1024 < 500;
 
-      if (!isJPG) {
-        this.$message.error("上传文件只能是 .xlsx 格式!");
-      }
+      // if (!isJPG) {
+      //   this.$message.error("上传文件只能是 .xlsx 格式!");
+      // }
       if (!isLt2M) {
         this.$message.error("上传文件大小不能超过 500k!");
       }

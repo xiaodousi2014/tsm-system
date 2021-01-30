@@ -739,22 +739,6 @@ export default {
               children: [],
             },
             {
-              id: 10,
-              menuId: '411',
-              name: '维修记录',
-              url: 'repair-record',
-              parentId: 6,
-              children: [],
-            },
-            {
-              id: 11,
-              menuId: '422',
-              name: '维修审核',
-              url: 'repair-examine',
-              parentId: 6,
-              children: [],
-            },
-            {
               id: 12,
               menuId: '433',
               name: '报废记录',
@@ -832,38 +816,6 @@ export default {
               menuId: '47',
               name: '请领审核',
               url: 'receive-examine',
-              parentId: 7,
-              children: [],
-            },
-            {
-              id: 8,
-              menuId: '48',
-              name: '借用记录',
-              url: 'borrow-record',
-              parentId: 7,
-              children: [],
-            },
-            {
-              id: 9,
-              menuId: '49',
-              name: '借用审核',
-              url: 'borrow-examine',
-              parentId: 7,
-              children: [],
-            },
-            {
-              id: 10,
-              menuId: '411',
-              name: '维修记录',
-              url: 'repair-record',
-              parentId: 7,
-              children: [],
-            },
-            {
-              id: 11,
-              menuId: '422',
-              name: '维修审核',
-              url: 'repair-examine',
               parentId: 7,
               children: [],
             },
@@ -975,8 +927,6 @@ export default {
     },
     getRouter(parent, child) {
       // debugger
-      console.log(parent)
-      console.log(child)
 
       this.$router.push(parent.url + child.url)
     },

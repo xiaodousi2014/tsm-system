@@ -7,7 +7,7 @@ export default {
         return Http.get(`${rt2}/device/plan/infoType`)
     },
     getPlanList(params) {
-        return Http.post(`${rt2}/device/plan/list`, params)
+        return Http.post(`${rt2}/device/plan/query`, params)
     },
     onPlanRevoke(params) {
         let query = {
@@ -19,10 +19,28 @@ export default {
     getBorrowTitle() {
         return Http.get(`${rt2}/device/lent/infoType`)
     },
+    getBorrowAgree(query) {
+        return Http.get(`${rt2}/device/lent/audit`,query)
+    },
     getBorrowList(params) {
-        return Http.post(`${rt2}/device/lent/list`, params)
+        return Http.post(`${rt2}/device/lent/query`, params)
     },
     // 设备登记
+    onListCreate(query) {
+      return Http.post(`${rt2}/device`, query) 
+    },
+    onListEdit(query) {
+        return Http.put(`${rt2}/device`, query) 
+      },
+    onCanBorrow(query) {
+        return Http.post(`${rt2}/device/toLent`, query)
+    },
+    onInventory(query) {
+        return Http.post(`${rt2}/device/check`, query)
+    },
+    checkedTrue(query) {
+        return Http.post(`${rt2}/device/handle`, query)
+    },
     getStockTitle() {
         let query = {
             infoType: 't_import_record'
@@ -44,34 +62,46 @@ export default {
         return Http.get(`${rt2}/device/use/infoType`)
     },
     getReciveList(params) {
-        return Http.post(`${rt2}/device/use/list`, params)
+        return Http.post(`${rt2}/device/use/query`, params)
+    },
+    getReciveAgree(query) {
+        return Http.get(`${rt2}/device/use/audit`,query)
+    },
+    getExport(params) {
+        return Http.download(`${rt2}/common/export`, params)
     },
     // 维修
     getRepairTitle() {
         return Http.get(`${rt2}/device/repair/infoType`)
     },
+    getRepairAgree(query) {
+        return Http.get(`${rt2}/device/repair/audit`,query)
+    },
     getRepairList(params) {
-        return Http.post(`${rt2}/device/repair/list`, params)
+        return Http.post(`${rt2}/device/repair/query`, params)
     },
     //报废
+    getScrapDelete(query) {
+      return Http.delete(`${rt2}/device/abolish`, query)
+    },
     getScrapTitle() {
         return Http.get(`${rt2}/device/abolish/infoType`)
     },
     getScrapList(params) {
-        return Http.post(`${rt2}/device/abolish/list`, params)
+        return Http.post(`${rt2}/device/abolish/query`, params)
     },
     // 库存记录 //
     getStorageTitle() {
         return Http.get(`${rt2}/device/infoType`)
     },
     getStorageList(params) {
-        return Http.post(`${rt2}/device/list`, params)
+        return Http.post(`${rt2}/device/query`, params)
     },
     getDeleteStorageTitle() {
         return Http.get(`${rt2}/device/dirty/infoType`)
     },
     getDeleteStorageList(params) {
-        return Http.post(`${rt2}/device/dirty/list`, params)
+        return Http.post(`${rt2}/device/dirty/query`, params)
     },
     putStorageList(params) {
         let query = {
@@ -105,18 +135,21 @@ export default {
         return Http.post(`${rt2}/device/abolish`, query)
     },
     // 盘点记录
+    getInventoryExport(params) {
+        return Http.download(`${rt2}/device/check/export`, params)
+    },
     getInventoryTitle() {
         return Http.get(`${rt2}/device/check/infoType`)
     },
     getInventoryList(params) {
-        return Http.post(`${rt2}/device/check/list`, params)
+        return Http.post(`${rt2}/device/check/query`, params)
     },
     // 维护管理
     getMaintainTitle() {
         return Http.get(`${rt2}/device/infoType`)
     },
     getMaintainList(params) {
-        return Http.post(`${rt2}/device/list`, params)
+        return Http.post(`${rt2}/device/query`, params)
     },
 
 }

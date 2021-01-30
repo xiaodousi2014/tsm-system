@@ -4,8 +4,8 @@
     <!--搜索表单-->
     <div>
       <el-button  icon="el-icon-edit" size="small">检索</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onReturn()">归还</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
+<el-button  icon="el-icon-search" size="small" @click="onAgree()">维修结算</el-button>
+<el-button  icon="el-icon-search" size="small" @click="onReturn()">待报废</el-button>
 
     </div>
     <custom-search :searchList = searchList></custom-search>
@@ -29,7 +29,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/consumablesManager'
+import Http from '@/api/deviceManage'
 import customTable from '../../../components/customTable'
 export default {
   name: "declareWarehousing",
@@ -39,17 +39,21 @@ export default {
       query: {
         orderField: 'id',
         orderOrient: '2',
-        indexArray: [],
+        indexArray: [
+          {
+          col_type: 'init',
+          col_name: 'repair_status',
+          indexType: '1',
+          value:'1'
+          }
+        ],
         pageNum: 1,
         pageCount: 10,
       },
       total: 0,
      tableData: [],
       tableAllIist: [],
-      searchList: [
-       
-      
-      ],
+      searchList: [],
       multipleSelection: [],
     };
   },
@@ -57,32 +61,69 @@ export default {
     this.getAllField()
   },
   methods: {
+     //同意
+    onAgree() {
+      if(!this.multipleSelection.length) {
+       this.$message.warning('请选择要维修结算的数据列！');
+       return
+     }
+     if(this.multipleSelection.length > 1) {
+       this.$message.warning('只能选择单个数据列！');
+       return
+     }
+      Http.getRepairAgree({id: this.multipleSelection[0].id,status:3})
+        .then((res) => {
+          if(res.code == '0000') {
+            this.$message.success('操作成功！')
+            this.getTableList();
+          }
+        })
+         .catch((res) => {this.$message.error(res.msg || '系统异常')})
+    },
+    //驳回
+    onReturn() {
+       if(!this.multipleSelection.length) {
+       this.$message.warning('请选择要待报废的数据列！');
+       return
+     }
+     if(this.multipleSelection.length > 1) {
+       this.$message.warning('只能选择单个数据列编辑！');
+       return
+     }
+      Http.getRepairAgree({id: this.multipleSelection[0].id,status:2})
+        .then((res) => {
+          if(res.code == '0000') {
+            this.$message.success('操作成功！')
+            this.getTableList();
+          }
+        })
+        .catch((res) => {this.$message.error(res.msg || '系统异常')})
+    },
     getAllField() {
       Http.getRepairTitle()
         .then((res) => {
           if(res.code == '0000') {
            if(res.data.filter.length) {
-             res.data.filter.forEach(item => {
-               item.checked = true;
-             });
-             this.tableAllIist = res.data.filter;
              this.getTableList();
           }
           }
         })
-        .catch(() => {})
+        .catch((res) => {this.$message.error(res.msg || '系统异常')})
     },
     getTableList() {
        Http.getRepairList(this.query)
         .then((res) => {
           if(res.code == '0000') {
+             this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
            if(res.data.searchList.length) {
              this.tableData = res.data.searchList;
              this.total = res.page.page_total;
           }
           }
         })
-        .catch(() => {})
+      .catch((res) => {this.$message.error(res.msg || '系统异常')})
     },
       getCurrentChange(val) {
       this.query.pageNum = val;

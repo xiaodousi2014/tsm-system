@@ -3,7 +3,9 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-edit" size="small">检索</el-button>
+      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+        >检索</el-button
+      >
       <el-button icon="el-icon-search" size="small" @click="onReturn()"
         >归还</el-button
       >
@@ -11,7 +13,6 @@
         >导出</el-button
       >
     </div>
-    <custom-search :searchList="searchList"></custom-search>
     <custom-table-select :list="tableAllIist"></custom-table-select>
     <custom-table
       :tableAllIist="tableAllIist"
@@ -28,6 +29,9 @@
         :total="total"
       />
     </div>
+        <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+      <custom-search :searchList="searchList" @Search="Search"></custom-search>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -53,38 +57,52 @@ export default {
       tableAllIist: [],
       searchList: [],
       multipleSelection: [],
+      searchModal: false,
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
+      Search(event) {
+      this.query.indexArray = [];
+      this.query.indexArray = event;
+      this.searchModal = false;
+      this.getTableList();
+    },
     getAllField() {
       Http.getMaintainTitle()
         .then((res) => {
           if (res.code == "0000") {
             if (res.data.filter.length) {
-              res.data.filter.forEach((item) => {
-                item.checked = true;
+              let list = res.data.filter.filter((item) => {
+                return item.display == true;
               });
-              this.tableAllIist = res.data.filter;
+              this.searchList = list;
               this.getTableList();
             }
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getTableList() {
       Http.getMaintainList(this.query)
         .then((res) => {
           if (res.code == "0000") {
+            this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
             if (res.data.searchList.length) {
               this.tableData = res.data.searchList;
               this.total = res.page.page_total;
             }
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getCurrentChange(val) {
       this.query.pageNum = val;

@@ -7,7 +7,7 @@ export default {
         return Http.get(`${rt2}/material/plan/infoType`)
     },
     getPlanList(params) {
-        return Http.post(`${rt2}/material/plan/list`, params)
+        return Http.post(`${rt2}/material/plan/query`, params)
     },
     onPlanRevoke(params) {
         let query = {
@@ -19,10 +19,28 @@ export default {
     getBorrowTitle() {
         return Http.get(`${rt2}/material/lent/infoType`)
     },
+    getBorrowAgree(query) {
+        return Http.get(`${rt2}/material/lent/audit`,query)
+    },
     getBorrowList(params) {
-        return Http.post(`${rt2}/material/lent/list`, params)
+        return Http.post(`${rt2}/material/lent/query`, params)
     },
     // 设备登记
+    onListCreate(query) {
+      return Http.post(`${rt2}/material`, query) 
+    },
+    onListEdit(query) {
+        return Http.put(`${rt2}/material`, query) 
+      },
+    onCanBorrow(query) {
+        return Http.post(`${rt2}/material/toLent`, query)
+    },
+    onInventory(query) {
+        return Http.post(`${rt2}/material/check`, query)
+    },
+    checkedTrue(query) {
+        return Http.post(`${rt2}/material/handle`, query)
+    },
     getStockTitle() {
         let query = {
             infoType: 't_import_record'
@@ -44,34 +62,46 @@ export default {
         return Http.get(`${rt2}/material/use/infoType`)
     },
     getReciveList(params) {
-        return Http.post(`${rt2}/material/use/list`, params)
+        return Http.post(`${rt2}/material/use/query`, params)
+    },
+    getReciveAgree(query) {
+        return Http.get(`${rt2}/material/use/audit`,query)
+    },
+    getExport(params) {
+        return Http.download(`${rt2}/common/export`, params)
     },
     // 维修
     getRepairTitle() {
         return Http.get(`${rt2}/material/repair/infoType`)
     },
+    getRepairAgree(query) {
+        return Http.get(`${rt2}/material/repair/audit`,query)
+    },
     getRepairList(params) {
-        return Http.post(`${rt2}/material/repair/list`, params)
+        return Http.post(`${rt2}/material/repair/query`, params)
     },
     //报废
+    getScrapDelete(query) {
+      return Http.delete(`${rt2}/material/abolish`, query)
+    },
     getScrapTitle() {
         return Http.get(`${rt2}/material/abolish/infoType`)
     },
     getScrapList(params) {
-        return Http.post(`${rt2}/material/abolish/list`, params)
+        return Http.post(`${rt2}/material/abolish/query`, params)
     },
     // 库存记录 //
     getStorageTitle() {
         return Http.get(`${rt2}/material/infoType`)
     },
     getStorageList(params) {
-        return Http.post(`${rt2}/material/list`, params)
+        return Http.post(`${rt2}/material/query`, params)
     },
     getDeleteStorageTitle() {
         return Http.get(`${rt2}/material/dirty/infoType`)
     },
     getDeleteStorageList(params) {
-        return Http.post(`${rt2}/material/dirty/list`, params)
+        return Http.post(`${rt2}/material/dirty/query`, params)
     },
     putStorageList(params) {
         let query = {
@@ -99,24 +129,24 @@ export default {
     },
     // 报废
     onStorageScrapSumit(params) {
-        let query = {
-            ids: params
-        }
-        return Http.post(`${rt2}/material/abolish`, query)
+        return Http.post(`${rt2}/material/abolish`, params)
     },
     // 盘点记录
+    getInventoryExport(params) {
+        return Http.download(`${rt2}/material/check/export`, params)
+    },
     getInventoryTitle() {
         return Http.get(`${rt2}/material/check/infoType`)
     },
     getInventoryList(params) {
-        return Http.post(`${rt2}/material/check/list`, params)
+        return Http.post(`${rt2}/material/check/query`, params)
     },
     // 维护管理
     getMaintainTitle() {
         return Http.get(`${rt2}/material/infoType`)
     },
     getMaintainList(params) {
-        return Http.post(`${rt2}/material/list`, params)
+        return Http.post(`${rt2}/material/query`, params)
     },
 
 }

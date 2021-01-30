@@ -9,12 +9,15 @@
       <template v-for="(item, index) in tableAllIist">
         
         <el-table-column
-          v-if="item.checked&& item.name != 'id'"
+          v-if="item.display&&item.favorate"
           :key="index"
           :prop="item.name"
           :label="item.comment"
           width=""
         >
+        <template slot-scope="scope" >
+          {{setArrayName(scope.row, item)}}
+        </template>
         </el-table-column>
       </template>
     </el-table>
@@ -41,6 +44,19 @@ export default {
     };
   },
   methods: {
+    setArrayName(row, item) {
+      if(item.type == 'map') {
+         let name = '';
+           for(let i in JSON.parse(item.itemdata)){
+             if(row[item.name] == i) {
+             name = JSON.parse(item.itemdata)[i];
+            }
+           }
+           return name;
+      }
+      return row[item.name]
+     
+    },
       handleSelectionChange(val) {
         console.log(val)
         this.multipleSelection = val;

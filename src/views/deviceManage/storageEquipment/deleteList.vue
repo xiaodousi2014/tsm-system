@@ -66,27 +66,30 @@ export default {
         .then((res) => {
           if (res.code == "0000") {
             if (res.data.filter.length) {
-              res.data.filter.forEach((item) => {
-                item.checked = true;
-              });
-              this.tableAllIist = res.data.filter;
               this.getTableList();
             }
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getTableList() {
       Http.getDeleteStorageList(this.query)
         .then((res) => {
           if (res.code == "0000") {
+            this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
             if (res.data.searchList.length) {
               this.tableData = res.data.searchList;
               this.total = res.page.page_total;
             }
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getCurrentChange(val) {
       this.query.pageNum = val;
@@ -107,7 +110,9 @@ export default {
             this.multipleSelection = [];
           }
         })
-        .catch(() => {});
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
       //  this.$router.push('storage-equipment');
     },
     // table选中

@@ -3,88 +3,157 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button  icon="el-icon-edit" size="small">检索</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onReturn()">归还</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
-
+      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+        >检索</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onAgree()"
+        >维修结算</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onReturn()"
+        >待报废</el-button
+      >
     </div>
-    <custom-search :searchList = searchList></custom-search>
-    <custom-table-select
-      :list="tableAllIist"
-    ></custom-table-select>
-    <custom-table :tableAllIist = tableAllIist :tableData = tableData @selectTableList= selectTableList></custom-table>
+    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <custom-table
+      :tableAllIist="tableAllIist"
+      :tableData="tableData"
+      @selectTableList="selectTableList"
+    ></custom-table>
     <!-- 分页 -->
-    <div class="pagination" >
-       <Pagination
+    <div class="pagination">
+      <Pagination
         ref="Pagination"
         @getSizeChange="getSizeChange"
         @getCurrentChange="getCurrentChange"
         :pagination="query"
-        :total='total'
+        :total="total"
       />
     </div>
+     <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+      <custom-search :searchList="searchList" @Search="Search"></custom-search>
+    </el-dialog>
   </div>
 </template>
 <script>
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/deviceManage'
-import customTable from '../../../components/customTable'
+import Http from "@/api/deviceManage";
+import customTable from "../../../components/customTable";
 export default {
   name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination},
+  components: { customTableSelect, customSearch, customTable, Pagination },
   data() {
     return {
       query: {
-        orderField: 'id',
-        orderOrient: '2',
-        indexArray: [],
+        orderField: "id",
+        orderOrient: "2",
+        indexArray: [
+          {
+            col_type: "init",
+            col_name: "repair_status",
+            indexType: "1",
+            value: "1",
+          },
+        ],
         pageNum: 1,
         pageCount: 10,
       },
       total: 0,
-     tableData: [],
+      tableData: [],
       tableAllIist: [],
-      searchList: [
-       
-      
-      ],
+      searchList: [],
       multipleSelection: [],
+      searchModal: false,
     };
   },
   mounted() {
-    this.getAllField()
+    this.getAllField();
   },
   methods: {
+     Search(event) {
+      this.query.indexArray = [];
+      this.query.indexArray = event;
+      this.getTableList();
+      this.searchModal = false;
+    },
+    //同意
+    onAgree() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要维修结算的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列！");
+        return;
+      }
+      Http.getRepairAgree({ id: this.multipleSelection[0].id, status: 3 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("操作成功！");
+            this.getTableList();
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    //驳回
+    onReturn() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要待报废的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列编辑！");
+        return;
+      }
+      Http.getRepairAgree({ id: this.multipleSelection[0].id, status: 2 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("操作成功！");
+            this.getTableList();
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
     getAllField() {
       Http.getRepairTitle()
         .then((res) => {
-          if(res.code == '0000') {
-           if(res.data.filter.length) {
-             res.data.filter.forEach(item => {
-               item.checked = true;
-             });
-             this.tableAllIist = res.data.filter;
-             this.getTableList();
-          }
+          if (res.code == "0000") {
+            if (res.data.filter.length) {
+              let list = res.data.filter.filter((item) => {
+                return item.display == true;
+              });
+              this.searchList = list;
+              this.getTableList();
+            }
           }
         })
-        .catch(() => {})
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getTableList() {
-       Http.getRepairList(this.query)
+      Http.getRepairList(this.query)
         .then((res) => {
-          if(res.code == '0000') {
-           if(res.data.searchList.length) {
-             this.tableData = res.data.searchList;
-             this.total = res.page.page_total;
-          }
+          if (res.code == "0000") {
+            this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
+            if (res.data.searchList.length) {
+              this.tableData = res.data.searchList;
+              this.total = res.page.page_total;
+            }
           }
         })
-        .catch(() => {})
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
-      getCurrentChange(val) {
+    getCurrentChange(val) {
       this.query.pageNum = val;
       this.getTableList();
     },
@@ -94,11 +163,10 @@ export default {
     },
     // table选中
     selectTableList(list) {
-     this.multipleSelection = list;
-    }
+      this.multipleSelection = list;
+    },
   },
-  created() {
-  },
+  created() {},
 };
 </script>
 <style scoped lang="less">
@@ -127,7 +195,7 @@ export default {
   }
 }
 .pagination {
-  margin-top:20px;
+  margin-top: 20px;
 }
 .showIcon i {
   cursor: pointer;

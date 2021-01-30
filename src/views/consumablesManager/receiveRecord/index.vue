@@ -3,88 +3,130 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button  icon="el-icon-edit" size="small">检索</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onReturn()">归还</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
-
+      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+        >检索</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onExport()"
+        >导出</el-button
+      >
     </div>
-    <custom-search :searchList = searchList></custom-search>
-    <custom-table-select
-      :list="tableAllIist"
-    ></custom-table-select>
-    <custom-table :tableAllIist = tableAllIist :tableData = tableData @selectTableList= selectTableList></custom-table>
+    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <custom-table
+      :tableAllIist="tableAllIist"
+      :tableData="tableData"
+      @selectTableList="selectTableList"
+    ></custom-table>
     <!-- 分页 -->
-    <div class="pagination" >
-       <Pagination
+    <div class="pagination">
+      <Pagination
         ref="Pagination"
         @getSizeChange="getSizeChange"
         @getCurrentChange="getCurrentChange"
         :pagination="query"
-        :total='total'
+        :total="total"
       />
     </div>
+      <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+      <custom-search :searchList="searchList" @Search="Search"></custom-search>
+    </el-dialog>
   </div>
 </template>
 <script>
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/consumablesManager'
-import customTable from '../../../components/customTable'
+import Http from "@/api/consumablesManager";
+import customTable from "../../../components/customTable";
 export default {
   name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination},
+  components: { customTableSelect, customSearch, customTable, Pagination },
   data() {
     return {
       query: {
-        orderField: 'id',
-        orderOrient: '2',
+        orderField: "id",
+        orderOrient: "2",
         indexArray: [],
         pageNum: 1,
         pageCount: 10,
       },
       total: 0,
-     tableData: [],
+      tableData: [],
       tableAllIist: [],
-      searchList: [
-       
-      
-      ],
+      searchList: [],
       multipleSelection: [],
+      searchModal: false,
     };
   },
   mounted() {
-    this.getAllField()
+    this.getAllField();
   },
   methods: {
+     Search(event) {
+      this.query.indexArray = [];
+      this.query.indexArray = event;
+      this.getTableList();
+      this.searchModal = false;
+    },
+    // 导出
+    onExport() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要导出的数据列！");
+        return;
+      }
+      let query = [];
+      this.multipleSelection.forEach((item) => {
+        query.push(item.id);
+      });
+      const link = document.createElement("a");
+      Http.getExport({ ids: query, infoType: "t_stationery_use" })
+        .then((res) => {
+          debugger;
+          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = `设备请领表.xlsx`;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    },
     getAllField() {
       Http.getReciveTitle()
         .then((res) => {
-          if(res.code == '0000') {
-           if(res.data.filter.length) {
-             res.data.filter.forEach(item => {
-               item.checked = true;
-             });
-             this.tableAllIist = res.data.filter;
-             this.getTableList();
-          }
+          if (res.code == "0000") {
+            if (res.data.filter.length) {
+              let list = res.data.filter.filter((item) => {
+                return item.display == true;
+              });
+              this.searchList = list;
+              this.getTableList();
+            }
           }
         })
-        .catch(() => {})
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getTableList() {
-       Http.getReciveList(this.query)
+      Http.getReciveList(this.query)
         .then((res) => {
-          if(res.code == '0000') {
-           if(res.data.searchList.length) {
-             this.tableData = res.data.searchList;
-             this.total = res.page.page_total;
-          }
+          if (res.code == "0000") {
+            this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
+            if (res.data.searchList.length) {
+              this.tableData = res.data.searchList;
+              this.total = res.page.page_total;
+            }
           }
         })
-        .catch(() => {})
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
-      getCurrentChange(val) {
+    getCurrentChange(val) {
       this.query.pageNum = val;
       this.getTableList();
     },
@@ -94,22 +136,21 @@ export default {
     },
     // 编辑
     onEdit() {
-      if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要编辑的数据列！');
-       return
-     }
-     if(this.multipleSelection.length > 1) {
-       this.$message.warning('只能选择单个数据列编辑！');
-       return
-     }
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要编辑的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列编辑！");
+        return;
+      }
     },
     // table选中
     selectTableList(list) {
-     this.multipleSelection = list;
-    }
+      this.multipleSelection = list;
+    },
   },
-  created() {
-  },
+  created() {},
 };
 </script>
 <style scoped lang="less">
@@ -138,7 +179,7 @@ export default {
   }
 }
 .pagination {
-  margin-top:20px;
+  margin-top: 20px;
 }
 .showIcon i {
   cursor: pointer;

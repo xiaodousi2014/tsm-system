@@ -22,6 +22,9 @@ axios.defaults.cache = false
 axios.interceptors.response.use(
     response => {
         // 接口拦截，用户未登陆
+        if(Object.getPrototypeOf(response.data) == Blob.prototype) {
+            return Promise.resolve(response)
+        }
         if (response.data.code !== '0000') {
             return Promise.reject(response.data)
         } else {
@@ -108,7 +111,16 @@ export default class Http {
         }
         return Http.send(config, loading)
     }
-
+    static download(url, params = {}, loading) {
+        const config = {
+            responseType:'blob',
+            method: 'post',
+            url,
+            data: params
+        }
+        return Http.send(config, loading)
+      }
+    
     static get(url, params = {}, loading) {
         let urlParams = []
         Object.keys(params).forEach((key) => {

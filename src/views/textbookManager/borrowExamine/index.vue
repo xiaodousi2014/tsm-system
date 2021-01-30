@@ -3,88 +3,182 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button  icon="el-icon-edit" size="small">检索</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onReturn()">归还</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
-
+      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+        >检索</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onAgree()"
+        >同意</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onReturn()"
+        >驳回</el-button
+      >
+      <el-button icon="el-icon-search" size="small" @click="onBack()"
+        >归还</el-button
+      >
     </div>
-    <custom-search :searchList = searchList></custom-search>
-    <custom-table-select
-      :list="tableAllIist"
-    ></custom-table-select>
-    <custom-table :tableAllIist = tableAllIist :tableData = tableData @selectTableList= selectTableList></custom-table>
+
+    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <custom-table
+      :tableAllIist="tableAllIist"
+      :tableData="tableData"
+      @selectTableList="selectTableList"
+    ></custom-table>
     <!-- 分页 -->
-    <div class="pagination" >
-       <Pagination
+    <div class="pagination">
+      <Pagination
         ref="Pagination"
         @getSizeChange="getSizeChange"
         @getCurrentChange="getCurrentChange"
         :pagination="query"
-        :total='total'
+        :total="total"
       />
     </div>
+    <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+      <custom-search :searchList="searchList" @Search="Search"></custom-search>
+    </el-dialog>
   </div>
 </template>
 <script>
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/textbookManager'
-import customTable from '../../../components/customTable'
+import Http from "@/api/textbookManager";
+import customTable from "../../../components/customTable";
 export default {
   name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination},
+  components: { customTableSelect, customSearch, customTable, Pagination },
   data() {
     return {
       query: {
-        orderField: 'id',
-        orderOrient: '2',
-        indexArray: [],
+        orderField: "id",
+        orderOrient: "2",
+        indexArray: [
+          {
+            col_type: "init",
+            col_name: "lent_status",
+            indexType: "1",
+            value: "1",
+          },
+        ],
         pageNum: 1,
         pageCount: 10,
       },
       total: 0,
-     tableData: [],
+      tableData: [],
       tableAllIist: [],
-      searchList: [
-       
-      
-      ],
+      searchList: [],
       multipleSelection: [],
+      searchModal: false,
     };
   },
   mounted() {
-    this.getAllField()
+    this.getAllField();
   },
   methods: {
+    Search(event) {
+      this.query.indexArray = [];
+      this.query.indexArray = event;
+      this.getTableList();
+      this.searchModal = false;
+    },
+    //同意
+    onAgree() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要同意的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列编辑！");
+        return;
+      }
+      Http.getBorrowAgree({ id: this.multipleSelection[0].id, status: 2 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("操作成功！");
+            this.getTableList();
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    //归还
+    onBack() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要归还的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列归还！");
+        return;
+      }
+      Http.getBorrowAgree({ id: this.multipleSelection[0].id, status: 4 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("操作成功！");
+            this.getTableList();
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    //驳回
+    onReturn() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要驳回的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列编辑！");
+        return;
+      }
+      Http.getBorrowAgree({ id: this.multipleSelection[0].id, status: 3 })
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("操作成功！");
+            this.getTableList();
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
     getAllField() {
       Http.getBorrowTitle()
         .then((res) => {
-          if(res.code == '0000') {
-           if(res.data.filter.length) {
-             res.data.filter.forEach(item => {
-               item.checked = true;
-             });
-             this.tableAllIist = res.data.filter;
-             this.getTableList();
-          }
+          if (res.code == "0000") {
+            if (res.data.filter.length) {
+              let list = res.data.filter.filter((item) => {
+                return item.display == true;
+              });
+              this.searchList = list;
+              this.getTableList();
+            }
           }
         })
-        .catch(() => {})
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     getTableList() {
-       Http.getBorrowList(this.query)
+      Http.getBorrowList(this.query)
         .then((res) => {
-          if(res.code == '0000') {
-           if(res.data.searchList.length) {
-             this.tableData = res.data.searchList;
-             this.total = res.page.page_total;
-          }
+          if (res.code == "0000") {
+            this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
+            if (res.data.searchList.length) {
+              this.tableData = res.data.searchList;
+              this.total = res.page.page_total;
+            }
           }
         })
-        .catch(() => {})
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
     },
-      getCurrentChange(val) {
+    getCurrentChange(val) {
       this.query.pageNum = val;
       this.getTableList();
     },
@@ -94,52 +188,53 @@ export default {
     },
     // 上传附件
     onUploadAttachment() {
-       if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要上传附件的数据列！');
-       return
-     }
-     if(this.multipleSelection.length > 1) {
-       this.$message.warning('只能选择单个数据列上传附件！');
-       return
-     }
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要上传附件的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列上传附件！");
+        return;
+      }
     },
     // 编辑
     onEdit() {
-      if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要编辑的数据列！');
-       return
-     }
-     if(this.multipleSelection.length > 1) {
-       this.$message.warning('只能选择单个数据列编辑！');
-       return
-     }
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要编辑的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列编辑！");
+        return;
+      }
     },
     // 删除
     onDelete() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要删除的数据列！');
-       return
-     }
-      this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-        this.$message.success('删除成功')
-        }).catch(() => {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要删除的数据列！");
+        return;
+      }
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$message.success("删除成功");
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除",
+          });
         });
     },
     // table选中
     selectTableList(list) {
-     this.multipleSelection = list;
+      this.multipleSelection = list;
     },
   },
-  created() {
-  },
+  created() {},
 };
 </script>
 <style scoped lang="less">
@@ -168,7 +263,7 @@ export default {
   }
 }
 .pagination {
-  margin-top:20px;
+  margin-top: 20px;
 }
 .showIcon i {
   cursor: pointer;

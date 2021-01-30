@@ -16,6 +16,12 @@ export default {
    component: () => import('@/views/consumablesManager/planDeclare/index.vue')
   },
   {
+    path: 'delete-list',
+    name: 'teaching-equipment-plan-declare',
+    meta: [{name: '删除列表', parentName: '易耗品管理', path: '/delete-list'}],
+    component: () => import('@/views/consumablesManager/storageEquipment/deleteList.vue')
+   },
+  {
    path: 'in-stock-register',
    name: 'consumables-manage-in-stock-register',
    meta: [{name: '入库登记', parentName: '易耗品管理', path: '/declare-in-stock'}],
