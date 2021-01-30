@@ -135,8 +135,8 @@ export default {
       this.getTableList();
     },
     getSizeChange(val) {
-      this.query.pageCount = val;
-      this.getTableList();
+      this.query.pageCount = val
+      this.getTableList()
     },
     // 删除
     onDelete() {

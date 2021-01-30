@@ -7,19 +7,21 @@
 <el-button  icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
 
     </div>
-    <custom-search :searchList = searchList></custom-search>
-    <custom-table-select
-      :list="tableAllIist"
-    ></custom-table-select>
-    <custom-table :tableAllIist = tableAllIist :tableData = tableData @selectTableList= selectTableList></custom-table>
+    <custom-search :searchList="searchList"></custom-search>
+    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <custom-table
+      :tableAllIist="tableAllIist"
+      :tableData="tableData"
+      @selectTableList="selectTableList"
+    ></custom-table>
     <!-- 分页 -->
-    <div class="pagination" >
-       <Pagination
+    <div class="pagination">
+      <Pagination
         ref="Pagination"
         @getSizeChange="getSizeChange"
         @getCurrentChange="getCurrentChange"
         :pagination="query"
-        :total='total'
+        :total="total"
       />
     </div>
   </div>
@@ -31,8 +33,8 @@ import customSearch from "../../../components/customSearch";
 import Http from '@/api/deviceManage'
 import customTable from '../../../components/customTable'
 export default {
-  name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination},
+  name: 'declareWarehousing',
+  components: { customTableSelect, customSearch, customTable, Pagination },
   data() {
     return {
       query: {
@@ -43,14 +45,11 @@ export default {
         pageCount: 10,
       },
       total: 0,
-     tableData: [],
+      tableData: [],
       tableAllIist: [],
-      searchList: [
-       
-      
-      ],
+      searchList: [],
       multipleSelection: [],
-    };
+    }
   },
   mounted() {
     this.getAllField()
@@ -105,54 +104,56 @@ export default {
         })
         .catch((res) => {this.$message.error(res.msg || '系统异常')})
     },
-      getCurrentChange(val) {
-      this.query.pageNum = val;
-      this.getTableList();
+    getCurrentChange(val) {
+      this.query.pageNum = val
+      this.getTableList()
     },
     getSizeChange(val) {
-      this.query.pageCount = val;
-      this.getTableList();
+      this.query.pageCount = val
+      this.getTableList()
     },
    
 
     // 撤销操作
     onRevoke() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要撤销操作的数据列！');
-       return
-     }
+      if (!this.multipleSelection.length) {
+        this.$message.warning('请选择要撤销操作的数据列！')
+        return
+      }
     },
     // 提交
     onSumit() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要提交的数据列！');
-       return
-     }
+      if (!this.multipleSelection.length) {
+        this.$message.warning('请选择要提交的数据列！')
+        return
+      }
     },
     // 编辑
     onEdit() {
-      if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要编辑的数据列！');
-       return
-     }
-     if(this.multipleSelection.length > 1) {
-       this.$message.warning('只能选择单个数据列编辑！');
-       return
-     }
+      if (!this.multipleSelection.length) {
+        this.$message.warning('请选择要编辑的数据列！')
+        return
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning('只能选择单个数据列编辑！')
+        return
+      }
     },
     // 删除
     onDelete() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要删除的数据列！');
-       return
-     }
+      if (!this.multipleSelection.length) {
+        this.$message.warning('请选择要删除的数据列！')
+        return
+      }
       this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-        this.$message.success('删除成功')
-        }).catch(() => {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          this.$message.success('删除成功')
+        })
+        .catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
@@ -162,12 +163,12 @@ export default {
    
     // table选中
     selectTableList(list) {
-     this.multipleSelection = list;
+      this.multipleSelection = list
     },
   },
   created() {
   },
-};
+}
 </script>
 <style scoped lang="less">
 .showIcon {
@@ -195,7 +196,7 @@ export default {
   }
 }
 .pagination {
-  margin-top:20px;
+  margin-top: 20px;
 }
 .showIcon i {
   cursor: pointer;
