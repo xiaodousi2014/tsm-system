@@ -63,7 +63,7 @@ export default {
       } else {
         this.fileList = [];
         // console.log(res)
-        this.$message.error(res.msg);
+        this.$message.error(res.msg|| '系统异常');
       }
     },
     closeModal() {

@@ -12,7 +12,7 @@
     <custom-table-select
       :list="tableAllIist"
     ></custom-table-select>
-    <custom-table :tableAllIist = tableAllIist :tableData = tableData @selectTableList= selectTableList></custom-table>
+    <custom-table :tableAllIist = tableAllIist :tableData = tableData @selectTableList= selectTableList @getAttachFile='getAttachFile'></custom-table>
     <!-- 分页 -->
     <div class="pagination" >
        <Pagination
@@ -29,7 +29,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/deviceManage'
+import Http from '@/api/consumablesManager'
 import customTable from '../../../components/customTable'
 export default {
   name: "declareWarehousing",
@@ -61,6 +61,22 @@ export default {
     this.getAllField()
   },
   methods: {
+    getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_stationery_repair" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
      //同意
     onAgree() {
       if(!this.multipleSelection.length) {

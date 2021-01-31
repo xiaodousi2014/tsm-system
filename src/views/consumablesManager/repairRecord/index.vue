@@ -13,6 +13,7 @@
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+      @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -30,7 +31,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from '@/api/deviceManage'
+import Http from '@/api/consumablesManager'
 import customTable from '../../../components/customTable'
 export default {
   name: 'declareWarehousing',
@@ -55,28 +56,33 @@ export default {
     this.getAllField()
   },
   methods: {
-      // 导出
-    onExport() {
-     if(!this.multipleSelection.length) {
-       this.$message.warning('请选择要导出的数据列！');
-       return
-     }
-     let query = [];
-     this.multipleSelection.forEach(item => {
-         query.push(item.id);
-     })
-     const link = document.createElement('a')
-      Http.getExport({ids: query,infoType:'t_device_repair'})
-        .then((res) => {
-          debugger
+    getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_stationery_repair" , file: query.file})
+      .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
-        let objectUrl = URL.createObjectURL(blob);
-        link.href = objectUrl;
-        link.download = `设备维修表.xlsx`;
-        link.click();
-        URL.revokeObjectURL(objectUrl);
-        })
-        .catch((res) =>{console.log(res)} )
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
+     // 导出
+    onExport() {
+         if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要导出的数据列！");
+        return;
+      }
+       let query = [];
+      this.multipleSelection.forEach((item) => {
+        query.push(item.id);
+      });
+      window.open(`http://10.8.145.43:8190/common/attachment/export?ids=${query.toString()}&&infoType=t_stationery_repair`)
     },
     getAllField() {
       Http.getRepairTitle()

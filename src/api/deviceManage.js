@@ -2,6 +2,15 @@ import Http from '../utils/axios'
 // const rt = 'http://139.198.188.175:8090/'
 const rt2 = 'http://10.8.145.43:8190'
 export default {
+    UploadImage(query) {
+     return Http.put(`${query.url}`, query.file)
+    },
+    getAttachFile(query) {
+      return Http.download(`${rt2}/common/showfile`, query)
+    },
+    onTemplateDown(query) {
+        return Http.download(`${rt2}/common/download_TemplateFile`, query)
+    },
     //计划申报
     getPlanTitle() {
         return Http.get(`${rt2}/device/plan/infoType`)

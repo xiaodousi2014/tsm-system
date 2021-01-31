@@ -15,6 +15,7 @@
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+      @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -69,6 +70,22 @@ export default {
     this.getAllField();
   },
   methods: {
+    getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_stationery_check" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
     // 上传附件
     onUploadFile() {
       if (!this.multipleSelection.length) {
@@ -101,19 +118,8 @@ export default {
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-      const link = document.createElement("a");
-      Http.getInventoryExport({ ids: [query[0]] })
-        .then((res) => {
-          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
-          let objectUrl = URL.createObjectURL(blob);
-          link.href = objectUrl;
-          link.download = `设备盘点表.xlsx`;
-          link.click();
-          URL.revokeObjectURL(objectUrl);
-        })
-        .catch((res) => {
-          console.log(res);
-        });
+      window.open(`http://10.8.145.43:8190/stationery/check/export?id=${this.multipleSelection[0].id}`)
+
     },
     getAllField() {
       Http.getInventoryTitle()

@@ -11,7 +11,7 @@
         style="margin-top: 20px"
       >
         <el-col :md="8" :sm="12" :xs="24"   v-for=" item in searchList" :key="item.name">
-           <el-form-item :label="item.comment">
+           <el-form-item :label="item.comment" v-if="item.editable">
             <el-input
             v-if="item.type == 'string'"
             size="small"
@@ -50,7 +50,7 @@
       </el-row>
       <div class="search-button-block" style="margin-top: 20px">
         <el-button size="small" @click="onSumit()">保 存</el-button>
-        <el-button size="small">取 消</el-button>
+        <el-button size="small" @click="onCancel()">取 消</el-button>
       </div>
    </el-form>
   </div>
@@ -72,6 +72,9 @@ export default {
   },
   watch: {},
   methods: {
+    onCancel() {
+     this.$emit('close');
+    },
     setSearchList(event) {
       let list = [];
      this.searchList.forEach(item => {

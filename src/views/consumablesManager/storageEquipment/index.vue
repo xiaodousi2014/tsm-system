@@ -39,6 +39,7 @@
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+      @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -339,6 +340,22 @@ export default {
     this.getAllField();
   },
   methods: {
+    getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_stationery" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
     borrowChange(event, item) {
        if(Number(event)<=0) {
         item.quantity = 1;
@@ -406,6 +423,7 @@ export default {
         .then((res) => {
           if (res.code == "0000") {
             this.$message.success("设置成功！");
+            this.getTableList();
           }
         })
         .catch((res) => {
@@ -448,25 +466,13 @@ export default {
           this.$message.error(res.msg || "系统异常");
         });
     },
-    // 导出
+     // 导出
     onExport() {
-      if (!this.multipleSelection.length) {
+         if (!this.multipleSelection.length) {
         this.$message.warning("请选择要导出的数据列！");
         return;
       }
-      const link = document.createElement("a");
-      Http.getExport({ ids: this.multipleSelection, infoType: "t_stationery" })
-        .then((res) => {
-          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
-          let objectUrl = URL.createObjectURL(blob);
-          link.href = objectUrl;
-          link.download = "在库设备表.xlsx";
-          link.click();
-          URL.revokeObjectURL(objectUrl);
-        })
-        .catch((res) => {
-          this.$message.error(res.msg || "系统异常");
-        });
+      window.open(`http://10.8.145.43:8190/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_stationery`)
     },
     // 报废
     // async onScrap() {
@@ -502,7 +508,7 @@ export default {
       Http.checkedTrue({ ids: this.multipleSelection, type: 3 })
         .then((res) => {
           if (res.code == "0000") {
-            this.title = "报修";
+            this.title = "报废";
             this.repairModal = true;
           }
         })
@@ -677,7 +683,7 @@ export default {
         let query = {
           stationery_id: item.id,
           stationery_name: item.stationery_name,
-          receiver: "111",
+          receiver: "测试用户",
           quantity: "1",
           maxNumber: item.inventory,
            locate_site: "",
@@ -690,7 +696,7 @@ export default {
         let query = {
           stationery_id: item.id,
           stationery_name: item.stationery_name,
-          borrower: "111",
+          borrower: "测试用户",
           quantity: "1",
           borrower_org: "",
           borrower_time: "",
@@ -707,7 +713,7 @@ export default {
         let query = {
           stationery_id: item.id,
           stationery_name: item.stationery_name,
-          abolish_man: "111",
+          abolish_man: "测试用户",
           quantity: "1",
           maxNumber: item.inventory
         };

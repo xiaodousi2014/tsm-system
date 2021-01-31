@@ -1,5 +1,5 @@
 <template>
-  <div class="ClassifiedDisplay">
+  <div class="ClassifiedDisplay" v-if="tableAllIist.length">
     <el-table   id="el-table" style="width: 100%"  :data="tableData"  @selection-change="handleSelectionChange">
       <!-- 动态循环的列表 -->
         <el-table-column
@@ -7,9 +7,8 @@
       width="55">
     </el-table-column>
       <template v-for="(item, index) in tableAllIist">
-        
         <el-table-column
-          v-if="item.display&&item.favorate"
+          v-if="item.display&&item.favorate&&item.name != 'attachment'"
           :key="index"
           :prop="item.name"
           :label="item.comment"
@@ -19,12 +18,26 @@
           {{setArrayName(scope.row, item)}}
         </template>
         </el-table-column>
+         <el-table-column
+          v-if="item.display&&item.favorate&&item.name == 'attachment'"
+          :key="index"
+          :prop="item.name"
+          :label="item.comment"
+          width=""
+        >
+        <template slot-scope="scope" >
+           <!-- {{setAttachment(scope.row, item)}} -->
+          <div v-for="(attach, index) in  setAttachment(scope.row, item)" :key="index">
+            <a href="javascript:void(0)" @click="getAttachFile(attach, scope.row)">{{attach}}</a>
+          </div>
+        </template>
+        </el-table-column>
       </template>
     </el-table>
   </div>
 </template>
 <script>
-
+import Http from "@/api/deviceManage";
 export default {
   name: "",
   components: {},
@@ -44,6 +57,18 @@ export default {
     };
   },
   methods: {
+    getAttachFile(file, row) {
+      let query ={
+        file: file,
+        row: row
+      }
+      this.$emit('getAttachFile',query);
+    },
+    setAttachment(row, item) {
+      if(row[item.name]) {
+      return JSON.parse(row[item.name]).attachment
+      }
+    },
     setArrayName(row, item) {
       if(item.type == 'map') {
          let name = '';
@@ -55,7 +80,6 @@ export default {
            return name;
       }
       return row[item.name]
-     
     },
       handleSelectionChange(val) {
         console.log(val)

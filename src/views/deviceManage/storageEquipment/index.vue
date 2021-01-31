@@ -48,6 +48,7 @@
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+       @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -345,6 +346,22 @@ export default {
     this.getAllField();
   },
   methods: {
+     getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_device" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
      Search(event) {
       this.query.indexArray = [];
       this.query.indexArray = event;
@@ -397,6 +414,7 @@ export default {
       Http.onCanBorrow({ ids: this.multipleSelection })
         .then((res) => {
           if (res.code == "0000") {
+            this.getTableList();
             this.$message.success("设置成功！");
           }
         })
@@ -442,23 +460,11 @@ export default {
     },
     // 导出
     onExport() {
-      if (!this.multipleSelection.length) {
+         if (!this.multipleSelection.length) {
         this.$message.warning("请选择要导出的数据列！");
         return;
       }
-      const link = document.createElement("a");
-      Http.getExport({ ids: this.multipleSelection, infoType: "t_device" })
-        .then((res) => {
-          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
-          let objectUrl = URL.createObjectURL(blob);
-          link.href = objectUrl;
-          link.download = "在库设备表.xlsx";
-          link.click();
-          URL.revokeObjectURL(objectUrl);
-        })
-        .catch((res) => {
-          this.$message.error(res.msg || "系统异常");
-        });
+      window.open(`http://10.8.145.43:8190/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_device`)
     },
     // 报废
     async onScrap() {
@@ -673,7 +679,7 @@ export default {
         let query = {
           device_id: item.id,
           device_name: item.name,
-          receiver: "111",
+          receiver: "测试用户",
           quantity: "1",
           locate_site: "",
           receiver_tel: "",
@@ -685,7 +691,7 @@ export default {
         let query = {
           device_id: item.id,
           device_name: item.name,
-          borrower: "111",
+          borrower: "测试用户",
           quantity: "1",
           locate_site: "",
           borrower_org: "",

@@ -10,12 +10,12 @@
         >删除</el-button
       >
     </div>
-    <custom-search :searchList="searchList"></custom-search>
     <custom-table-select :list="tableAllIist"></custom-table-select>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+        @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -69,6 +69,22 @@ export default {
     this.getAllField();
   },
   methods: {
+     getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_material_abolish" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
       Search(event) {
       this.query.indexArray = [];
       this.query.indexArray = event;

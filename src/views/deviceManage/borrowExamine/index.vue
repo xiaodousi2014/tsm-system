@@ -22,6 +22,7 @@
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+       @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -54,11 +55,19 @@ export default {
         orderOrient: "2",
         indexArray: [
           {
-            col_type: "init",
+            col_type: "int",
             col_name: "lent_status",
             indexType: "1",
             value: "1",
+            relation: '2'
           },
+           {
+            col_type: "int",
+            col_name: "lent_status",
+            indexType: "1",
+            value: "2",
+             relation: '2'
+          }
         ],
         pageNum: 1,
         pageCount: 10,
@@ -75,6 +84,38 @@ export default {
     this.getAllField();
   },
   methods: {
+    onExport() {
+         if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要导出的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列导出！");
+        return;
+      }
+      let query = [];
+      this.multipleSelection.forEach((item) => {
+        query.push(item.id);
+      });
+      window.open(`http://10.8.145.43:8190/common/attachment/export?ids=${query.toString()}&&infoType=t_device`)
+
+    },
+     getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_device_lent" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
     Search(event) {
       this.query.indexArray = [];
       this.query.indexArray = event;

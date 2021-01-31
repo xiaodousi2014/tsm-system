@@ -45,7 +45,7 @@ loading为false  调用只会关闭loading ,主要用于首次打开tab页面，
 loading为''或者不传  什么都不操作
  */
 export default class Http {
-    static send(config,loading) {
+    static send(config,loading,isBlob) {
         const currentUrl = encodeURIComponent(window.location.href)
         const configs = Object.assign({
             headers: {
@@ -58,12 +58,14 @@ export default class Http {
             loadingShowOrHide(true)
         }
         return axios(configs).then((res) => {
-
-            if (loading === '' ||typeof loading == 'object' || loading === undefined) {
+        
+            if ((loading === '' ||typeof loading == 'object' || loading === undefined)&& !isBlob) {
                 // 什么都不操作
+            } else if(isBlob) {
+             return res
             } else {
                 loadingShowOrHide()
-            }
+            } 
             return res.data
             
         }).catch((error) => {
@@ -118,7 +120,8 @@ export default class Http {
             url,
             data: params
         }
-        return Http.send(config, loading)
+        let isBlob = true;
+        return Http.send(config, loading, isBlob)
       }
     
     static get(url, params = {}, loading) {

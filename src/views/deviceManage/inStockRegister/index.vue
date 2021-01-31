@@ -9,7 +9,7 @@
       <el-button icon="el-icon-search" size="small" @click="onUploadFile()"
         >上传附件</el-button
       >
-      <el-button size="small">导入模板下载</el-button>
+      <el-button size="small" @click="onTemplateDown()">导入模板下载</el-button>
       <el-button icon="el-icon-search" size="small" @click="onUpload()"
         >文件导入</el-button
       >
@@ -23,6 +23,7 @@
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+      @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -37,6 +38,9 @@
     <el-dialog title="导入" :visible.sync="exportModal" width="500px">
       <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
     </el-dialog>
+     <el-dialog title="导入附件" :visible.sync="exportPutModal" width="500px">
+      <custom-upload-file-put :url="fileUrl" @close="close"></custom-upload-file-put>
+    </el-dialog>
      <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
       <custom-search :searchList="searchList" @Search="Search"></custom-search>
     </el-dialog>
@@ -49,6 +53,7 @@ import customSearch from "../../../components/customSearch";
 import Http from "@/api/deviceManage";
 import customTable from "../../../components/customTable";
 import customUploadFile from "../../../components/customUploadFile";
+import customUploadFilePut from "../../../components/customUploadFilePut";
 export default {
   name: "declareWarehousing",
   components: {
@@ -57,13 +62,21 @@ export default {
     customTable,
     Pagination,
     customUploadFile,
+    customUploadFilePut
   },
   data() {
     return {
       query: {
         orderField: "id",
         orderOrient: "2",
-        indexArray: [],
+         indexArray: [
+          {
+            col_type: "string",
+            col_name: "data_table",
+            indexType: "1",
+            value: "t_device",
+          },
+        ],
         pageNum: 1,
         pageCount: 10,
       },
@@ -75,6 +88,8 @@ export default {
       multipleSelection: [],
       exportModal: false,
       searchModal: false,
+      exportPutModal: false,
+      dataId: 0,
       fileUrl: "http://10.8.145.43:8190/device/import",
     };
   },
@@ -82,6 +97,25 @@ export default {
     this.getAllField();
   },
   methods: {
+    onTemplateDown() {
+      window.open('http://10.8.145.43:8190/common/attachment/download_TemplateFile?infoType=t_device')
+    },
+     getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_import_record" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
      Search(event) {
       this.query.indexArray = [];
       this.query.indexArray = event;
@@ -98,10 +132,11 @@ export default {
         this.$message.warning("只能选择单个数据列操作！");
         return;
       }
-      this.fileUrl = `http://10.8.145.43:8190/common/attachment/import?infoType=t_device_check&id=${this.multipleSelection[0]}`;
-      this.exportModal = true;
+      this.fileUrl = `http://10.8.145.43:8190/common/import/attachment/upload?import_id=${this.dataId}`;
+      this.exportPutModal = true;
     },
     close() {
+      this.exportPutModal = false;
       this.searchModal = false;
       this.exportModal = false;
       this.getTableList();
@@ -110,6 +145,9 @@ export default {
     // table选中
     selectTableList(list) {
       // debugger
+      if(list.length) {
+         this.dataId = list[0].data_id;
+      }
       let query = [];
       list.forEach((item) => {
         query.push(item.id);

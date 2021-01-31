@@ -15,6 +15,7 @@
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
+       @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -61,6 +62,22 @@ export default {
     this.getAllField();
   },
   methods: {
+     getAttachFile(query) {
+       const link = document.createElement("a");
+      Http.getAttachFile({id:query.row.id, infoType: "t_device_use" , file: query.file})
+      .then((res) => {
+        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+      })
+      .catch((res) => {
+        debugger
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
      Search(event) {
       this.query.indexArray = [];
       this.query.indexArray = event;
@@ -68,29 +85,17 @@ export default {
       this.searchModal = false;
     },
     // 导出
+     // 导出
     onExport() {
-      if (!this.multipleSelection.length) {
+         if (!this.multipleSelection.length) {
         this.$message.warning("请选择要导出的数据列！");
         return;
       }
-      let query = [];
+       let query = [];
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-      const link = document.createElement("a");
-      Http.getExport({ ids: query, infoType: "t_device_use" })
-        .then((res) => {
-          debugger;
-          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
-          let objectUrl = URL.createObjectURL(blob);
-          link.href = objectUrl;
-          link.download = `设备请领表.xlsx`;
-          link.click();
-          URL.revokeObjectURL(objectUrl);
-        })
-        .catch((res) => {
-          console.log(res);
-        });
+      window.open(`http://10.8.145.43:8190/common/attachment/export?ids=${query.toString()}&&infoType=t_device_use`)
     },
     getAllField() {
       Http.getReciveTitle()

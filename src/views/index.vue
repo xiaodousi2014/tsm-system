@@ -59,7 +59,6 @@
               :key="parent.menuId"
             >
               <template slot="title">
-                <i class="el-icon-location"></i>
                 <span>{{ parent.name }}</span>
               </template>
               <el-menu-item
@@ -230,7 +229,7 @@ export default {
             {
               id: 4,
               menuId: '44',
-              name: '入库登记',
+              name: '设备登记',
               url: 'in-stock-register',
               parentId: 8,
               children: [],
@@ -238,7 +237,7 @@ export default {
             {
               id: 5,
               menuId: '45',
-              name: '在库设备',
+              name: '库存记录',
               url: 'storage-equipment',
               parentId: 8,
               children: [],
@@ -310,7 +309,7 @@ export default {
             {
               id: 14,
               menuId: '455',
-              name: '盘点日志',
+              name: '盘点记录',
               url: 'inventory-journal',
               parentId: 8,
               children: [],
@@ -343,7 +342,7 @@ export default {
             {
               id: 4,
               menuId: '24',
-              name: '入库登记',
+              name: '设备登记',
               url: 'in-stock-register',
               parentId: 2,
               children: [],
@@ -351,27 +350,12 @@ export default {
             {
               id: 5,
               menuId: '25',
-              name: '在库设备',
+              name: '库存记录',
               url: 'storage-equipment',
               parentId: 2,
               children: [],
             },
-            {
-              id: 6,
-              menuId: '26',
-              name: '请领记录',
-              url: 'receive-record',
-              parentId: 2,
-              children: [],
-            },
-            {
-              id: 7,
-              menuId: '27',
-              name: '请领审核',
-              url: 'receive-examine',
-              parentId: 2,
-              children: [],
-            },
+           
             {
               id: 8,
               menuId: '28',
@@ -423,7 +407,7 @@ export default {
             {
               id: 14,
               menuId: '34',
-              name: '盘点日志',
+              name: '盘点记录',
               url: 'inventory-journal',
               parentId: 2,
               children: [],
@@ -446,17 +430,9 @@ export default {
           parentId: '',
           children: [
             {
-              id: 2,
-              menuId: '32',
-              name: '采购申报',
-              url: 'plan-declare',
-              parentId: 3,
-              children: [],
-            },
-            {
               id: 4,
               menuId: '34',
-              name: '入库登记',
+              name: '设备登记',
               url: 'in-stock-register',
               parentId: 3,
               children: [],
@@ -464,7 +440,7 @@ export default {
             {
               id: 5,
               menuId: '35',
-              name: '在库设备',
+              name: '库存记录',
               url: 'storage-equipment',
               parentId: 3,
               children: [],
@@ -554,14 +530,14 @@ export default {
         {
           id: 5,
           menuId: '51',
-          name: '信息管理',
+          name: '训练信息资源管理',
           url: '/information/',
           parentId: '',
           children: [
             {
               id: 2,
               menuId: '52',
-              name: '采购申报',
+              name: '计划申报',
               url: 'plan-declare',
               parentId: 5,
               children: [],
@@ -569,7 +545,7 @@ export default {
             {
               id: 4,
               menuId: '54',
-              name: '信息资源登记',
+              name: '入库登记',
               url: 'information',
               parentId: 5,
               children: [],
@@ -577,7 +553,7 @@ export default {
             {
               id: 5,
               menuId: '55',
-              name: '库存管理',
+              name: '库存信息',
               url: 'stock-manage',
               parentId: 5,
               children: [],
@@ -594,7 +570,7 @@ export default {
             {
               id: 2,
               menuId: '42',
-              name: '采购申报',
+              name: '计划申报',
               url: 'plan-declare',
               parentId: 4,
               children: [],
@@ -602,7 +578,7 @@ export default {
             {
               id: 4,
               menuId: '44',
-              name: '入库登记',
+              name: '登记入库',
               url: 'in-stock-register',
               parentId: 4,
               children: [],
@@ -610,7 +586,7 @@ export default {
             {
               id: 5,
               menuId: '45',
-              name: '在库设备',
+              name: '库存记录',
               url: 'storage-equipment',
               parentId: 4,
               children: [],
@@ -691,7 +667,7 @@ export default {
             {
               id: 2,
               menuId: '42',
-              name: '采购申报',
+              name: '计划申报',
               url: 'plan-declare',
               parentId: 6,
               children: [],
@@ -699,7 +675,7 @@ export default {
             {
               id: 4,
               menuId: '44',
-              name: '入库登记',
+              name: '登记入库',
               url: 'in-stock-register',
               parentId: 6,
               children: [],
@@ -707,7 +683,7 @@ export default {
             {
               id: 5,
               menuId: '45',
-              name: '在库设备',
+              name: '库存记录',
               url: 'storage-equipment',
               parentId: 6,
               children: [],
@@ -781,14 +757,14 @@ export default {
         {
           id: 7,
           menuId: '71',
-          name: '易耗品管理',
+          name: '文具与低值易耗品管理',
           url: '/stationery/',
           parentId: '',
           children: [
             {
               id: 2,
               menuId: '42',
-              name: '采购申报',
+              name: '计划申报',
               url: 'plan-declare',
               parentId: 7,
               children: [],
@@ -796,7 +772,7 @@ export default {
             {
               id: 4,
               menuId: '44',
-              name: '入库登记',
+              name: '登记入库',
               url: 'in-stock-register',
               parentId: 7,
               children: [],
@@ -804,7 +780,7 @@ export default {
             {
               id: 5,
               menuId: '45',
-              name: '在库设备',
+              name: '库存记录',
               url: 'storage-equipment',
               parentId: 7,
               children: [],
@@ -844,7 +820,7 @@ export default {
             {
               id: 14,
               menuId: '455',
-              name: '盘点日志',
+              name: '盘点记录',
               url: 'inventory-journal',
               parentId: 7,
               children: [],
