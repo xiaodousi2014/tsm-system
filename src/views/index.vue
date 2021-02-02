@@ -1438,7 +1438,7 @@ body > .el-container {
 }
 /deep/.el-dialog__header {
   color: #444444;
-  background-color: #0091ea;
+  // background-color: #0091ea;
 }
 /deep/.el-dialog__footer {
   text-align: center;

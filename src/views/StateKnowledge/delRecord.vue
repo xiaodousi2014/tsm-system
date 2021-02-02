@@ -1,149 +1,229 @@
 <template>
-  <div >
-    <div class="top-menu">
-      <span style="font-size: 20px;font-weight:900;">法规删除记录</span>
-
-      <div class="top-menu-but">
-        <el-button type="primary" class="btnWidth"
-                  @click="dialogVisible = true">检索</el-button>
-        <el-button type="primary" class="btnWidth" style="padding:12px 0;">上传附件</el-button>
-        <el-button class="btnSty">撤销操作</el-button>
-      </div>
+  <div class="my-el-table content_box">
+    <!-- 表格 -->
+    <!--搜索表单-->
+    <div class="menu-type">
+      <span style="font-size: 20px; font-weight: 900">删除记录</span>
+      <span>
+        <el-button class="btnSty" @click="onRevoke()">撤销删除</el-button>
+      </span>
     </div>
-
-    <div class="marginTo14 marginLeftAndRight paddingBtm20 my-el-table">
-      <el-table :data="tableData3"
-                id="el-table"
-                style="width: 100%">
-        <!-- 动态循环的列表 -->
-        <template v-for="(item, index) in tableLabel">
-          <el-table-column :key="index"
-                           :prop="item.prop"
-                           :label="item.label">
-          </el-table-column>
-        </template>
-        <!-- 固定的列：从业人员 -->
-        <el-table-column label="操作"
-                         width="200px">
-          <template slot-scope="scope">
-            <el-button type="text"
-                       size="small">编辑</el-button>
-            <el-button type="text"
-                       size="small">删除</el-button>
-            <el-button type="text"
-                       size="small">上传附件</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <Pagination :pagination="pagination" />
+    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <custom-table
+      :tableAllIist="tableAllIist"
+      :tableData="tableData"
+      @selectTableList="selectTableList"
+      @getAttachFile="getAttachFile"
+    ></custom-table>
+    <!-- 分页 -->
+    <div class="pagination">
+      <Pagination
+        ref="Pagination"
+        @getSizeChange="getSizeChange"
+        @getCurrentChange="getCurrentChange"
+        :pagination="query"
+        :total="total"
+      />
     </div>
-
-    <div>
-      <el-upload class="upload-demo"
-                 action="https://jsonplaceholder.typicode.com/posts/"
-                 :on-preview="handlePreview"
-                 :on-remove="handleRemove"
-                 :before-remove="beforeRemove"
-                 multiple
-                 :limit="1"
-                 :on-exceed="handleExceed"
-                 :file-list="fileList">
-        <el-button size="small"
-                   type="primary">点击上传</el-button>
-        <div slot="tip"
-             class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload>
-    </div>
+    <el-dialog title="导入" :visible.sync="exportModal" width="500px">
+      <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
+    </el-dialog>
+    <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+      <custom-search :searchList="searchList" @Search="Search"></custom-search>
+    </el-dialog>
   </div>
 </template>
 <script>
-import Pagination from '../../components/pagination'
-
-let id = 1000
-
+import Pagination from "@/components/customPagination";
+import customTableSelect from "@/components/customTableSelect";
+import customSearch from "@/components/customSearch";
+import Http from "@/api/deviceManage";
+import customTable from "@/components/customTable";
+import customUploadFile from "@/components/customUploadFile";
 export default {
-  name: 'rkRecord',
-  components: { Pagination },
+  name: "declareWarehousing",
+  components: {
+    customTableSelect,
+    customSearch,
+    customTable,
+    Pagination,
+    customUploadFile,
+  },
   data() {
     return {
-      tableData3: [
-        {
-          id: '1',
-          number: '112',
-          a: '这是个数据',
-          b: '这是个数据',
-        },
-        {
-          id: '2',
-          number: '113',
-          a: '这是个数据',
-          b: '这是个数据',
-        },
-      ],
-      tableLabel: [
-        { label: '文件标题', prop: 'id' },
-        { label: '作者', prop: 'number' },
-        { label: '发布时间', prop: 'a' },
-        { label: '发布层级', prop: 'b' },
-        { label: '发布人', prop: 'b' },
-        { label: '分类', prop: 'b' },
-        { label: '创建日期', prop: 'b' },
-      ],
-      pagination: {
+      query: {
+        orderField: "id",
+        orderOrient: "2",
+        indexArray: [],
         pageNum: 1,
-        pageSize: 10,
-        total: 200,
+        pageCount: 10,
       },
-      fileList: [],
-    }
+      failReason: "",
+      total: 0,
+      tableData: [],
+      tableAllIist: [],
+      searchList: [],
+      multipleSelection: [],
+      exportModal: false,
+      fileUrl: "http://139.198.188.175:8090/device/plan/import",
+      searchModal: false,
+    };
   },
-  created() {},
   mounted() {
-    console.log('----')
+    this.getAllField();
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
+    getAttachFile(query) {
+      const link = document.createElement("a");
+      Http.getAttachFile({
+        id: query.row.id,
+        infoType: "t_device_plan",
+        file: query.file,
+      })
+        .then((res) => {
+          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+          let objectUrl = URL.createObjectURL(blob);
+          link.href = objectUrl;
+          link.download = query.file;
+          link.click();
+          URL.revokeObjectURL(objectUrl);
+        })
+        .catch((res) => {
+          debugger;
+          this.$message.error(res.msg || "系统异常");
+        });
     },
-    handlePreview(file) {
-      console.log(file)
+    Search(event) {
+      this.query.indexArray = [];
+      this.query.indexArray = event;
+      this.searchModal = false;
+      this.getPlanList();
     },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
-          files.length + fileList.length
-        } 个文件`
-      )
+    // table选中
+    selectTableList(list) {
+      // debugger
+      let query = [];
+      list.forEach((item) => {
+        query.push(item.id);
+      });
+      this.multipleSelection = query;
     },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
+    // 撤销操作
+    onRevoke() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要撤销操作的数据列！");
+        return;
+      }
+      Http.onPlanRevoke(this.multipleSelection)
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("撤销成功！");
+            this.multipleSelection = [];
+            this.getPlanList();
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    onUploadFile() {
+      this.exportModal = true;
+    },
+    close() {
+      this.exportModal = false;
+      this.getPlanList();
+      // this.search();
+    },
+    getAllField() {
+      Http.getPlanTitle()
+        .then((res) => {
+          if (res.code == "0000") {
+            if (res.data.filter.length) {
+              //  this.tableAllIist = res.data.filter;
+              let list = res.data.filter.filter((item) => {
+                return item.display == true;
+              });
+              this.searchList = list;
+              this.getPlanList();
+            }
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    getPlanList() {
+      Http.getPlanList(this.query)
+        .then((res) => {
+          if (res.code == "0000") {
+            this.tableData = [];
+            this.total = 0;
+            this.tableAllIist = res.data.columns;
+            if (res.data.searchList.length) {
+              this.tableData = res.data.searchList;
+              this.total = res.page.page_total;
+            } else {
+              this.tableData = [];
+              this.total = 0;
+            }
+          }
+        })
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
+        });
+    },
+    getCurrentChange(val) {
+      this.query.pageNum = val;
+      this.getPlanList();
+    },
+    getSizeChange(val) {
+      this.query.pageCount = val;
+      this.getPlanList();
+    },
+    // 编辑
+    onEdit() {
+      if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要编辑的数据列！");
+        return;
+      }
+      if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列编辑！");
+        return;
+      }
     },
   },
-}
+  created() {},
+};
 </script>
-<style lang="less" scoped>
-.type-sele {
-  width: 120px;
-}
-.custom-tree-node {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  padding-right: 8px;
-}
-.el-mini-input {
-  height: 25px;
-  line-height: 25px;
-  width: 120px;
-  /deep/ .el-input__inner {
-    height: 25px;
-    line-height: 25px;
-    padding: 0 10px;
+<style scoped lang="less">
+.showIcon {
+  text-align: right;
+  padding-right: 5px;
+  font-size: 25px;
+  position: relative;
+  .selectList {
+    position: absolute;
+    height: 400px;
+    overflow-y: scroll;
+    top: 30px;
+    right: 0;
+    z-index: 99;
+    min-width: 100px;
+    text-align: left;
+    font-size: 20px;
+    padding: 20px 0;
+    background: #fdfdfd;
+    border: 1px solid rgb(238, 238, 238);
+    li {
+      padding: 0 10px;
+      line-height: 50px;
+    }
   }
 }
-.el-mini-btn {
-  padding: 5px 12px;
+.pagination {
+  margin-top: 20px;
+}
+.showIcon i {
+  cursor: pointer;
 }
 </style>
