@@ -212,6 +212,96 @@ export default {
       homeBg: '',
       menuList: [
         {
+          id: 1,
+          menuId: '11',
+          name: '法规知识',
+          url: '/doc/',
+          parentId: '',
+          children: [
+            {
+              id: 2,
+              menuId: '11111',
+              name: '法规总览',
+              url: 'overview',
+              parentId: 1,
+              children: [],
+            },
+            {
+              id: 2,
+              menuId: '121111',
+              name: '入库记录',
+              url: 'in-stock-record',
+              parentId: 1,
+              children: [],
+            },
+            {
+              id: 3,
+              menuId: '131111',
+              name: '维护管理',
+              url: 'maintain-manage',
+              parentId: 1,
+              children: [],
+            },
+            {
+              id: 4,
+              menuId: '141111',
+              name: '知识检索',
+              url: 'retrieval',
+              parentId: 1,
+              children: [],
+            },
+          ],
+        },
+        {
+          id: 222,
+          menuId: '1',
+          name: '项目管理',
+          url: '/pm/',
+          parentId: '',
+          children: [
+            {
+              id: 1,
+              menuId: '11',
+              name: '申报入库',
+              url: 'declare-in-stock',
+              parentId: 222,
+              children: [],
+            },
+            {
+              id: 2,
+              menuId: '12',
+              name: '申报审核',
+              url: 'declare-examine',
+              parentId: 222,
+              children: [],
+            },
+            {
+              id: 3,
+              menuId: '13',
+              name: '在建项目',
+              url: 'progress-projcet',
+              parentId: 222,
+              children: [],
+            },
+            {
+              id: 4,
+              menuId: '14',
+              name: '已结项目',
+              url: 'complete-projcet',
+              parentId: 222,
+              children: [],
+            },
+            {
+              id: 5,
+              menuId: '15',
+              name: '维护管理',
+              url: 'maintain-manage',
+              parentId: 222,
+              children: [],
+            },
+          ],
+        },
+        {
           id: 8,
           menuId: '81',
           name: '设备管理',
@@ -355,7 +445,7 @@ export default {
               parentId: 2,
               children: [],
             },
-           
+
             {
               id: 8,
               menuId: '28',
@@ -848,7 +938,7 @@ export default {
               menuId: '300023',
               name: '使用计划',
               url: 'use-plan',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -856,7 +946,7 @@ export default {
               menuId: '300024',
               name: '位置显示',
               url: 'location-display',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -864,7 +954,7 @@ export default {
               menuId: '300026',
               name: '训练基地',
               url: 'training-base',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -872,7 +962,7 @@ export default {
               menuId: '300027',
               name: '训练场地',
               url: 'training-field',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -880,7 +970,7 @@ export default {
               menuId: '300028',
               name: '保障用房',
               url: 'room',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -888,7 +978,7 @@ export default {
               menuId: '300029',
               name: '配置设施',
               url: 'facilitie-config',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -896,7 +986,7 @@ export default {
               menuId: '300033',
               name: '阵地工事',
               url: 'fortification',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -904,7 +994,7 @@ export default {
               menuId: '300043',
               name: '道路管网',
               url: 'road-network',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -912,7 +1002,7 @@ export default {
               menuId: '300053',
               name: '军官训练中心',
               url: 'officer-training-center',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -920,7 +1010,7 @@ export default {
               menuId: '300063',
               name: '教导机构',
               url: 'teaching-institution',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -928,7 +1018,7 @@ export default {
               menuId: '300073',
               name: '普通教室',
               url: 'classroom',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -936,7 +1026,7 @@ export default {
               menuId: '300083',
               name: '专业训练中心',
               url: 'major-training-center',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -944,7 +1034,7 @@ export default {
               menuId: '300093',
               name: '图书馆',
               url: 'library',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -952,7 +1042,7 @@ export default {
               menuId: '300123',
               name: '军体馆',
               url: 'military-gymnasium',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -960,7 +1050,7 @@ export default {
               menuId: '300223',
               name: '演播室(电教设备)',
               url: 'studio',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -968,7 +1058,7 @@ export default {
               menuId: '300323',
               name: '实验室管理',
               url: 'laboratory-manage',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
             {
@@ -976,7 +1066,7 @@ export default {
               menuId: '300423',
               name: '维护管理',
               url: 'maintain-manage',
-              parentId: '300022',
+              parentId: '17',
               children: [],
             },
           ],
