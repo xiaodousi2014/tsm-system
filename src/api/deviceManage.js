@@ -1,6 +1,6 @@
 import Http from '../utils/axios'
-// const rt = 'http://139.198.188.175:8090/'
-const rt2 = 'http://10.8.145.43:8190'
+const rt = 'http://10.8.145.43:8090/'
+const rt2 = 'http://139.198.188.175:8190'
 export default {
     UploadImage(query) {
      return Http.put(`${query.url}`, query.file)

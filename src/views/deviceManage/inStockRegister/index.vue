@@ -90,7 +90,7 @@ export default {
       searchModal: false,
       exportPutModal: false,
       dataId: 0,
-      fileUrl: "http://10.8.145.43:8190/device/import",
+      fileUrl: "http://139.198.188.175:8190/device/import",
     };
   },
   mounted() {
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     onTemplateDown() {
-      window.open('http://10.8.145.43:8190/common/attachment/download_TemplateFile?infoType=t_device')
+      window.open('http://139.198.188.175:8190/common/attachment/download_TemplateFile?infoType=t_device')
     },
      getAttachFile(query) {
        const link = document.createElement("a");
@@ -132,7 +132,7 @@ export default {
         this.$message.warning("只能选择单个数据列操作！");
         return;
       }
-      this.fileUrl = `http://10.8.145.43:8190/common/import/attachment/upload?import_id=${this.dataId}`;
+      this.fileUrl = `http://139.198.188.175:8190/common/import/attachment/upload?import_id=${this.dataId}`;
       this.exportPutModal = true;
     },
     close() {
@@ -173,7 +173,7 @@ export default {
         });
     },
     onUpload() {
-      (this.fileUrl = "http://10.8.145.43:8190/device/import"),
+      (this.fileUrl = "http://139.198.188.175:8190/device/import"),
         (this.exportModal = true);
     },
     getAllField() {

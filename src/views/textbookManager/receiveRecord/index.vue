@@ -94,7 +94,7 @@ export default {
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-     window.open(`http://10.8.145.43:8190/common/attachment/export?ids=${query.toString()}&&infoType=t_material_use`)
+     window.open(`http://139.198.188.175:8190/common/attachment/export?ids=${query.toString()}&&infoType=t_material_use`)
 
     },
     getAllField() {

@@ -8,7 +8,7 @@
     </el-table-column>
       <template v-for="(item, index) in tableAllIist">
         <el-table-column
-          v-if="item.display&&item.favorate&&item.name != 'attachment'"
+          v-if="item.display&&item.favorate&&item.type != 'attachment'"
           :key="index"
           :prop="item.name"
           :label="item.comment"
@@ -19,7 +19,7 @@
         </template>
         </el-table-column>
          <el-table-column
-          v-if="item.display&&item.favorate&&item.name == 'attachment'"
+          v-if="item.display&&item.favorate&&item.type == 'attachment'"
           :key="index"
           :prop="item.name"
           :label="item.comment"
@@ -66,7 +66,7 @@ export default {
     },
     setAttachment(row, item) {
       if(row[item.name]) {
-      return JSON.parse(row[item.name]).attachment
+      return JSON.parse(row[item.name]).files
       }
     },
     setArrayName(row, item) {

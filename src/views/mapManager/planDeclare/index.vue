@@ -71,7 +71,7 @@ export default {
       searchList: [],
       multipleSelection: [],
       exportModal: false,
-      fileUrl: "http://10.8.145.43:8190/maps/plan/import",
+      fileUrl: "http://139.198.188.175:8190/maps/plan/import",
       searchModal: false,
     };
   },

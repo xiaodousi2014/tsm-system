@@ -3,7 +3,6 @@
     <el-form
         ref="form"
         label-width="130px"
-        style="padding-top: 20px"
       >
         <el-row>
           <el-col :span="8">
@@ -17,21 +16,17 @@
                 :limit="1"
                 :http-request="UploadImage"
                 :show-file-list="false"
-                acceptType=".xlsx, .xls"
                 :on-success="successful"
                 :before-upload="beforeAvatarUpload"
                 :file-list="fileList"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip" style="width:300px">
-                  只能上传xlsx文件，且不超过500kb
-                </div>
               </el-upload>
             </el-form-item>
           </el-col>
         </el-row>
           </el-form>
-             <div slot="footer" class="dialog-footer" style="text-align: center">
+             <div slot="footer" class="dialog-footer" style="text-align: center;padding-top:40px">
         <el-button @click="closeModal()">关 闭</el-button>
       </div>
   </div>
@@ -99,7 +94,7 @@ export default {
       if (!isLt2M) {
         this.$message.error("上传文件大小不能超过 500k!");
       }
-      return isJPG && isLt2M;
+      return true;
     },
   }
 

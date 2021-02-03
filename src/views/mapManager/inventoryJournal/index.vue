@@ -96,7 +96,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `http://10.8.145.43:8190/common/attachment/import?infoType=t_maps_check&id=${this.multipleSelection[0].id}`;
+      this.fileUrl = `http://139.198.188.175:8190/common/attachment/import?infoType=t_maps_check&id=${this.multipleSelection[0].id}`;
       this.exportModal = true;
     },
     close() {
@@ -114,7 +114,7 @@ export default {
         this.$message.warning("只能选择单个数据列导出！");
         return;
       }
-      window.open(`http://10.8.145.43:8190/maps/check/export?id=${this.multipleSelection[0].id}`)
+      window.open(`http://139.198.188.175:8190/maps/check/export?id=${this.multipleSelection[0].id}`)
 
     },
     getAllField() {

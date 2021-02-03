@@ -2,19 +2,12 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" @click="searchModal = true"
-        >检索</el-button
-      >
-      <el-button class="btnSty" @click="onUploadFile()"
-        >上传附件</el-button
-      >
-    </div>
+    <custom-table-select :list="tableAllIist"></custom-table-select>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
-        @getAttachFile='getAttachFile'
+       @getAttachFile='getAttachFile'
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -26,30 +19,26 @@
         :total="total"
       />
     </div>
-    <el-dialog title="上传附件" :visible.sync="exportModal" width="500px">
-      <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
-    </el-dialog>
-     <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
-      <custom-search :searchList="searchList" @Search="Search"></custom-search>
-    </el-dialog>
+    <div style="margin: 30px 0 20px 0; text-align: center">
+      <el-button size="small" @click="cancal()">取消</el-button>
+      <el-button
+        size="small"
+        @click="onRevoke()"
+        :disabled="!multipleSelection.length"
+        >撤销删除</el-button
+      >
+    </div>
   </div>
 </template>
 <script>
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from "@/api/textbookManager";
+import Http from "@/api/deviceManage";
 import customTable from "../../../components/customTable";
-import customUploadFile from "@/components/customUploadFile";
 export default {
   name: "declareWarehousing",
-  components: {
-    customTableSelect,
-    customSearch,
-    customTable,
-    Pagination,
-    customUploadFile,
-  },
+  components: { customTableSelect, customSearch, customTable, Pagination },
   data() {
     return {
       query: {
@@ -59,14 +48,11 @@ export default {
         pageNum: 1,
         pageCount: 10,
       },
-      exportModal: false,
       total: 0,
       tableData: [],
       tableAllIist: [],
       searchList: [],
       multipleSelection: [],
-      fileUrl: "",
-      searchModal: false,
     };
   },
   mounted() {
@@ -75,7 +61,7 @@ export default {
   methods: {
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_material_abolish" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_device_dirty" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);
@@ -89,39 +75,14 @@ export default {
         this.$message.error(res.msg || "系统异常");
       });
     },
-      Search(event) {
-      this.query.indexArray = [];
-      this.query.indexArray = event;
-      this.getTableList();
-      this.searchModal = false;
-    },
-    // 上传附件
-    onUploadFile() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要编辑的数据列！");
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message.warning("只能选择单个数据列编辑！");
-        return;
-      }
-      this.fileUrl = `http://139.198.188.175:8190/common/attachment/import?infoType=t_material_abolish&id=${this.multipleSelection[0].id}`;
-      this.exportModal = true;
-    },
-    close() {
-      this.exportModal = false;
-      this.getTableList();
-      // this.search();
+    cancal() {
+      this.$router.push("storage-equipment");
     },
     getAllField() {
-      Http.getScrapTitle()
+      Http.getDeleteStorageTitle()
         .then((res) => {
           if (res.code == "0000") {
             if (res.data.filter.length) {
-              let list = res.data.filter.filter((item) => {
-                return item.display == true;
-              });
-              this.searchList = list;
               this.getTableList();
             }
           }
@@ -131,7 +92,7 @@ export default {
         });
     },
     getTableList() {
-      Http.getScrapList(this.query)
+      Http.getDeleteStorageList(this.query)
         .then((res) => {
           if (res.code == "0000") {
             this.tableData = [];
@@ -152,33 +113,32 @@ export default {
       this.getTableList();
     },
     getSizeChange(val) {
-      this.query.pageCount = val
-      this.getTableList()
+      this.query.pageCount = val;
+      this.getTableList();
     },
-    // 删除
-    onDelete() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要删除的数据列！");
-        return;
-      }
-      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          this.$message.success("删除成功");
+
+    // 撤销操作
+    onRevoke() {
+      Http.putStorageList(this.multipleSelection)
+        .then((res) => {
+          if (res.code == "0000") {
+            this.$message.success("撤销成功！");
+            this.getTableList();
+            this.multipleSelection = [];
+          }
         })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
+        .catch((res) => {
+          this.$message.error(res.msg || "系统异常");
         });
+      //  this.$router.push('storage-equipment');
     },
     // table选中
     selectTableList(list) {
-      this.multipleSelection = list;
+      let query = [];
+      list.forEach((item) => {
+        query.push(item.id);
+      });
+      this.multipleSelection = query;
     },
   },
   created() {},

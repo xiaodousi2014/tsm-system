@@ -405,7 +405,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `http://10.8.145.43:8190/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
+      this.fileUrl = `http://139.198.188.175:8190/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
       this.exportModal = true;
     },
     close() {

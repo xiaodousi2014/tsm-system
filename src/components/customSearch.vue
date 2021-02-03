@@ -7,7 +7,7 @@
         :key="index"
         style="margin-top: 20px"
       >
-        <el-col :md="4" :sm="6" :xs="12">
+        <el-col :md="4" :sm="6" :xs="12" >
           <el-select
             size="small"
             v-model="it.col_name"
@@ -44,8 +44,10 @@
           ></el-input>
           <el-date-picker
             style="width: 100%"
-            v-if="it.col_type == 'date'"
+            v-if="it.col_type == 'datetime'"
             v-model="it.value"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
             type="date"
             placeholder="选择日期"
           >

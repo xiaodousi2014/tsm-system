@@ -432,7 +432,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `http://10.8.145.43:8190/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
+      this.fileUrl = `http://139.198.188.175:8190/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
       this.exportModal = true;
     },
     close() {
@@ -464,7 +464,7 @@ export default {
         this.$message.warning("请选择要导出的数据列！");
         return;
       }
-      window.open(`http://10.8.145.43:8190/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_device`)
+      window.open(`http://139.198.188.175:8190/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_device`)
     },
     // 报废
     async onScrap() {
@@ -612,6 +612,7 @@ export default {
       Http.getStorageList(this.query)
         .then((res) => {
           if (res.code == "0000") {
+            this.form = {};
             this.tableData = [];
             this.total = 0;
             this.tableAllIist = res.data.columns;
