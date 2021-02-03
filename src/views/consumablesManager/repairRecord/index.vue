@@ -3,8 +3,8 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button  icon="el-icon-edit" size="small">检索</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onExport()">导出</el-button>
+      <el-button  class="btnSty">检索</el-button>
+<el-button  class="btnSty" @click="onExport()">导出</el-button>
 
     </div>
     <custom-search :searchList="searchList"></custom-search>

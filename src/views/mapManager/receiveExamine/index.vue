@@ -3,13 +3,13 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+      <el-button class="btnSty" @click="searchModal = true"
         >检索</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onAgree()"
+      <el-button class="btnSty" @click="onAgree()"
         >同意</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onReturn()"
+      <el-button class="btnSty" @click="onReturn()"
         >驳回</el-button
       >
     </div>

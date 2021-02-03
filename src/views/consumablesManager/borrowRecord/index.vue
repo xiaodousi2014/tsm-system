@@ -3,10 +3,10 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+      <el-button class="btnSty" @click="searchModal = true"
         >检索</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onExport()"
+      <el-button class="btnSty" @click="onExport()"
         >导出</el-button
       >
     </div>

@@ -3,18 +3,18 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+      <el-button class="btnSty" @click="searchModal = true"
         >检索</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onUploadFile()"
+      <el-button class="btnSty" @click="onUploadFile()"
         >上传附件</el-button
       >
-      <el-button size="small" @click="onTemplateDown()">导入模板下载</el-button>
-      <el-button icon="el-icon-search" size="small" @click="onUpload()"
+      <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
+      <el-button class="btnSty" @click="onUpload()"
         >文件导入</el-button
       >
-      <el-button size="small" v-if="failReason">查看错误信息</el-button>
-      <el-button icon="el-icon-search" size="small" @click="onRevoke()"
+      <el-button class="btnSty" v-if="failReason">查看错误信息</el-button>
+      <el-button class="btnSty"  @click="onRevoke()"
         >撤销操作</el-button
       >
     </div>

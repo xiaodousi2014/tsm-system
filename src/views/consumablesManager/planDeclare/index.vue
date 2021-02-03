@@ -3,14 +3,14 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+      <el-button class="btnSty" @click="searchModal = true"
         >检索</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onUploadFile()"
+      <el-button class="btnSty" @click="onUploadFile()"
         >导入文件</el-button
       >
       <el-button size="small" v-if="failReason">查看错误信息</el-button>
-      <el-button icon="el-icon-search" size="small" @click="onRevoke()"
+      <el-button class="btnSty" @click="onRevoke()"
         >撤销操作</el-button
       >
     </div>

@@ -3,9 +3,9 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button  icon="el-icon-edit" size="small">检索</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onAgree()">维修结算</el-button>
-<el-button  icon="el-icon-search" size="small" @click="onReturn()">待报废</el-button>
+      <el-button  class="btnSty">检索</el-button>
+<el-button  class="btnSty" @click="onAgree()">维修结算</el-button>
+<el-button  class="btnSty" @click="onReturn()">待报废</el-button>
 
     </div>
     <custom-search :searchList = searchList></custom-search>

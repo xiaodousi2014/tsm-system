@@ -3,10 +3,10 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-search" size="small" @click="onExport()"
+      <el-button class="btnSty" @click="onExport()"
         >导出</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onUploadFile()"
+      <el-button class="btnSty" @click="onUploadFile()"
         >上传盘点结果</el-button
       >
     </div>

@@ -3,43 +3,43 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button icon="el-icon-edit" size="small" @click="searchModal = true"
+      <el-button class="btnSty" @click="searchModal = true"
         >检索</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onCreate()"
+      <el-button class="btnSty" @click="onCreate()"
         >新增</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onEdit()"
+      <el-button class="btnSty" @click="onEdit()"
         >编辑</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onDelete()"
+      <el-button class="btnSty" @click="onDelete()"
         >删除</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onRevoke()"
-        >撤销删除</el-button
+      <el-button class="btnSty" @click="onRevoke()"
+        >删除记录</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onQingLing()"
+      <el-button class="btnSty" @click="onQingLing()"
         >请领</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onBorrow()"
+      <el-button class="btnSty" @click="onBorrow()"
         >借用</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onRepair()"
+      <el-button class="btnSty" @click="onRepair()"
         >维修</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onScrap()"
+      <el-button class="btnSty" @click="onScrap()"
         >报废</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onExport()"
+      <el-button class="btnSty" @click="onExport()"
         >导出</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onInventory()"
+      <el-button class="btnSty" @click="onInventory()"
         >盘点</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onUploadFile()"
+      <el-button class="btnSty" @click="onUploadFile()"
         >上传附件</el-button
       >
-      <el-button icon="el-icon-search" size="small" @click="onCanBorrow()"
+      <el-button class="btnSty" @click="onCanBorrow()"
         >设置可借</el-button
       >
     </div>
