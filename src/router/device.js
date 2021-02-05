@@ -16,7 +16,7 @@ export default {
   },
 
   {
-   path: 'plan-examine',
+   path: 'plan/audit',
    name: 'teaching-equipment-plan-examine',
    meta: [{name: '计划审核', parentName: '教学设备', path: '/declare-in-stock'}],
    component: () => import('@/views/device/planExamine/index.vue')
