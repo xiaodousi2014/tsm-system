@@ -28,31 +28,7 @@
           <el-button class="btnSty" @click="goDelectPage(2)">删除记录</el-button>
         </div>
       </div>
-      <!-- <el-table
-        :data="tableData"
-        id="el-table"
-        @selection-change="handleSelectionChange"
-        style="width: 100%"
-      >
-        <el-table-column type="selection" width="55"> </el-table-column> -->
-        <!-- 动态循环的列表 -->
-        <!-- <template v-for="(item, index) in tableLabel">
-          <el-table-column :key="index" :prop="item.prop" :label="item.label" :width="item.width">
-          </el-table-column>
-        </template> -->
-        <!-- 固定的列：从业人员 -->
-        <!-- <el-table-column label="操作" width="200px">
-          <template slot-scope="scope">
-            <el-button type="text" size="small" @click="edit(scope.row)"
-              >编辑</el-button
-            >
-            <el-button type="text" size="small" @click="rowDelete(scope.row)"
-              >删除</el-button
-            >
-            <el-button type="text" size="small">上传附件</el-button>
-          </template>
-        </el-table-column>
-      </el-table> -->
+
       <el-row >
         <custom-table-select :list="tableAllIist"></custom-table-select>
         <custom-table
@@ -62,16 +38,11 @@
           @getAttachFile="getAttachFile"
           @clickrow="clickrow"
         ></custom-table>
-        <Pagination :pagination="pagination" />
+        <Pagination :pagination="pagination" @getSizeChange="getSizeChange" @getCurrentChange="getCurrentChange"/>
       </el-row>
-      
     </div>
 
-    <!-- <div class="marginTo25">
-      <TreeComp />
-    </div> -->
-
-    <el-dialog v-if="dialogVisible" :visible.sync="dialogVisible" title="新增" width="1100px">
+    <el-dialog :visible.sync="dialogVisible" title="新增" width="1100px">
       <custom-create
         @close="close"
         :searchList="searchList"
@@ -79,7 +50,7 @@
         :form="{}"
       ></custom-create>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="editModal" width="1100px">
+    <el-dialog v-if="editModal" :visible.sync="editModal" title="编辑" width="1100px">
       <custom-edit
         @close="close"
         :searchList="searchList"
@@ -87,7 +58,7 @@
         @listEdit="listEdit"
       ></custom-edit>
     </el-dialog>
-    <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+    <el-dialog v-if="searchModal" :visible.sync="searchModal" title="检索" width="1100px">
       <custom-search :searchList="searchList" @Search="Search"></custom-search>
     </el-dialog>
     
@@ -131,8 +102,6 @@ export default {
         orderField: "unit_group", //排序字段
         orderOrient: "1", //排序顺序 1正序 2倒序
         // indexArray: "1", //检索参数
-        pageNum: 1, //页码
-        pageCount: 10, //每页数量
       },
       //0-txt,1-pdf,2-doc,3-jpg,4-png,5-bmp,6-gif,7-媒体,9-其他
       file_generate_unit_rank: [], // 文件生成单位级别
@@ -149,67 +118,77 @@ export default {
       pagination: {
         pageNum: 1,
         pageSize: 10,
-        total: 200,
+        total: 0
       },
       field_data: []
     };
   },
   created() {
     this.getTableList()
-    // 获取所有字段
-    Api.getInfoType().then((res) => {
-      if (res.code == "0000") {
-        if (res.data.filter.length) {
-          //  this.tableAllIist = res.data.filter;
-          let list = res.data.filter.filter((item) => {
-            return item.display == true;
-          });
-          let info = res.data.filter.filter((v)=>{
-            return v.name == 'file_generate_unit_rank'
-          })[0]
-          let file_generate_unit_rank = []
-          file_generate_unit_rank.push({id:undefined,name:'全部'})
-          if(info){
-            Object.entries(JSON.parse(info.itemdata)).forEach((item) => {
-              let query = {
-                id: Number(item[0]),
-                name: item[1],
-              };
-              file_generate_unit_rank.push(query);
-            });
-            this.file_generate_unit_rank = file_generate_unit_rank
-            console.log(this.file_generate_unit_rank)
-          }
-          this.searchList = list;
-          // this.getPlanList();
-        }
-      }
-    })
-    .catch((res) => {
-      this.$message.error(res.msg || "系统异常");
-    });
-    // Common.attrdata('d_docs').then((res)=>{
-    //   if(res.code === '0000' && res.data && res.data.field_data){
-    //     const {data:{field_data}} = res
-    //   }
-    // })
+  },
+  mounted() {
+    this.getInfoType()
   },
   methods: {
-    getTableList() {
-      Api.queryRecord(Utils.filterParams(this.query)).then((res)=>{
-        if(res.code === '0000'){
-          this.tableData = [];
-          this.total = 0;
-          this.tableAllIist = res.data.columns;
-          if (res.data.searchList.length) {
-            this.tableData = res.data.searchList;
-            this.total = res.page.page_total;
-          } else {
-            this.tableData = [];
-            this.total = 0;
+    getInfoType(){
+      // 获取所有字段
+      Api.getInfoType().then((res) => {
+        if (res.code == "0000") {
+          if (res.data.filter.length) {
+            //  this.tableAllIist = res.data.filter;
+            let list = res.data.filter.filter((item) => {
+              return item.display == true;
+            });
+            let info = res.data.filter.filter((v)=>{
+              return v.name == 'file_generate_unit_rank'
+            })[0]
+            let file_generate_unit_rank = []
+            file_generate_unit_rank.push({id:undefined,name:'全部'})
+            if(info){
+              Object.entries(JSON.parse(info.itemdata)).forEach((item) => {
+                let query = {
+                  id: Number(item[0]),
+                  name: item[1],
+                };
+                file_generate_unit_rank.push(query);
+              });
+              this.file_generate_unit_rank = file_generate_unit_rank
+              console.log(this.file_generate_unit_rank)
+            }
+            this.searchList = list;
+            // this.getPlanList();
           }
         }
       })
+      .catch((res) => {
+        this.$message.error(res.msg || "系统异常");
+      });
+    },
+    getTableList() {
+      let params = Object.assign({},this.query,this.pagination)
+      Api.queryRecord(Utils.filterParams(params)).then((res)=>{
+        if(res.code === '0000'){
+          this.tableData = [];
+          // this.total = 0;
+          this.tableAllIist = res.data.columns;
+          if (res.data.searchList.length) {
+            this.tableData = res.data.searchList;
+            this.pagination.total = res.page.page_total;
+          } else {
+            this.tableData = [];
+            this.pagination.total = 0;
+          }
+        }
+      })
+    },
+    // 分页功能
+    getCurrentChange(val) {
+      this.pagination.pageNum = val;
+      this.getTableList();
+    },
+    getSizeChange(val) {
+      this.pagination.pageSize = val;
+      this.getTableList();
     },
     searchlist(){
       this.searchModal = true;
@@ -217,10 +196,33 @@ export default {
     addForm() {
       this.dialogVisible = true;
     },
-    edit() {
+    edit() { // 编辑按钮
+      console.log('multipleSelectionInfo', JSON.stringify(this.multipleSelectionInfo),this.multipleSelectionInfo)
+      if(JSON.stringify(this.multipleSelectionInfo) == '{}'){
+        this.$message.warning('请先选择数据')
+        return
+      }
       this.editModal = true;
     },
-    clickType(value) {
+    delectList() { // 删除
+      console.log('selectTableList', this.multipleSelection)
+      if(!this.multipleSelection || this.multipleSelection.length === 0){
+        this.$message.warning('请先选择数据')
+        return
+      }
+      let params = {
+        ids: this.multipleSelection
+      }
+      Api.deleteRecord(params).then((res)=>{
+        if (res.code == '0000') {
+          this.$message.success('删除成功')
+          this.close()
+        }
+      }).catch(()=>{
+        this.$message.error(res.msg || '系统异常')
+      })
+    },
+    clickType(value) { // 法规分类
       this.value = value;
       let arr = [
         {
@@ -236,27 +238,26 @@ export default {
       }
       this.Search(arr)
     },
-    listCreate(event) {
+    listCreate(event) { // 创建保存
       console.log('listCreate', event)
       Api.addRecord(event).then((res)=>{
         if (res.code == '0000') {
           this.$message.success('操作成功！')
+          this.close()
         }
       }).catch(()=>{
         this.$message.error(res.msg || '系统异常')
       })
     },
-    listEdit() {
-      // Http.onListEdit(this.multipleSelectionInfo)
-      //   .then((res) => {
-      //     if (res.code == '0000') {
-      //       this.$message.success('编辑成功！')
-      //       this.close()
-      //     }
-      //   })
-      //   .catch((res) => {
-      //     this.$message.error(res.msg || '系统异常')
-      //   })
+    listEdit(event) { // 修改保存
+      Api.putRecord(event).then((res)=>{
+        if (res.code == '0000') {
+          this.$message.success('操作成功！')
+          this.close()
+        }
+      }).catch(()=>{
+        this.$message.error(res.msg || '系统异常')
+      })
     },
     Search(event) {
       this.query.indexArray = []
@@ -264,29 +265,26 @@ export default {
       this.searchModal = false
       this.getTableList()
     },
-    delectList() {
-      console.log('selectTableList', this.selectTableList)
-    },
-    goDelectPage() {
+    goDelectPage() { // 删除记录页面
       this.$router.push("/doc/in-stock-record-del");
     },
     goPage(flag) {
       if (flag === 1) {
-        this.$router.push("/doc/in-stock-record");
+        this.$router.push("/doc/record");
       }
     },
     close() {
       this.editModal = false
-      this.createModal = false
-      this.exportModal = false
+      this.dialogVisible = false
+      this.searchModal = false
       this.getTableList()
       // this.search();
     },
     getAttachFile(query) {
       const link = document.createElement('a')
-      Http.getAttachFile({
+      Common.getAttachFile({
         id: query.row.id,
-        infoType: 't_device',
+        infoType: 't_doc',
         file: query.file,
       })
         .then((res) => {

@@ -7,61 +7,72 @@
       :model="form"
     >
       <el-row :gutter="10" style="margin-top: 20px">
-        <template v-for="item in searchList">
-          <el-col
-            :md="8"
-            :sm="12"
-            :xs="24"
-            v-if="item.editable && item.type != 'attachment'"
-          >
-            <el-form-item :label="item.comment">
-              <el-input
-                v-if="item.type == 'string'"
-                size="small"
-                v-model="form[item.name]"
-                placeholder="请输入"
-              ></el-input>
+        <el-col
+          :md="8"
+          :sm="12"
+          :xs="24"
+          v-for="item in searchList"
+          :key="item.name"
+        >
+          <el-form-item :label="item.comment" v-if="item.editable">
+            <el-input
+              v-if="item.type == 'string'"
+              size="small"
+              v-model="form[item.name]"
+              placeholder="请输入"
+            ></el-input>
 
-              <el-date-picker
-                style="width: 100%"
-                v-if="item.type == 'datetime'"
-                v-model="form[item.name]"
-                type="date"
-                size="small"
-                placeholder="选择日期"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
-                :clearable="false"
+            <el-date-picker
+              style="width: 100%"
+              v-if="item.type == 'date' || item.type == 'datetime'"
+              v-model="form[item.name]"
+              size="small"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd"
+            >
+            </el-date-picker>
+
+            <el-input
+              v-if="item.type == 'int'"
+              type="number"
+              size="small"
+              v-model.number="form[item.name]"
+              placeholder="请输入"
+            ></el-input>
+
+            <el-select
+              placeholder="请选择"
+              v-model="form[item.name]"
+              size="small"
+              v-if="item.type == 'map'"
+            >
+              <el-option
+                v-for="(list, index) in setSearchList(item)"
+                :key="index"
+                :label="list.name"
+                :value="list.id"
               >
-              </el-date-picker>
+              </el-option>
+            </el-select>
 
-              <el-input
-                v-if="item.type == 'int'"
-                type="number"
-                size="small"
-                v-model.number="form[item.name]"
-                placeholder="请输入"
-              ></el-input>
-
-              <el-select
-                placeholder="请选择"
-                v-model="form[item.name]"
-                size="small"
-                v-if="item.type == 'map'"
+            <el-select
+              placeholder="请选择"
+              v-model="form[item.name]"
+              size="small"
+              v-if="item.type == 'list'"
+            >
+              <el-option
+                v-for="(list, index) in setSearchList2(item)"
+                :key="index"
+                :label="list"
+                :value="list"
               >
-                <el-option
-                  v-for="(list, index) in setSearchList(item)"
-                  :key="index"
-                  :label="list.name"
-                  :value="list.id"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </template>
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
-
       <div class="search-button-block" style="margin-top: 20px">
         <el-button size="small" @click="onSumit()">保 存</el-button>
         <el-button size="small" @click="onCancel()">取 消</el-button>
@@ -100,6 +111,17 @@ export default {
             };
             list.push(query);
           });
+        }
+      });
+      return list;
+    },
+    setSearchList2(event) {
+      let list = [];
+      this.searchList.forEach((item) => {
+        if (item.name == event.name) {
+          if(item.itemdata && item.itemdata.length>0){
+            list = item.itemdata.split(',')
+          }
         }
       });
       return list;

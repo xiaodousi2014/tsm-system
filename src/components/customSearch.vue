@@ -7,7 +7,7 @@
         :key="index"
         style="margin-top: 20px"
       >
-        <el-col :md="4" :sm="6" :xs="12" >
+        <el-col :md="4" :sm="6" :xs="12">
           <el-select
             size="small"
             v-model="it.col_name"
@@ -44,10 +44,8 @@
           ></el-input>
           <el-date-picker
             style="width: 100%"
-            v-if="it.col_type == 'datetime'"
+            v-if="it.col_type == 'date' || it.col_type == 'datetime'"
             v-model="it.value"
-            format="yyyy-MM-dd"
-            value-format="yyyy-MM-dd"
             type="date"
             placeholder="选择日期"
           >
@@ -98,7 +96,7 @@
       </el-row>
       <div class="search-button-block" style="margin-top: 20px">
         <el-button size="small" @click="onSearch()">查 询</el-button>
-        <el-button size="small">重 置</el-button>
+        <el-button size="small" @click="resetSearch()">重 置</el-button>
       </div>
     </div>
   </div>
@@ -190,6 +188,18 @@ export default {
     onSearch() {
      console.log(this.checkedSearchList);
      this.$emit('Search', this.checkedSearchList)
+    },
+    resetSearch(){
+      this.checkedSearchList = [
+        {
+          col_type: "",
+          col_name: "",
+          value: '',
+          relation: 1,
+          indexType: 1,
+        },
+      ]
+      this.$emit('Search', [])
     },
     // 删除一个搜索条件
     reduceSearch(index) {
