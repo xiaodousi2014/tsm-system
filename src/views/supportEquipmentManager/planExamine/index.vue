@@ -2,7 +2,7 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
+    <div class="table-button">
       <el-button type="primary" class="btnSty">检索</el-button>
 <el-button type="primary" class="btnSty" @click="onReturn()">归还</el-button>
 <el-button type="primary" class="btnSty" @click="onExport()">导出</el-button>

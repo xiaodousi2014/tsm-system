@@ -2,8 +2,8 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button  class="btnSty">检索</el-button>
+    <div class="table-button">
+      <el-button  type="primary" @click="searchModal = true">检索</el-button>
 <el-button  class="btnSty" @click="onAgree()">维修结算</el-button>
 <el-button  class="btnSty" @click="onReturn()">待报废</el-button>
 

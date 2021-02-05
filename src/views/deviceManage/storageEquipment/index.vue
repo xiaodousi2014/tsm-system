@@ -2,8 +2,8 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" @click="searchModal = true"
+    <div class="table-button">
+      <el-button  type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onCreate()"
@@ -36,7 +36,7 @@
       <el-button class="btnSty" @click="onInventory()"
         >盘点</el-button
       >
-      <el-button class="btnSty" @click="onUploadFile()"
+      <el-button  type="primary" @click="onUploadFile()"
         >上传附件</el-button
       >
       <el-button class="btnSty" @click="onCanBorrow()"
@@ -271,6 +271,9 @@
     <el-dialog title="上传附件" :visible.sync="exportModal" width="500px">
       <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
     </el-dialog>
+      <el-dialog title="上传附件" :visible.sync="exportListModal" width="500px">
+      <custom-upload-file-list :url="fileUrl" @close="close" :fileList='dataList' :upLoadQuery='upLoadQuery'></custom-upload-file-list>
+    </el-dialog>
     <el-dialog title="新增" :visible.sync="createModal" width="1100px">
       <custom-create
         @close="close"
@@ -279,12 +282,13 @@
         :form="{}"
       ></custom-create>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="editModal" width="1100px">
+    <el-dialog title="编辑" :visible.sync="editModal" width="1100px" >
       <custom-edit
         @close="close"
         :searchList="searchList"
         :form="multipleSelectionInfo"
         @listEdit="listEdit"
+        :url="fileUrl"
       ></custom-edit>
     </el-dialog>
        <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
@@ -301,6 +305,7 @@ import customTable from "../../../components/customTable";
 import customUploadFile from "@/components/customUploadFile";
 import customCreate from "@/components/customCreate";
 import customEdit from "@/components/customEdit";
+import customUploadFileList from "../../../components/customUploadFileList";
 export default {
   name: "declareWarehousing",
   components: {
@@ -311,6 +316,7 @@ export default {
     customUploadFile,
     customCreate,
     customEdit,
+    customUploadFileList
   },
   data() {
     return {
@@ -337,9 +343,18 @@ export default {
       exportModal: false,
       createModal: false,
       editModal: false,
+       exportListModal: false,
       fileUrl: "",
       multipleSelectionInfo: {},
       searchModal: false,
+      dataList: {},
+      upLoadQuery: {
+        id: '',
+        file: '',
+        infoType: 't_device',
+        field: 'attachment',
+        isMultiFiles: true,
+      }
     };
   },
   mounted() {
@@ -392,6 +407,7 @@ export default {
         this.$message.warning("编辑数据列只能选择一条！");
         return;
       }
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
       this.editModal = true;
     },
     listEdit() {
@@ -432,13 +448,16 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `http://139.198.188.175:8190/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
-      this.exportModal = true;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device&id=${this.dataList.id}`;
+      this.exportListModal = true;
+      this.upLoadQuery.id= this.dataList.id;
+      this.upLoadQuery.infoType = 't_device';
     },
     close() {
       this.editModal = false;
       this.createModal = false;
       this.exportModal = false;
+      this.exportListModal = false;
       this.getTableList();
       // this.search();
     },
@@ -464,7 +483,7 @@ export default {
         this.$message.warning("请选择要导出的数据列！");
         return;
       }
-      window.open(`http://139.198.188.175:8190/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_device`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_device`)
     },
     // 报废
     async onScrap() {
@@ -673,6 +692,9 @@ export default {
       list.forEach((item) => {
         query.push(item.id);
       });
+       if(list.length) {
+         this.dataList = list[0];
+      }
       this.multipleSelection = query;
       this.multipleSelectionInfo = list[0];
       this.form = [];

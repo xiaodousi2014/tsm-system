@@ -34,7 +34,7 @@ export default {
     component: () => import('@/views/informationManager/stockManage/deleteListThree.vue')
    },
   {
-   path: 'information',
+   path: 'information/:id',
    name: 'information-resources-information',
    meta: [{name: '信息资源登记', parentName: '信息资源', path: '/declare-in-stock'}],
    component: () => import('@/views/informationManager/information/index.vue')

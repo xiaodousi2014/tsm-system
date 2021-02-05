@@ -30,7 +30,22 @@ export default {
   methods: {
       handleClick(tab, event) {
         console.log(tab, event);
+      },
+      getRouterId() {
+        console.log(this.$route.params.id)
+        if(this.$route.params.id == 1) {
+          this.activeName = 'first';
+        } else if(this.$route.params.id == 2) {
+           this.activeName = 'second';
+        } else if(this.$route.params.id == 3) {
+           this.activeName = 'third';
+        } else {
+           this.activeName = 'first';
+        }
       }
+  },
+   mounted() {
+    this.getRouterId();
   },
   created() {
     

@@ -2,8 +2,8 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" @click="searchModal = true"
+    <div class="table-button">
+      <el-button class="btnSty" type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onAgree()"

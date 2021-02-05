@@ -5,7 +5,7 @@
     <div class="menu-type">
       <span style="font-size: 20px; font-weight: 900">入库记录</span>
       <span>
-        <el-button class="btnSty" @click="searchModal = true">检索</el-button>
+        <el-button class="btnSty" type="primary" @click="searchModal = true">检索</el-button>
         <el-button class="btnSty" @click="onUploadFile()">导入文件</el-button>
         <el-button class="btnSty" v-if="failReason">查看错误信息</el-button>
         <el-button class="btnSty" @click="onRevoke()">撤销操作</el-button>

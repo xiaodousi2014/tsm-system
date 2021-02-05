@@ -59,7 +59,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col
+          <!-- <el-col
             :md="24"
             :sm="24"
             :xs="24"
@@ -68,14 +68,16 @@
             <el-form-item :label="item.comment">
               <el-upload
                 class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                :action='url'
                 :on-remove="handleRemove"
+                :on-progress='onProgress(item.name)'
+                :on-success='handleSuccessful'
                 :file-list='setAttachmentList(form[item.name], item.name)'
               >
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </template>
       </el-row>
       <div class="search-button-block" style="margin-top: 20px">
@@ -99,14 +101,37 @@ export default {
       default: function() {
         return {}
       }
+    },
+    url: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
       // fileList: [],
+      queryName: ''
     };
   },
   methods: {
+    onProgress(event) {
+      this.queryName = event;
+    },
+     handleSuccessful(res, file, fileList) {
+      if (res.code == '0000') {
+       
+         console.log(res);
+         fileList[fileList.length-1].code = this.queryName;
+          console.log(fileList);
+          console.log(this.form[this.queryName])
+          let query =JSON.parse(this.form[this.queryName]).files.push(file.name);
+          console.log(query)
+        this.$message.success("上传成功");
+      } else {
+        // console.log(res)
+        this.$message.error(res.msg|| '系统异常');
+      }
+    },
     onCancel() {
       this.$emit("close");
     },

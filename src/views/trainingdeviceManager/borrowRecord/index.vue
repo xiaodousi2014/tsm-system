@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button class="btnSty" @click="searchModal = true"
+      <el-button class="btnSty" type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onExport()"
@@ -71,7 +71,7 @@ export default {
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-      window.open(`http://139.198.188.175:8190/common/attachment/export?ids=${query.toString()}&&infoType=t_device_lent`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_device_lent`)
 
     },
      getAttachFile(query) {

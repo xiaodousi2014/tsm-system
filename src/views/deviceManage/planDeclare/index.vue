@@ -2,8 +2,8 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" @click="searchModal = true"
+    <div class="table-button">
+      <el-button  type="primary"  @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onUploadFile()"
@@ -71,7 +71,7 @@ export default {
       searchList: [],
       multipleSelection: [],
       exportModal: false,
-      fileUrl: "http://139.198.188.175:8190/device/plan/import",
+      fileUrl: `${window.upLoadUrl}/device/plan/import`,
       searchModal: false,
     };
   },

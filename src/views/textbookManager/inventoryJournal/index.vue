@@ -2,7 +2,7 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
+    <div class="table-button">
       <el-button class="btnSty" @click="onExport()"
         >导出</el-button
       >
@@ -96,7 +96,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `http://139.198.188.175:8190/common/attachment/import?infoType=t_material_check&id=${this.multipleSelection[0].id}`;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_material_check&id=${this.multipleSelection[0].id}`;
       this.exportModal = true;
     },
     close() {
@@ -115,7 +115,7 @@ export default {
         this.$message.warning("只能选择单个数据列导出！");
         return;
       }
-      window.open(`http://139.198.188.175:8190/material/check/export?id=${this.multipleSelection[0].id}`)
+      window.open(`${window.upLoadUrl}/material/check/export?id=${this.multipleSelection[0].id}`)
 
     },
     getAllField() {

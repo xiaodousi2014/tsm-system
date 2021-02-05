@@ -2,11 +2,11 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" @click="searchModal = true"
+    <div class="table-button">
+      <el-button  type="primary"  @click="searchModal = true"
         >检索</el-button
       >
-      <el-button class="btnSty" @click="onUploadFile()"
+      <el-button type="primary" @click="onUploadFile()"
         >上传附件</el-button
       >
       <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
@@ -38,6 +38,9 @@
     <el-dialog title="导入" :visible.sync="exportModal" width="500px">
       <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
     </el-dialog>
+     <el-dialog title="上传附件" :visible.sync="exportListModal" width="500px">
+      <custom-upload-file-list :url="fileUrl" @close="close" :fileList='dataList'></custom-upload-file-list>
+    </el-dialog>
      <el-dialog title="导入附件" :visible.sync="exportPutModal" width="500px">
       <custom-upload-file-put :url="fileUrl" @close="close"></custom-upload-file-put>
     </el-dialog>
@@ -54,6 +57,8 @@ import Http from "@/api/deviceManage";
 import customTable from "../../../components/customTable";
 import customUploadFile from "../../../components/customUploadFile";
 import customUploadFilePut from "../../../components/customUploadFilePut";
+import customUploadFileList from "../../../components/customUploadFileList";
+
 export default {
   name: "declareWarehousing",
   components: {
@@ -62,7 +67,8 @@ export default {
     customTable,
     Pagination,
     customUploadFile,
-    customUploadFilePut
+    customUploadFilePut,
+    customUploadFileList
   },
   data() {
     return {
@@ -89,8 +95,9 @@ export default {
       exportModal: false,
       searchModal: false,
       exportPutModal: false,
-      dataId: 0,
-      fileUrl: "http://139.198.188.175:8190/device/import",
+      exportListModal: false,
+      dataList: {},
+      fileUrl: `${window.upLoadUrl}/device/import`,
     };
   },
   mounted() {
@@ -98,7 +105,7 @@ export default {
   },
   methods: {
     onTemplateDown() {
-      window.open('http://139.198.188.175:8190/common/attachment/download_TemplateFile?infoType=t_device')
+      window.open(`${window.upLoadUrl}/common/attachment/download_TemplateFile?infoType=t_device`)
     },
      getAttachFile(query) {
        const link = document.createElement("a");
@@ -132,8 +139,8 @@ export default {
         this.$message.warning("只能选择单个数据列操作！");
         return;
       }
-      this.fileUrl = `http://139.198.188.175:8190/common/import/attachment/upload?import_id=${this.dataId}`;
-      this.exportPutModal = true;
+      this.fileUrl = `${window.upLoadUrl}/common/import/attachment/upload?import_id=${this.dataList.data_id}`;
+      this.exportListModal = true;
     },
     close() {
       this.exportPutModal = false;
@@ -146,7 +153,7 @@ export default {
     selectTableList(list) {
       // debugger
       if(list.length) {
-         this.dataId = list[0].data_id;
+         this.dataList = list[0];
       }
       let query = [];
       list.forEach((item) => {
@@ -173,8 +180,8 @@ export default {
         });
     },
     onUpload() {
-      (this.fileUrl = "http://139.198.188.175:8190/device/import"),
-        (this.exportModal = true);
+      this.fileUrl = `${window.upLoadUrl}/device/import`,
+      this.exportModal = true;
     },
     getAllField() {
       Http.getStockTitle()

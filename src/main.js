@@ -14,6 +14,8 @@ import 'babel-polyfill'
 import Es6Promise from 'es6-promise'
 require('es6-promise').polyfill()
 Es6Promise.polyfill()
+window.upLoadUrl = "http://10.8.145.43:8190";
+
 Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false

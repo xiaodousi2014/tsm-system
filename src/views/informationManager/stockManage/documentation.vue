@@ -2,8 +2,8 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" @click="searchModal = true"
+    <div class="table-button">
+      <el-button class="btnSty" type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onEdit()"
@@ -404,7 +404,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `http://139.198.188.175:8190/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
       this.exportModal = true;
     },
     close() {

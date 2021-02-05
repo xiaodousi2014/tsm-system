@@ -3,10 +3,10 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div>
-      <el-button class="btnSty" @click="searchModal = true"
+      <el-button class="btnSty" type="primary" @click="searchModal = true"
         >检索</el-button
       >
-      <el-button class="btnSty" @click="onUploadFile()"
+      <el-button class="btnSty" type="primary" @click="onUploadFile()"
         >上传附件</el-button
       >
       <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
@@ -90,7 +90,7 @@ export default {
       searchModal: false,
       exportPutModal: false,
       dataId: 0,
-      fileUrl: "http://139.198.188.175:8190/device/import",
+      fileUrl: `${window.upLoadUrl}/device/import`,
     };
   },
   mounted() {
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     onTemplateDown() {
-      window.open('http://139.198.188.175:8190/common/attachment/download_TemplateFile?infoType=t_device')
+      window.open(`${window.upLoadUrl}/common/attachment/download_TemplateFile?infoType=t_device`)
     },
      getAttachFile(query) {
        const link = document.createElement("a");
@@ -132,7 +132,7 @@ export default {
         this.$message.warning("只能选择单个数据列操作！");
         return;
       }
-      this.fileUrl = `http://139.198.188.175:8190/common/import/attachment/upload?import_id=${this.dataId}`;
+      this.fileUrl = `${window.upLoadUrl}/common/import/attachment/upload?import_id=${this.dataId}`;
       this.exportPutModal = true;
     },
     close() {
@@ -173,7 +173,7 @@ export default {
         });
     },
     onUpload() {
-      (this.fileUrl = "http://139.198.188.175:8190/device/import"),
+      (this.fileUrl = "${window.upLoadUrl}/device/import"),
         (this.exportModal = true);
     },
     getAllField() {

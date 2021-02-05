@@ -2,8 +2,8 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" @click="searchModal = true"
+    <div class="table-button">
+      <el-button  type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onExport()"
@@ -94,7 +94,7 @@ export default {
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-      window.open(`http://139.198.188.175:8190/common/attachment/export?ids=${query.toString()}&&infoType=t_stationery_use`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_stationery_use`)
     },
     getAllField() {
       Http.getReciveTitle()
