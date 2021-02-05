@@ -41,6 +41,7 @@ import customSearch from "../../../components/customSearch";
 import Http from "@/api/textbookManager";
 import customTable from "../../../components/customTable";
 import customUploadFile from "@/components/customUploadFile";
+import customUploadFileList from "../../../components/customUploadFileList";
 export default {
   name: "declareWarehousing",
   components: {
@@ -49,6 +50,7 @@ export default {
     customTable,
     Pagination,
     customUploadFile,
+    customUploadFileList
   },
   data() {
     return {
@@ -67,6 +69,14 @@ export default {
       multipleSelection: [],
       fileUrl: "",
       searchModal: false,
+       dataList: {},
+      upLoadQuery: {
+        id: '',
+        file: '',
+        infoType: 't_device',
+        field: 'attachment',
+        isMultiFiles: true,
+      }
     };
   },
   mounted() {
@@ -106,7 +116,9 @@ export default {
         return;
       }
       this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_material_abolish&id=${this.multipleSelection[0].id}`;
-      this.exportModal = true;
+         this.exportListModal = true;
+      this.upLoadQuery.id= this.dataList.id;
+      this.upLoadQuery.infoType = 't_material_abolish';
     },
     close() {
       this.exportModal = false;
@@ -178,6 +190,9 @@ export default {
     },
     // table选中
     selectTableList(list) {
+        if(list.length) {
+         this.dataList = list[0];
+      }
       this.multipleSelection = list;
     },
   },

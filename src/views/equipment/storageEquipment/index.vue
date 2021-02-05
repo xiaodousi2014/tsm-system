@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div class="table-button">
-      <el-button class="btnSty" type="primary" @click="searchModal = true"
+      <el-button  type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onCreate()"
@@ -36,7 +36,7 @@
       <el-button class="btnSty" @click="onInventory()"
         >盘点</el-button
       >
-      <el-button class="btnSty" type="primary" @click="onUploadFile()"
+      <el-button  type="primary" @click="onUploadFile()"
         >上传附件</el-button
       >
       <el-button class="btnSty" @click="onCanBorrow()"
@@ -73,13 +73,13 @@
               <el-form-item label="设备名称:" prop="manufacturer">
                 <el-input
                   disabled
-                  v-model.trim="item.device_name"
+                  v-model.trim="item.equipment_name"
                   maxlength="10"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="请领数量:" prop="deviceModel">
+              <el-form-item label="请领数量:" prop="equipmentModel">
                 <el-input
                   disabled
                   v-model.trim="item.quantity"
@@ -134,13 +134,13 @@
               <el-form-item label="设备名称:" prop="manufacturer">
                 <el-input
                   disabled
-                  v-model.trim="item.device_name"
+                  v-model.trim="item.equipment_name"
                   maxlength="10"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="请领数量:" prop="deviceModel">
+              <el-form-item label="请领数量:" prop="equipmentModel">
                 <el-input
                   disabled
                   v-model.trim="item.quantity"
@@ -247,7 +247,7 @@
             <el-form-item label="维修项目名称:" prop="manufacturer">
               <el-input
                 disabled
-                v-model.trim="repairList[0].device_name"
+                v-model.trim="repairList[0].equipment_name"
                 maxlength="10"
               ></el-input>
             </el-form-item>
@@ -271,6 +271,9 @@
     <el-dialog title="上传附件" :visible.sync="exportModal" width="500px">
       <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
     </el-dialog>
+      <el-dialog title="上传附件" :visible.sync="exportListModal" width="500px">
+      <custom-upload-file-list :url="fileUrl" @close="close" :fileList='dataList' :upLoadQuery='upLoadQuery'></custom-upload-file-list>
+    </el-dialog>
     <el-dialog title="新增" :visible.sync="createModal" width="1100px">
       <custom-create
         @close="close"
@@ -279,12 +282,13 @@
         :form="{}"
       ></custom-create>
     </el-dialog>
-    <el-dialog title="编辑" :visible.sync="editModal" width="1100px">
+    <el-dialog title="编辑" :visible.sync="editModal" width="1100px" >
       <custom-edit
         @close="close"
         :searchList="searchList"
         :form="multipleSelectionInfo"
         @listEdit="listEdit"
+        :url="fileUrl"
       ></custom-edit>
     </el-dialog>
        <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
@@ -296,11 +300,12 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from "@/api/deviceManage";
+import Http from "@/api/equipmentManage";
 import customTable from "../../../components/customTable";
 import customUploadFile from "@/components/customUploadFile";
 import customCreate from "@/components/customCreate";
 import customEdit from "@/components/customEdit";
+import customUploadFileList from "../../../components/customUploadFileList";
 export default {
   name: "declareWarehousing",
   components: {
@@ -311,6 +316,7 @@ export default {
     customUploadFile,
     customCreate,
     customEdit,
+    customUploadFileList
   },
   data() {
     return {
@@ -337,9 +343,18 @@ export default {
       exportModal: false,
       createModal: false,
       editModal: false,
+       exportListModal: false,
       fileUrl: "",
       multipleSelectionInfo: {},
       searchModal: false,
+      dataList: {},
+      upLoadQuery: {
+        id: '',
+        file: '',
+        infoType: 't_equipment',
+        field: 'attachment',
+        isMultiFiles: true,
+      }
     };
   },
   mounted() {
@@ -348,7 +363,7 @@ export default {
   methods: {
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_device" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_equipment" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);
@@ -392,6 +407,7 @@ export default {
         this.$message.warning("编辑数据列只能选择一条！");
         return;
       }
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_equipment&id=${this.multipleSelection[0]}`;
       this.editModal = true;
     },
     listEdit() {
@@ -432,13 +448,16 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device&id=${this.multipleSelection[0]}`;
-      this.exportModal = true;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_equipment&id=${this.dataList.id}`;
+      this.exportListModal = true;
+      this.upLoadQuery.id= this.dataList.id;
+      this.upLoadQuery.infoType = 't_equipment';
     },
     close() {
       this.editModal = false;
       this.createModal = false;
       this.exportModal = false;
+      this.exportListModal = false;
       this.getTableList();
       // this.search();
     },
@@ -464,7 +483,7 @@ export default {
         this.$message.warning("请选择要导出的数据列！");
         return;
       }
-      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_device`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_equipment`)
     },
     // 报废
     async onScrap() {
@@ -612,6 +631,7 @@ export default {
       Http.getStorageList(this.query)
         .then((res) => {
           if (res.code == "0000") {
+            this.form = {};
             this.tableData = [];
             this.total = 0;
             this.tableAllIist = res.data.columns;
@@ -672,13 +692,16 @@ export default {
       list.forEach((item) => {
         query.push(item.id);
       });
+       if(list.length) {
+         this.dataList = list[0];
+      }
       this.multipleSelection = query;
       this.multipleSelectionInfo = list[0];
       this.form = [];
       list.forEach((item) => {
         let query = {
-          device_id: item.id,
-          device_name: item.name,
+          equipment_id: item.id,
+          equipment_name: item.name,
           receiver: "测试用户",
           quantity: "1",
           locate_site: "",
@@ -689,8 +712,8 @@ export default {
       this.borrowList = [];
       list.forEach((item) => {
         let query = {
-          device_id: item.id,
-          device_name: item.name,
+          equipment_id: item.id,
+          equipment_name: item.name,
           borrower: "测试用户",
           quantity: "1",
           locate_site: "",
@@ -706,8 +729,8 @@ export default {
       this.repairList = [];
       list.forEach((item) => {
         let query = {
-          device_id: item.id,
-          device_name: item.name,
+          equipment_id: item.id,
+          equipment_name: item.name,
           repair_content: "",
         };
         this.repairList.push(query);

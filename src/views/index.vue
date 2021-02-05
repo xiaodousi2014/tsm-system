@@ -5,7 +5,7 @@
       <div style="line-height: 68px; 
          text-align: center;color: #fff;font-size:20px;width: 208px;background: #001529;">
          教学保障管理系统</div>
-      <el-aside width="208px">
+      <el-aside width="208px" style="height: calc(100% - 68px);background:rgb(0, 13, 23)">
         <el-menu
           unique-opened
           :default-active="$route.path"
@@ -485,7 +485,7 @@ export default {
     font-size: 14px;
   }
   .el-menu {
-    height: calc(100% - 60px);
+  
     border-right: none;
     width: 208px;
   }

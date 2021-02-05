@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div class="table-button">
-      <el-button class="btnSty" type="primary" @click="searchModal = true"
+      <el-button  type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onAgree()"
@@ -39,7 +39,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from "@/api/deviceManage";
+import Http from "@/api/equipmentManage";
 import customTable from "../../../components/customTable";
 export default {
   name: "declareWarehousing",
@@ -74,7 +74,7 @@ export default {
   methods: {
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_device_repair" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_equipment_repair" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);

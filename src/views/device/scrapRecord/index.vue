@@ -27,8 +27,8 @@
         :total="total"
       />
     </div>
-    <el-dialog title="上传附件" :visible.sync="exportModal" width="500px">
-      <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
+     <el-dialog title="上传附件" :visible.sync="exportListModal" width="500px">
+      <custom-upload-file-list :url="fileUrl" @close="close" :fileList='dataList' :upLoadQuery='upLoadQuery'></custom-upload-file-list>
     </el-dialog>
      <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
       <custom-search :searchList="searchList" @Search="Search"></custom-search>
@@ -41,7 +41,7 @@ import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
 import Http from "@/api/deviceManage";
 import customTable from "../../../components/customTable";
-import customUploadFile from "@/components/customUploadFile";
+import customUploadFileList from "@/components/customUploadFileList";
 export default {
   name: "declareWarehousing",
   components: {
@@ -49,7 +49,8 @@ export default {
     customSearch,
     customTable,
     Pagination,
-    customUploadFile,
+    // customUploadFile,
+    customUploadFileList
   },
   data() {
     return {
@@ -68,6 +69,15 @@ export default {
       multipleSelection: [],
       fileUrl: "",
       searchModal: false,
+      exportListModal: false,
+       dataList: {},
+      upLoadQuery: {
+        id: '',
+        file: '',
+        infoType: 't_device',
+        field: 'attachment',
+        isMultiFiles: true,
+      }
     };
   },
   mounted() {
@@ -106,8 +116,12 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device_abolish&id=${this.multipleSelection[0].id}`;
-      this.exportModal = true;
+      // this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device&id=${this.dataList.id}`;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device_abolish&id=${this.dataList.id}`;
+      // this.exportModal = true;
+       this.exportListModal = true;
+      this.upLoadQuery.id= this.dataList.id;
+      this.upLoadQuery.infoType = 't_device_abolish';
     },
     close() {
       this.exportModal = false;
@@ -179,6 +193,9 @@ export default {
     },
     // table选中
     selectTableList(list) {
+        if(list.length) {
+         this.dataList = list[0];
+      }
       this.multipleSelection = list;
     },
   },

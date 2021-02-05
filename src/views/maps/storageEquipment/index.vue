@@ -249,6 +249,9 @@
         <el-button type="primary" @click="onRepairSumit()">确 定</el-button>
       </div>
     </el-dialog>
+      <el-dialog title="上传附件" :visible.sync="exportListModal" width="500px">
+      <custom-upload-file-list :url="fileUrl" @close="close" :fileList='dataList' :upLoadQuery='upLoadQuery'></custom-upload-file-list>
+    </el-dialog>
     <el-dialog title="上传附件" :visible.sync="exportModal" width="500px">
       <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
     </el-dialog>
@@ -282,6 +285,7 @@ import customTable from "../../../components/customTable";
 import customUploadFile from "@/components/customUploadFile";
 import customCreate from "@/components/customCreate";
 import customEdit from "@/components/customEdit";
+import customUploadFileList from "../../../components/customUploadFileList";
 export default {
   name: "declareWarehousing",
   components: {
@@ -292,6 +296,7 @@ export default {
     customUploadFile,
     customCreate,
     customEdit,
+    customUploadFileList,
   },
   data() {
     return {
@@ -321,6 +326,15 @@ export default {
       fileUrl: "",
       multipleSelectionInfo: {},
       searchModal: false,
+      exportListModal: false,
+        dataList: {},
+      upLoadQuery: {
+        id: '',
+        file: '',
+        infoType: 't_device',
+        field: 'attachment',
+        isMultiFiles: true,
+      }
     };
   },
   mounted() {
@@ -427,8 +441,11 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_maps&id=${this.multipleSelection[0]}`;
-      this.exportModal = true;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_maps&id=${this.dataList.id}`;
+      // this.exportModal = true;
+         this.exportListModal = true;
+      this.upLoadQuery.id= this.dataList.id;
+      this.upLoadQuery.infoType = 't_maps';
     },
     close() {
       this.editModal = false;
@@ -663,6 +680,9 @@ export default {
       list.forEach((item) => {
         query.push(item.id);
       });
+       if(list.length) {
+         this.dataList = list[0];
+      }
       this.multipleSelection = query;
       this.multipleSelectionInfo = list[0];
       this.form = [];

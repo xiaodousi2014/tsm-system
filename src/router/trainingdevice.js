@@ -33,18 +33,18 @@ export default {
    meta: [{name: '在库器械', parentName: '模拟器械', path: '/declare-in-stock'}],
    component: () => import('@/views/trainingdevice/storageEquipment/index.vue')
   },
-  {
-    path: 'receive/record',
-    name: 'simulation-equipment-receive-record',
-    meta: [{name: '请领记录', parentName: '模拟器械', path: '/declare-in-stock'}],
-    component: () => import('@/views/trainingdevice/receiveRecord/index.vue')
-   },
-   {
-    path: 'receive/examine',
-    name: 'simulation-equipment-receive-examine',
-    meta: [{name: '请领审核', parentName: '模拟器械', path: '/declare-in-stock'}],
-    component: () => import('@/views/trainingdevice/receiveExamine/index.vue')
-   },
+  // {
+  //   path: 'receive/record',
+  //   name: 'simulation-equipment-receive-record',
+  //   meta: [{name: '请领记录', parentName: '模拟器械', path: '/declare-in-stock'}],
+  //   component: () => import('@/views/trainingdevice/receiveRecord/index.vue')
+  //  },
+  //  {
+  //   path: 'receive/examine',
+  //   name: 'simulation-equipment-receive-examine',
+  //   meta: [{name: '请领审核', parentName: '模拟器械', path: '/declare-in-stock'}],
+  //   component: () => import('@/views/trainingdevice/receiveExamine/index.vue')
+  //  },
   {
    path: 'borrow/record',
    name: 'simulation-equipment-borrow-record',

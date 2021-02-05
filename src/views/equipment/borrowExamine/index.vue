@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div class="table-button">
-      <el-button class="btnSty" type="primary" @click="searchModal = true"
+      <el-button  type="primary"  @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onAgree()"
@@ -40,11 +40,11 @@
   </div>
 </template>
 <script>
-import Pagination from "../../../components/customPagination";
-import customTableSelect from "../../../components/customTableSelect";
-import customSearch from "../../../components/customSearch";
-import Http from "@/api/deviceManage";
-import customTable from "../../../components/customTable";
+import Pagination from "@/components/customPagination";
+import customTableSelect from "@/components/customTableSelect";
+import customSearch from "@/components/customSearch";
+import Http from "@/api/equipmentManage";
+import customTable from "@/components/customTable";
 export default {
   name: "declareWarehousing",
   components: { customTableSelect, customSearch, customTable, Pagination },
@@ -97,12 +97,12 @@ export default {
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_device`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_equipment`)
 
     },
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_device_lent" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_equipment_lent" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);

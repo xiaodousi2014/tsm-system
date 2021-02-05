@@ -2,8 +2,8 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <div>
-      <el-button class="btnSty" type="primary" @click="searchModal = true"
+    <div class="table-button">
+      <el-button  type="primary" @click="searchModal = true"
         >检索</el-button
       >
       <el-button class="btnSty" @click="onDelete()"
@@ -36,7 +36,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from "@/api/deviceManage";
+import Http from "@/api/trainingdeviceManage";
 import customTable from "../../../components/customTable";
 export default {
   name: "declareWarehousing",
@@ -71,7 +71,7 @@ export default {
   methods: {
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_device_abolish" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_trainingdevice_abolish" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);

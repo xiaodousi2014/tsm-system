@@ -36,7 +36,7 @@
 import Pagination from "../../../components/customPagination";
 import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
-import Http from "@/api/deviceManage";
+import Http from "@/api/equipmentManage";
 import customTable from "../../../components/customTable";
 import customUploadFile from "@/components/customUploadFile";
 export default {
@@ -72,7 +72,7 @@ export default {
   methods: {
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_device_check" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_equipment_check" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);
@@ -96,7 +96,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_device_check&id=${this.multipleSelection[0].id}`;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_equipment_check&id=${this.multipleSelection[0].id}`;
       this.exportModal = true;
     },
     close() {
@@ -114,7 +114,7 @@ export default {
         this.$message.warning("只能选择单个数据列导出！");
         return;
       }
-      window.open(`${window.upLoadUrl}/device/check/export?id=${this.multipleSelection[0].id}`)
+      window.open(`${window.upLoadUrl}/equipment/check/export?id=${this.multipleSelection[0].id}`)
      
     },
     getAllField() {
