@@ -8,7 +8,7 @@
       <el-aside width="208px">
         <el-menu
           unique-opened
-          :default-active="$route.path.slice(1)"
+          :default-active="$route.path"
           :router="true"
           class="el-menu-vertical-demo"
           background-color="#000D17"
@@ -37,7 +37,6 @@
                 v-for="child in parent.children"
                 :index="parent.path+'/'+child.path"
                 :key="child.path"
-                :data-url="parent.path + '/' + child.path"
               >
                 <span v-if="child.meta.length>0"> {{ child.meta[0].name }} </span>
               </el-menu-item>
