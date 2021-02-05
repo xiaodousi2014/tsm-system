@@ -255,7 +255,7 @@ export default {
                 return
             }
             debugger
-            this.fileUrl = `http://10.8.145.43:8190/common/uploadfile?infoType=d_training_base&id=${this.multipleSelection[0]}`
+            this.fileUrl = `http://24992uu588.qicp.vip:80/common/uploadfile?infoType=d_training_base&id=${this.multipleSelection[0]}`
             this.exportPutModal = true
         },
         // 删除
@@ -300,7 +300,7 @@ export default {
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            window.open(`http://10.8.145.43:8190/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_training_base`)
+            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_training_base`)
         },
     },
     created() {},
