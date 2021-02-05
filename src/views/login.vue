@@ -86,6 +86,8 @@ export default {
     //     .finally(() => {
     //       this.loading = false
     //     })
+
+        this.$router.push('/main')
     },
     getMainFunctionButtonList() {
       this.mainFunctionButtonList = [
