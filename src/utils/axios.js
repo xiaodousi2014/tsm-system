@@ -142,4 +142,16 @@ export default class Http {
         }
         return Http.send(config, loading)
     }
+
+    static get2(url, params = {}, loading) {
+        const config = {
+            method: 'post',
+            url,
+            data: params,
+            params: {
+                randomTime: new Date().getTime() // 防止缓存
+            }
+        }
+        return Http.send(config, loading)
+    }
 }
