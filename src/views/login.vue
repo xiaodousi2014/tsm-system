@@ -71,21 +71,21 @@ export default {
       this.loading = true
       let params = this.loginForm
       let url = '/trmslogin'
-      Http.login(params)
-        .then((res) => {
-           this.$router.push('/main')
-          console.log("res");
-          console.log(res);
-          // this.logoutDialog = false
-          // removeStorage('ifLogin')
-          // removeStorage('token')
-          // delCookie('token')
-          // this.$router.push('/login')
+    //   Http.login(params)
+    //     .then((res) => {
+    //        this.$router.push('/main')
+    //       console.log("res");
+    //       console.log(res);
+    //       // this.logoutDialog = false
+    //       // removeStorage('ifLogin')
+    //       // removeStorage('token')
+    //       // delCookie('token')
+    //       // this.$router.push('/login')
          
-        })
-        .finally(() => {
-          this.loading = false
-        })
+    //     })
+    //     .finally(() => {
+    //       this.loading = false
+    //     })
     },
     getMainFunctionButtonList() {
       this.mainFunctionButtonList = [
