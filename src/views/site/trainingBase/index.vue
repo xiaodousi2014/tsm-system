@@ -115,7 +115,7 @@ export default {
             this.query.indexArray = []
             this.query.indexArray = event
             this.searchModal = false
-            this.getSitCommonList()
+            this.getSitCommonData()
         },
         // table选中
         selectTableList(list) {
@@ -137,7 +137,7 @@ export default {
                     if (res.code == '0000') {
                         this.$message.success('撤销成功！')
                         this.multipleSelection = []
-                        this.getSitCommonList()
+                        this.getSitCommonData()
                     }
                 })
                 .catch((res) => {
@@ -152,7 +152,7 @@ export default {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
-            this.getSitCommonList()
+            this.getSitCommonData()
             // this.search();
         },
         getSitCommonList() {
@@ -195,11 +195,11 @@ export default {
         },
         getCurrentChange(val) {
             this.query.pageNum = val
-            this.getSitCommonList()
+            this.getSitCommonData()
         },
         getSizeChange(val) {
             this.query.pageCount = val
-            this.getSitCommonList()
+            this.getSitCommonData()
         },
         listCreate(event) {
             event.site_type = 'd_training_base'

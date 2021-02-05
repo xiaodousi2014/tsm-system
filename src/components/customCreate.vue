@@ -14,7 +14,7 @@
           v-for="item in searchList"
           :key="item.name"
         >
-          <el-form-item :label="item.comment" v-if="item.editable">
+          <el-form-item :label="item.comment" v-if="item.editable && (item.type == 'string' || item.type == 'date' || item.type == 'datetime' || item.type == 'int' || item.type == 'map' || item.type == 'list')">
             <el-input
               v-if="item.type == 'string'"
               size="small"

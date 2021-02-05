@@ -12,7 +12,8 @@
             :md="8"
             :sm="12"
             :xs="24"
-            v-if="item.editable && item.type != 'attachment'"
+            :key="item.name"
+            v-if="item.editable && (item.type != 'attachment' || item.type == 'string' || item.type == 'date' || item.type == 'datetime' || item.type == 'int' || item.type == 'map' || item.type == 'list')"
           >
             <el-form-item :label="item.comment">
               <el-input
