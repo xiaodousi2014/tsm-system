@@ -10,6 +10,7 @@
             <el-button @click="onUploadFile()">导入</el-button>
             <el-button @click="onExport()">导出</el-button>
             <el-button @click="onRevoke()">撤销操作</el-button>
+            <el-button @click="onPreferences()">偏好设置</el-button>
             <el-button type="primary" @click="onUploadFileOther()">上传附件</el-button>
         </div>
 
@@ -32,8 +33,11 @@
         <el-dialog title="导入" :visible.sync="exportModal" width="500px">
             <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
         </el-dialog>
-        <el-dialog title="导入附件" :visible.sync="exportPutModal" width="500px">
-            <custom-upload-file-put :url="fileUrl" @close="close"></custom-upload-file-put>
+        <el-dialog title="导入附件" :visible.sync="exportPutModal" width="600px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <custom-upload-file-put :url="fileUrl" @close="close" :uploadType="fileType" :id="multipleSelectionInfo.id" :infoType="infoType"></custom-upload-file-put>
+        </el-dialog>
+        <el-dialog title="偏好设置" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :searchList="searchList" :infoType="infoType"></commonon-preferences>
         </el-dialog>
     </div>
 </template>
@@ -45,8 +49,9 @@ import Http from '@/api/siteManagemer'
 import customTable from '@/components/customTable'
 import customUploadFile from '@/components/customUploadFile'
 import customUploadFilePut from '@/components/customUploadFilePut2'
-import customCreate from '@/components/customCreate'
-import customEdit from '@/components/customEdit'
+import customCreate from '@/components/customCreate2'
+import customEdit from '@/components/customEdit2'
+import commononPreferences from '@/components/commononPreferences'
 export default {
     name: 'training-base',
     components: {
@@ -58,9 +63,11 @@ export default {
         customUploadFilePut,
         customCreate,
         customEdit,
+        commononPreferences,
     },
     data() {
         return {
+            infoType: 'd_training_base',
             query: {
                 infoType: 'd_training_base',
                 orderField: 'id',
@@ -75,14 +82,15 @@ export default {
             tableAllIist: [],
             searchList: [],
             multipleSelection: [],
+            preferencesModal: false,
             exportModal: false,
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: '',
             fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_training_base',
             searchModal: false,
             multipleSelectionInfo: {},
+            fileType: [],
         }
     },
     mounted() {
@@ -107,7 +115,6 @@ export default {
                     URL.revokeObjectURL(objectUrl)
                 })
                 .catch((res) => {
-                    debugger
                     this.$message.error(res.msg || '系统异常')
                 })
         },
@@ -132,7 +139,10 @@ export default {
                 this.$message.warning('请选择要撤销操作的数据列！')
                 return
             }
-            Http.revokeOperation(this.multipleSelection)
+            Http.revokeOperation({
+                ids: this.multipleSelection,
+                site_type: 'd_training_base',
+            })
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('撤销成功！')
@@ -144,6 +154,9 @@ export default {
                     this.$message.error(res.msg || '系统异常')
                 })
         },
+        onPreferences() {
+            this.preferencesModal = true
+        },
         // 导入
         onUploadFile() {
             ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_training_base'), (this.exportModal = true)
@@ -152,8 +165,8 @@ export default {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
-            this.getSitCommonData()
-            // this.search();
+            this.exportPutModal = false
+            this.preferencesModal = false
         },
         getSitCommonList() {
             Http.getSitCommonList({
@@ -166,12 +179,25 @@ export default {
                                 return item.display == true
                             })
                             this.searchList = list
+
+                            this.fileTypeFun(list)
                         }
                     }
                 })
                 .catch((res) => {
                     this.$message.error(res.msg || '系统异常')
                 })
+        },
+        fileTypeFun(data) {
+            data.map((res) => {
+                if (res.type == 'picture' || res.type == 'video' || res.type == 'attachment') {
+                    this.fileType.push({
+                        type: res.type,
+                        name: res.name,
+                        comment: res.comment,
+                    })
+                }
+            })
         },
         getSitCommonData() {
             Http.getSitCommonData(this.query)
@@ -202,7 +228,9 @@ export default {
             this.getSitCommonData()
         },
         listCreate(event) {
+            event.t_training_base = 'd_training_base'
             event.site_type = 'd_training_base'
+            event.base_name = ''
             Http.addData(event)
                 .then((res) => {
                     if (res.code == '0000') {
@@ -254,7 +282,7 @@ export default {
                 this.$message.warning('只能选择单个数据列编辑！')
                 return
             }
-            debugger
+
             this.fileUrl = `http://24992uu588.qicp.vip:80/common/uploadfile?infoType=d_training_base&id=${this.multipleSelection[0]}`
             this.exportPutModal = true
         },
@@ -287,7 +315,8 @@ export default {
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('删除成功！')
-                        this.getTableList()
+                        this.multipleSelection = []
+                        this.getSitCommonData()
                     }
                 })
                 .catch((res) => {
@@ -312,6 +341,8 @@ export default {
 }
 </style>
 <style scoped lang="less">
+.ClassifiedDisplay {
+}
 .el-button--primary {
     margin-top: 20px;
 }

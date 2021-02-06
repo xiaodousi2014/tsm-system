@@ -58,7 +58,6 @@ export default class Http {
             loadingShowOrHide(true)
         }
         return axios(configs).then((res) => {
-        
             if ((loading === '' ||typeof loading == 'object' || loading === undefined)&& !isBlob) {
                 // 什么都不操作
             } else if(isBlob) {

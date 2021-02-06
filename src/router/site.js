@@ -7,12 +7,12 @@ export default {
   name: '场地维护',
  },
  children: [
-    {
-        path: 'field',
-        name: 'site-plan-declare', 
-        meta: [{name: '场地', parentName: '场地维护', path: '/site'}],
-        component: () => import('@/views/site/field/index.vue')
-    },
+    // {
+    //     path: 'field',
+    //     name: 'site-plan-declare', 
+    //     meta: [{name: '场地', parentName: '场地维护', path: '/site'}],
+    //     component: () => import('@/views/site/field/index.vue')
+    // },
   {
    path: 'plan',
    name: 'site-managemer-use-plan',
@@ -154,6 +154,13 @@ export default {
     name: 'site-patent', 
     meta: [{name: '实验专利', parentName: '场地维护', path: '/site'}],
     component: () => import('@/views/site/patent/index.vue')
+},
+{
+ path: 'attr',
+ name: 'site-manage',
+
+ meta: [{name: '维护管理', parentName: '场地维护'}],
+ component: () => import('@/views/site/maintainManage/index.vue')
 },
 ]
 }
