@@ -36,8 +36,8 @@
         <el-dialog title="导入附件" :visible.sync="exportPutModal" width="600px" :close-on-press-escape="false" :close-on-click-modal="false">
             <custom-upload-file-put :url="fileUrl" @close="close" :uploadType="fileType" :id="multipleSelectionInfo.id" :infoType="infoType"></custom-upload-file-put>
         </el-dialog>
-        <el-dialog title="偏好设置" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
-            <commonon-preferences @close="close" :searchList="searchList" :infoType="infoType"></commonon-preferences>
+        <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
         </el-dialog>
     </div>
 </template>

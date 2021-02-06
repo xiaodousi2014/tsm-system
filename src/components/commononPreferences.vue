@@ -17,13 +17,10 @@
 </template>
 
 <script>
+import Http from '@/api/common'
 export default {
     name: 'customSearch',
     props: {
-        searchList: {
-            type: Array,
-            default: [],
-        },
         infoType: {
             type: String,
             default: '',
@@ -33,13 +30,23 @@ export default {
         return {
             form: {},
             checked: false,
+            searchList: [],
         }
     },
     watch: {},
+    mounted() {
+        this.selectPreferences()
+    },
     methods: {
         selectPreferences() {
-            Http.preferencesSelect('')
-                .then((res) => {})
+            Http.preferencesSelect(this.infoType)
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.searchList = res.data.filter
+                    } else {
+                        this.searchList = []
+                    }
+                })
                 .catch((res) => {
                     this.$message.error(res.msg || '系统异常')
                 })
