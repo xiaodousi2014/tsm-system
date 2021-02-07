@@ -165,7 +165,7 @@ export default {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
-
+            
             flag && this.getSitCommonData()
         },
         getSitCommonList() {

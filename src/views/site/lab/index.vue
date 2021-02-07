@@ -143,7 +143,7 @@ export default {
                 this.$message.warning('请选择要撤销操作的数据列！')
                 return
             }
-            Http.revokeOperation({
+            Http.revokeOperationLab({
                 ids: this.multipleSelection,
                 site_type: this.infoType,
             })
@@ -232,7 +232,7 @@ export default {
             event.t_training_base = this.infoType
             event.site_type = this.infoType
             event.base_name = ''
-            Http.addData(event)
+            Http.addDataLab(event)
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('创建成功！')
@@ -262,7 +262,7 @@ export default {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
             params.site_type = this.infoType
-            Http.editData(params)
+            Http.editDataLab(params)
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('编辑成功！')
@@ -295,7 +295,7 @@ export default {
                 })
         },
         deleteSure() {
-            Http.deleteList({
+            Http.deleteListLab({
                 ids: this.multipleSelection,
                 site_type: this.infoType,
             })
