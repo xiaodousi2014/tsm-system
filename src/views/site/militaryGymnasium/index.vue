@@ -85,14 +85,14 @@ export default {
             preferencesModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
-this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`
+        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -159,7 +159,7 @@ this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
+            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
         close() {
             this.editModal = false
@@ -313,7 +313,19 @@ this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&infoType=${this.infoType}`)
+            
+            const link = document.createElement('a')
+            Http.downFileCommon({ ids: this.multipleSelection, infoType: this.infoType })
+                .then((res) => {
+                    let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
+                    let objectUrl = URL.createObjectURL(blob)
+                    link.href = objectUrl
+                    link.click()
+                    URL.revokeObjectURL(objectUrl)
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
         },
     },
     created() {},
@@ -322,6 +334,9 @@ this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType
 <style>
 .el-dialog__body {
     padding: 0 30px 30px 30px !important;
+}
+.dialog-footer {
+    padding-top: 20px !important;
 }
 </style>
 <style scoped lang="less">

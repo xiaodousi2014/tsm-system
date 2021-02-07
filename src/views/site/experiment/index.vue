@@ -163,14 +163,14 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
-        this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`
+        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -224,7 +224,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
+            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
         close() {
             this.editModal = false
@@ -393,6 +393,10 @@ export default {
 }
 .el-dialog__body {
     padding: 0 30px 30px 30px !important;
+}
+
+.dialog-footer {
+    padding-top: 20px !important;
 }
 </style>
 <style scoped lang="less">
