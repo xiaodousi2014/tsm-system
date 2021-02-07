@@ -72,7 +72,7 @@ export default {
   methods: {
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_trainingdevice_check" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_training_device_check" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);
@@ -96,7 +96,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_trainingdevice_check&id=${this.multipleSelection[0].id}`;
+      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_training_device_check&id=${this.multipleSelection[0].id}`;
       this.exportModal = true;
     },
     close() {
