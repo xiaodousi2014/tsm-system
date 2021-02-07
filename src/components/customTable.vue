@@ -65,11 +65,12 @@ export default {
       this.$emit('getAttachFile',query);
     },
     setAttachment(row, item) {
+      // debugger
       if (row[item.name]) {
         if (row[item.name].indexOf('{')<0 && row[item.name].indexOf('[')<0 && typeof row[item.name] == 'string'){
           return row[item.name]
         } else if (typeof JSON.parse(row[item.name]) == 'object'){
-          return JSON.parse(row[item.name]).attachment
+          return JSON.parse(row[item.name]).files;
         } else {
           return JSON.parse(row[item.name]).attachment;
         }
