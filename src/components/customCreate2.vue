@@ -82,7 +82,11 @@ export default {
                 }
             })
 
-            this.$emit('listCreate', this.form)
+            let param = JSON.parse(JSON.stringify(this.form))
+
+            this.form = {}
+
+            this.$emit('listCreate', param)
         },
         onSearch() {
             console.log(this.checkedSearchList)
