@@ -85,14 +85,15 @@ export default {
             preferencesModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: '',
-            fileUrl: 'http://27.210.230.34:8190/common/import?infoType=d_regular_classroom',
+            fileUrl: `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
+        this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`
+
         this.getSitCommonList()
 
         this.getSitCommonData()
@@ -105,7 +106,7 @@ export default {
             const link = document.createElement('a')
             Http.getAttachFile({
                 id: query.row.id,
-                infoType: 'd_regular_classroom',
+                infoType: this.infoType,
                 file: query.file,
             })
                 .then((res) => {
@@ -143,7 +144,7 @@ export default {
             }
             Http.revokeOperation({
                 ids: this.multipleSelection,
-                site_type: 'd_regular_classroom',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -158,7 +159,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.230.34:8190/common/import?infoType=d_regular_classroom'), (this.exportModal = true)
+            ;(this.fileUrl = `http://10.183.79.225:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
         close() {
             this.editModal = false
@@ -167,7 +168,7 @@ export default {
         },
         getSitCommonList() {
             Http.getSitCommonList({
-                infoType: 'd_regular_classroom',
+                infoType: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -225,8 +226,8 @@ export default {
             this.getSitCommonData()
         },
         listCreate(event) {
-            event.t_training_base = 'd_regular_classroom'
-            event.site_type = 'd_regular_classroom'
+            event.t_training_base = this.infoType
+            event.site_type = this.infoType
             event.base_name = ''
             Http.addData(event)
                 .then((res) => {
@@ -257,7 +258,7 @@ export default {
         listEdit() {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
-            params.site_type = 'd_regular_classroom'
+            params.site_type = this.infoType
             Http.editData(params)
                 .then((res) => {
                     if (res.code == '0000') {
@@ -293,7 +294,7 @@ export default {
         deleteSure() {
             Http.deleteList({
                 ids: this.multipleSelection,
-                site_type: 'd_regular_classroom',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -312,7 +313,7 @@ export default {
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_regular_classroom`)
+            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&infoType=${this.infoType}`)
         },
     },
     created() {},
