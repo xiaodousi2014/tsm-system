@@ -8,6 +8,9 @@ export default {
     UploadImage(query) {
      return Http.put(`${query.url}`, query.file)
     },
+    UploadImagePost(query, url) {
+        return Http.post(`${url}`, query)
+       },
     getAttachFile(query) {
       return Http.download(`${rt2}/common/showfile`, query)
     },

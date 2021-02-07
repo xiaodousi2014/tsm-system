@@ -48,7 +48,7 @@
                 placeholder="请选择"
                 v-model.lazy="form[item.name]"
                 size="small"
-                v-if="item.type == 'map'"
+                v-if="item.type == 'map' || item.type == 'list'"
               >
                 <el-option
                   v-for="(list, index) in setSearchList(item)"
@@ -164,9 +164,13 @@ export default {
       return [];
     },
     setSearchList(event) {
+     
       let list = [];
       this.searchList.forEach((item) => {
         if (item.name == event.name) {
+           if(!item.itemdata) {
+        return
+      }
           Object.entries(JSON.parse(item.itemdata)).forEach((item) => {
             let query = {
               id: Number(item[0]),

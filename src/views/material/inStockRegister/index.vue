@@ -172,8 +172,8 @@ export default {
         });
     },
     onUpload() {
-      (this.fileUrl = "${window.upLoadUrl}/material/import"),
-        (this.exportModal = true);
+      this.fileUrl = "${window.upLoadUrl}/material/import",
+      this.exportModal = true;
     },
     getAllField() {
       Http.getStockTitle()

@@ -45,7 +45,7 @@
               placeholder="请选择"
               v-model="form[item.name]"
               size="small"
-              v-if="item.type == 'map'"
+              v-if="item.type == 'map' || item.type == 'list'"
             >
               <el-option
                 v-for="(list, index) in setSearchList(item)"

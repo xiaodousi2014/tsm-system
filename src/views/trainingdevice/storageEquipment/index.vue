@@ -18,9 +18,9 @@
       <el-button class="btnSty" @click="onRevoke()"
         >删除记录</el-button
       >
-      <el-button class="btnSty" @click="onQingLing()"
+      <!-- <el-button class="btnSty" @click="onQingLing()"
         >请领</el-button
-      >
+      > -->
       <el-button class="btnSty" @click="onBorrow()"
         >借用</el-button
       >
@@ -73,7 +73,7 @@
               <el-form-item label="设备名称:" prop="manufacturer">
                 <el-input
                   disabled
-                  v-model.trim="item.trainingdevice_name"
+                  v-model.trim="item.device_name"
                   maxlength="10"
                 ></el-input>
               </el-form-item>
@@ -134,7 +134,7 @@
               <el-form-item label="设备名称:" prop="manufacturer">
                 <el-input
                   disabled
-                  v-model.trim="item.trainingdevice_name"
+                  v-model.trim="item.device_name"
                   maxlength="10"
                 ></el-input>
               </el-form-item>
@@ -247,7 +247,7 @@
             <el-form-item label="维修项目名称:" prop="manufacturer">
               <el-input
                 disabled
-                v-model.trim="repairList[0].trainingdevice_name"
+                v-model.trim="repairList[0].device_name"
                 maxlength="10"
               ></el-input>
             </el-form-item>
@@ -272,7 +272,7 @@
       <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
     </el-dialog>
       <el-dialog title="上传附件" :visible.sync="exportListModal" width="500px">
-      <custom-upload-file-list :url="fileUrl" @close="close" :fileList='dataList' :upLoadQuery='upLoadQuery'></custom-upload-file-list>
+      <custom-upload-file-list-again :url="fileUrl" @close="close" :fileList='dataList' :upLoadQuery='upLoadQuery'></custom-upload-file-list-again>
     </el-dialog>
     <el-dialog title="新增" :visible.sync="createModal" width="1100px">
       <custom-create
@@ -306,6 +306,7 @@ import customUploadFile from "@/components/customUploadFile";
 import customCreate from "@/components/customCreate";
 import customEdit from "@/components/customEdit";
 import customUploadFileList from "../../../components/customUploadFileList";
+import customUploadFileListAgain from '../../../components/customUploadFileListAgain.vue';
 export default {
   name: "declareWarehousing",
   components: {
@@ -316,7 +317,8 @@ export default {
     customUploadFile,
     customCreate,
     customEdit,
-    customUploadFileList
+    customUploadFileList,
+    customUploadFileListAgain
   },
   data() {
     return {
@@ -351,7 +353,7 @@ export default {
       upLoadQuery: {
         id: '',
         file: '',
-        infoType: 't_trainingdevice',
+        infoType: 't_training_device',
         field: 'attachment',
         isMultiFiles: true,
       }
@@ -448,10 +450,10 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_trainingdevice&id=${this.dataList.id}`;
+      this.fileUrl = `${window.upLoadUrl}/common/uploadfile`;
       this.exportListModal = true;
       this.upLoadQuery.id= this.dataList.id;
-      this.upLoadQuery.infoType = 't_trainingdevice';
+      this.upLoadQuery.infoType = 't_training_device';
     },
     close() {
       this.editModal = false;
@@ -483,7 +485,7 @@ export default {
         this.$message.warning("请选择要导出的数据列！");
         return;
       }
-      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_trainingdevice`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_training_device`)
     },
     // 报废
     async onScrap() {
@@ -700,8 +702,8 @@ export default {
       this.form = [];
       list.forEach((item) => {
         let query = {
-          trainingdevice_id: item.id,
-          trainingdevice_name: item.name,
+          device_id: item.id,
+          device_name: item.device_name,
           receiver: "测试用户",
           quantity: "1",
           locate_site: "",
@@ -712,8 +714,8 @@ export default {
       this.borrowList = [];
       list.forEach((item) => {
         let query = {
-          trainingdevice_id: item.id,
-          trainingdevice_name: item.name,
+          device_id: item.id,
+          device_name: item.device_name,
           borrower: "测试用户",
           quantity: "1",
           locate_site: "",
@@ -729,8 +731,8 @@ export default {
       this.repairList = [];
       list.forEach((item) => {
         let query = {
-          trainingdevice_id: item.id,
-          trainingdevice_name: item.name,
+          device_id: item.id,
+          device_name: item.device_name,
           repair_content: "",
         };
         this.repairList.push(query);

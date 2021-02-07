@@ -66,7 +66,7 @@ export default {
         let query = {
             ids: params
         }
-        return Http.post(`${rt2}/trainingdevice/import/cancel`, query)
+        return Http.delete(`${rt2}/common/import`, query)
     },
 
     // 请领

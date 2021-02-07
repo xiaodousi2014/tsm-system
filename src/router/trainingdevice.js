@@ -14,12 +14,12 @@ export default {
    component: () => import('@/views/trainingdevice/planDeclare/index.vue')
   },
 
-  {
-    path: 'plan-examine',
-    name: 'simulation-equipment-plan-examine',
-    meta: [{name: '计划审核', parentName: '模拟器械', path: '/declare-in-stock'}],
-    component: () => import('@/views/trainingdevice/planExamine/index.vue')
-   },
+  // {
+  //   path: 'plan-examine',
+  //   name: 'simulation-equipment-plan-examine',
+  //   meta: [{name: '计划审核', parentName: '模拟器械', path: '/declare-in-stock'}],
+  //   component: () => import('@/views/trainingdevice/planExamine/index.vue')
+  //  },
   {
    path: 'record',
    name: 'simulation-equipment-in-stock-register',

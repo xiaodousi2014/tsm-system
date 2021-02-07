@@ -80,7 +80,7 @@ export default {
             col_type: "string",
             col_name: "data_table",
             indexType: "1",
-            value: "t_trainingdevice",
+            value: "t_training_device",
           },
         ],
         pageNum: 1,
@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     onTemplateDown() {
-      window.open(`${window.upLoadUrl}/common/attachment/download_TemplateFile?infoType=t_trainingdevice`)
+      window.open(`${window.upLoadUrl}/common/attachment/download_TemplateFile?infoType=t_training_device`)
     },
      getAttachFile(query) {
        const link = document.createElement("a");

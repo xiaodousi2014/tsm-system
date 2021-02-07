@@ -128,6 +128,7 @@ export default {
         this.$message.warning("请选择要操作的数据列！");
         return;
       }
+      debugger
       if (this.multipleSelection.length > 1) {
         this.$message.warning("只能选择单个数据列操作！");
         return;
@@ -172,8 +173,8 @@ export default {
         });
     },
     onUpload() {
-      (this.fileUrl = "${window.upLoadUrl}/information/import"),
-        (this.exportModal = true);
+      this.fileUrl = `${window.upLoadUrl}/information/import`,
+        this.exportModal = true;
     },
     getAllField() {
       Http.getOneStockTitle()
