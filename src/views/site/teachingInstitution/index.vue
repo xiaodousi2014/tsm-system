@@ -65,6 +65,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_teach_org',
             query: {
                 infoType: 'd_teach_org',
                 orderField: 'id',

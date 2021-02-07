@@ -67,6 +67,7 @@ export default {
     },
     data() {
         return {
+            infoType: 'd_training_sites',
             query: {
                 infoType: 'd_training_sites',
                 orderField: 'id',

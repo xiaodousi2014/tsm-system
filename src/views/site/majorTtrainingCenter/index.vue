@@ -65,6 +65,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_profession_centre',
             query: {
                 infoType: 'd_profession_centre',
                 orderField: 'id',

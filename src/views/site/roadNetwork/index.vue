@@ -65,6 +65,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_roadpipe',
             query: {
                 infoType: 'd_roadpipe',
                 orderField: 'id',

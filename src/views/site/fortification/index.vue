@@ -65,6 +65,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_bastion',
             query: {
                 infoType: 'd_bastion',
                 orderField: 'id',

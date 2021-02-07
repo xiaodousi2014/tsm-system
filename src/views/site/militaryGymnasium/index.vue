@@ -65,6 +65,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_military_sports_hall',
             query: {
                 infoType: 'd_military_sports_hall',
                 orderField: 'id',

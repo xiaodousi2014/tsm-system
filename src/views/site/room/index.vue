@@ -65,6 +65,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_barracks',
             query: {
                 infoType: 'd_barracks',
                 orderField: 'id',
