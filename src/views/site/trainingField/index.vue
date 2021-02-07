@@ -2,7 +2,7 @@
     <div class="ClassifiedDisplay padding20">
         <!-- 表格 -->
         <!--搜索表单-->
-        <div style="text-align: right;">
+        <div style="text-align: right;margin-top: -20px">
             <el-button type="primary" @click="searchModal = true">检索</el-button>
             <el-button @click="onCreate()">新增</el-button>
             <el-button @click="onEdit()">编辑</el-button>
@@ -67,6 +67,7 @@ export default {
     },
     data() {
         return {
+            infoType: 'd_training_sites',
             query: {
                 infoType: 'd_training_sites',
                 orderField: 'id',
@@ -86,14 +87,15 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: '',
-            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_training_sites',
+            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
+        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+
         this.getSitCommonList()
 
         this.getSitCommonData()
@@ -106,7 +108,7 @@ export default {
             const link = document.createElement('a')
             Http.getAttachFile({
                 id: query.row.id,
-                infoType: 'd_training_sites',
+                infoType: this.infoType,
                 file: query.file,
             })
                 .then((res) => {
@@ -144,7 +146,7 @@ export default {
             }
             Http.revokeOperation({
                 ids: this.multipleSelection,
-                site_type: 'd_training_sites',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -159,17 +161,19 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_training_sites'), (this.exportModal = true)
+            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
-        close() {
+        close(flag) {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
             this.exportPutModal = false
+
+            flag && this.getSitCommonData()
         },
         getSitCommonList() {
             Http.getSitCommonList({
-                infoType: 'd_training_sites',
+                infoType: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -227,8 +231,8 @@ export default {
             this.getSitCommonData()
         },
         listCreate(event) {
-            event.t_training_base = 'd_training_sites'
-            event.site_type = 'd_training_sites'
+            event.t_training_base = this.infoType
+            event.site_type = this.infoType
             event.base_name = ''
             Http.addData(event)
                 .then((res) => {
@@ -259,7 +263,7 @@ export default {
         listEdit() {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
-            params.site_type = 'd_training_sites'
+            params.site_type = this.infoType
             Http.editData(params)
                 .then((res) => {
                     if (res.code == '0000') {
@@ -282,7 +286,7 @@ export default {
                 return
             }
 
-            this.fileUrl = `http://24992uu588.qicp.vip:80/common/uploadfile?infoType=d_training_sites&id=${this.multipleSelection[0]}`
+            this.fileUrl = `http://24992uu588.qicp.vip:80/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
             this.exportPutModal = true
         },
         // 删除
@@ -309,7 +313,7 @@ export default {
         deleteSure() {
             Http.deleteList({
                 ids: this.multipleSelection,
-                site_type: 'd_training_sites',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -328,7 +332,19 @@ export default {
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_training_sites`)
+           
+            const link = document.createElement('a')
+            Http.downFileCommon({ ids: this.multipleSelection, infoType: this.infoType })
+                .then((res) => {
+                    let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
+                    let objectUrl = URL.createObjectURL(blob)
+                    link.href = objectUrl
+                    link.click()
+                    URL.revokeObjectURL(objectUrl)
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
         },
     },
     created() {},
@@ -338,11 +354,14 @@ export default {
 .el-dialog__body {
     padding: 0 30px 30px 30px !important;
 }
+.dialog-footer {
+    padding-top: 20px !important;
+}
 </style>
 <style scoped lang="less">
 .ClassifiedDisplay {
 }
-.el-button--primary {
+.el-button {
     margin-top: 20px;
 }
 .showIcon {

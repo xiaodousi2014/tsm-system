@@ -10,5 +10,7 @@
 
 // 服务器地址
 export const SERVICE_URL = "http://24992uu588.qicp.vip:80"
+// export const SERVICE_URL = "//218.59.43.155:8190"
+
 
 

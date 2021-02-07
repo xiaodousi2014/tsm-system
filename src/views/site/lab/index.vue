@@ -2,7 +2,7 @@
     <div class="ClassifiedDisplay padding20">
         <!-- 表格 -->
         <!--搜索表单-->
-        <div style="text-align: right;">
+        <div style="text-align: right;margin-top: -20px">
             <el-button type="primary" @click="searchModal = true">检索</el-button>
             <el-button @click="onCreate()">新增</el-button>
             <el-button @click="onEdit()">编辑</el-button>
@@ -10,6 +10,7 @@
             <el-button @click="onUploadFile()">导入</el-button>
             <el-button @click="onExport()">导出</el-button>
             <el-button @click="onPreferences()">偏好设置</el-button>
+            <el-button @click="toLibList()">实验室列表</el-button>
         </div>
 
         <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -65,6 +66,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_labs',
             query: {
                 infoType: 'd_labs',
                 orderField: 'id',
@@ -84,14 +86,15 @@ export default {
             preferencesModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: '',
-            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_labs',
+            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
+        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+
         this.getSitCommonList()
 
         this.getSitCommonData()
@@ -104,7 +107,7 @@ export default {
             const link = document.createElement('a')
             Http.getAttachFile({
                 id: query.row.id,
-                infoType: 'd_labs',
+                infoType: this.infoType,
                 file: query.file,
             })
                 .then((res) => {
@@ -140,9 +143,9 @@ export default {
                 this.$message.warning('请选择要撤销操作的数据列！')
                 return
             }
-            Http.revokeOperation({
+            Http.revokeOperationLab({
                 ids: this.multipleSelection,
-                site_type: 'd_labs',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -157,16 +160,18 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_labs'), (this.exportModal = true)
+            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
-        close() {
+        close(flag) {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
+
+            flag && this.getSitCommonData()
         },
         getSitCommonList() {
             Http.getSitCommonList({
-                infoType: 'd_labs',
+                infoType: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -224,10 +229,10 @@ export default {
             this.getSitCommonData()
         },
         listCreate(event) {
-            event.t_training_base = 'd_labs'
-            event.site_type = 'd_labs'
+            event.t_training_base = this.infoType
+            event.site_type = this.infoType
             event.base_name = ''
-            Http.addData(event)
+            Http.addDataLab(event)
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('创建成功！')
@@ -256,8 +261,8 @@ export default {
         listEdit() {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
-            params.site_type = 'd_labs'
-            Http.editData(params)
+            params.site_type = this.infoType
+            Http.editDataLab(params)
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('编辑成功！')
@@ -290,9 +295,9 @@ export default {
                 })
         },
         deleteSure() {
-            Http.deleteList({
+            Http.deleteListLab({
                 ids: this.multipleSelection,
-                site_type: 'd_labs',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -311,7 +316,24 @@ export default {
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_labs`)
+            
+            const link = document.createElement('a')
+            Http.downFileCommon({ ids: this.multipleSelection, infoType: this.infoType })
+                .then((res) => {
+                    let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
+                    let objectUrl = URL.createObjectURL(blob)
+                    link.href = objectUrl
+                    link.click()
+                    URL.revokeObjectURL(objectUrl)
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        toLibList() {
+            this.$router.push({
+                path: '/site/lab/experiment',
+            })
         },
     },
     created() {},
@@ -321,11 +343,15 @@ export default {
 .el-dialog__body {
     padding: 0 30px 30px 30px !important;
 }
+
+.dialog-footer {
+    padding-top: 20px !important;
+}
 </style>
 <style scoped lang="less">
 .ClassifiedDisplay {
 }
-.el-button--primary {
+.el-button {
     margin-top: 20px;
 }
 .showIcon {

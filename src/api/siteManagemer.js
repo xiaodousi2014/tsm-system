@@ -1,8 +1,7 @@
 import Http from '../utils/axios'
 // const rt = 'http://139.198.188.175:8090/'
-const rt = 'http://27.210.124.225:8190'
+const rt = 'http://218.59.43.155:8190'
 export default {
-
     // 删除附件
     deletefile(query) {
         return Http.delete(`${rt}/common/deletefile`, query)
@@ -18,11 +17,11 @@ export default {
     UploadImage(query) {
         return Http.post(`${rt}${query.url}`, query.file)
     },
-    // 列表数据导入
+    // 新增
     addData(params) {
         return Http.post(`${rt}/site`, params)
     },
-    // 列表数据导入
+    // 编辑
     editData(params) {
         return Http.put(`${rt}/site`, params)
     },
@@ -45,5 +44,27 @@ export default {
     // 公用检索
     getSitCommonData(params) {
         return Http.post(`${rt}/common/query/data`, params)
+    },
+    // 下载
+    downFileCommon(query) {
+        return Http.download(`${rt}/common/export`, query)
+    },
+
+    
+    // 新增
+    addDataLab(params) {
+        return Http.post(`${rt}/lib`, params)
+    },
+    // 编辑
+    editDataLab(params) {
+        return Http.put(`${rt}/lib`, params)
+    },
+    // 撤销
+    revokeOperationLab(params) {
+        return Http.delete(`${rt}/lib`, params)
+    },
+    // 删除
+    deleteListLab(params) {
+        return Http.delete(`${rt}/lib`, params)
     },
 }

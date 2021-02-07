@@ -55,15 +55,15 @@ export default {
         // this.$refs.uploadFiles.clear();
         this.fileList = [];
         this.$message.success("上传成功");
-        this.closeModal();
+        this.closeModal(true);
       } else {
         this.fileList = [];
         // console.log(res)
         this.$message.error(res.msg|| '系统异常');
       }
     },
-    closeModal() {
-     this.$emit('close')
+    closeModal(flag) {
+     this.$emit('close', flag)
     },
     beforeAvatarUpload(file) {
       const isJPG =

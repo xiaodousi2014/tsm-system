@@ -2,7 +2,7 @@
     <div class="ClassifiedDisplay padding20">
         <!-- 表格 -->
         <!--搜索表单-->
-        <div style="text-align: right;">
+        <div style="text-align: right;margin-top: -20px">
             <el-button type="primary" @click="searchModal = true">检索</el-button>
             <el-button @click="onCreate()">新增</el-button>
             <el-button @click="onEdit()">编辑</el-button>
@@ -65,6 +65,7 @@ export default {
             title: '请领',
             borrowModal: false,
             borrowList: [],
+            infoType: 'd_roadpipe',
             query: {
                 infoType: 'd_roadpipe',
                 orderField: 'id',
@@ -84,14 +85,15 @@ export default {
             preferencesModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: '',
-            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_roadpipe',
+            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
+        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+
         this.getSitCommonList()
 
         this.getSitCommonData()
@@ -104,7 +106,7 @@ export default {
             const link = document.createElement('a')
             Http.getAttachFile({
                 id: query.row.id,
-                infoType: 'd_roadpipe',
+                infoType: this.infoType,
                 file: query.file,
             })
                 .then((res) => {
@@ -142,7 +144,7 @@ export default {
             }
             Http.revokeOperation({
                 ids: this.multipleSelection,
-                site_type: 'd_roadpipe',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -157,16 +159,18 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_roadpipe'), (this.exportModal = true)
+            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
-        close() {
+        close(flag) {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
+
+            flag && this.getSitCommonData()
         },
         getSitCommonList() {
             Http.getSitCommonList({
-                infoType: 'd_roadpipe',
+                infoType: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -224,8 +228,8 @@ export default {
             this.getSitCommonData()
         },
         listCreate(event) {
-            event.t_training_base = 'd_roadpipe'
-            event.site_type = 'd_roadpipe'
+            event.t_training_base = this.infoType
+            event.site_type = this.infoType
             event.base_name = ''
             Http.addData(event)
                 .then((res) => {
@@ -256,7 +260,7 @@ export default {
         listEdit() {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
-            params.site_type = 'd_roadpipe'
+            params.site_type = this.infoType
             Http.editData(params)
                 .then((res) => {
                     if (res.code == '0000') {
@@ -292,7 +296,7 @@ export default {
         deleteSure() {
             Http.deleteList({
                 ids: this.multipleSelection,
-                site_type: 'd_roadpipe',
+                site_type: this.infoType,
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -311,7 +315,19 @@ export default {
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_roadpipe`)
+            
+            const link = document.createElement('a')
+            Http.downFileCommon({ ids: this.multipleSelection, infoType: this.infoType })
+                .then((res) => {
+                    let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
+                    let objectUrl = URL.createObjectURL(blob)
+                    link.href = objectUrl
+                    link.click()
+                    URL.revokeObjectURL(objectUrl)
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
         },
     },
     created() {},
@@ -321,11 +337,14 @@ export default {
 .el-dialog__body {
     padding: 0 30px 30px 30px !important;
 }
+.dialog-footer {
+    padding-top: 20px !important;
+}
 </style>
 <style scoped lang="less">
 .ClassifiedDisplay {
 }
-.el-button--primary {
+.el-button {
     margin-top: 20px;
 }
 .showIcon {

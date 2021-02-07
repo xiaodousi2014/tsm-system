@@ -43,20 +43,7 @@ export default {
         }
     },
     watch: {},
-    mounted() {
-        this.setFormObj()
-    },
     methods: {
-        setFormObj() {
-            if (!this.searchList || !this.searchList.length) {
-                this.form = {}
-                return
-            }
-
-            this.searchList.forEach(e => {
-                this.form[e.name] = ''
-            })
-        },
         onCancel() {
             this.$emit('close')
         },
@@ -87,14 +74,15 @@ export default {
             return list
         },
         onSumit() {
-            let submitData = JSON.parse(JSON.stringify(this.form))
             this.searchList.forEach(e => {
-                if (!submitData[e.name] && e.type == 'int') {
-                    submitData[e.name] = 0
+                if (!this.form[e.name] && e.type == 'int') {
+                    this.form[e.name] = 0
+                } else if (!this.form[e.name]) {
+                    this.form[e.name] = ''
                 }
             })
 
-            this.$emit('listCreate', submitData)
+            this.$emit('listCreate', this.form)
         },
         onSearch() {
             console.log(this.checkedSearchList)
