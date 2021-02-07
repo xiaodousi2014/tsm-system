@@ -9,8 +9,8 @@
 // const rt2 = 'http://121.5.2.69:8190/' 
 
 // 服务器地址
-// export const SERVICE_URL = "http://24992uu588.qicp.vip:80"
-export const SERVICE_URL = "//27.210.230.34:8190"
+export const SERVICE_URL = "http://24992uu588.qicp.vip:80"
+// export const SERVICE_URL = "//27.210.230.34:8190"
 
 
 
