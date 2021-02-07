@@ -16,7 +16,7 @@
                     {{ field }}
                     <i class="el-icon-delete delete_icon" @click="deletefie(index)" />
                 </div>
-                <el-button type="primary" size="small" @click="submit()" :disabled="!fieldInfo.itemdata || fieldInfo.itemdata.length == 0">提交</el-button>
+                <el-button style="margin-top: 10px" type="primary" size="small" @click="submit()" :disabled="!fieldInfo.itemdata || fieldInfo.itemdata.length == 0">提交</el-button>
             </el-col>
         </el-row>
     </div>
