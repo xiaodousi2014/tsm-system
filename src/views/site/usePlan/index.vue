@@ -6,12 +6,13 @@
             <el-tab-pane label="日计划" name="day">
                 <div class="user_plan_day">
                     <div class="user_plan_day_btn">
-                        <el-button type="primary" size="small" @click="createData">新建</el-button>
-                        <el-button type="primary" size="small" @click="editData">编辑</el-button>
-                        <el-button type="primary" size="small">删除</el-button>
-                        <el-button type="primary" size="small">导出</el-button>
-                        <el-button type="primary" size="small" @click="dayListTable()">列表显示</el-button>
-                        <el-button type="primary" size="small" @click="dayListTable('default')">汇总图显示</el-button>
+                        <el-button @click="createData">新建</el-button>
+                        <el-button @click="editData">编辑</el-button>
+                        <el-button>删除</el-button>
+                        <el-button>导入</el-button>
+                        <el-button>导出</el-button>
+                        <el-button type="primary" @click="dayListTable()">列表显示</el-button>
+                        <el-button type="primary" @click="dayListTable('default')">汇总图显示</el-button>
                     </div>
 
                     <div class="user_plan_day_default_table" v-if="defaultTableShow">
@@ -582,6 +583,8 @@ export default {
 <style scoped lang="less">
 .user_plan {
     padding: 16px;
+    margin: 20px;
+    background: #fff;
 
     /deep/ :focus {
         outline: 0;
@@ -601,6 +604,10 @@ export default {
 
     .user_plan_day_default_table {
         padding: 20px 0;
+    }
+
+    .user_plan_day_btn {
+        text-align: right;
     }
 }
 </style>

@@ -12,7 +12,7 @@
           :key="index"
           :prop="item.name"
           :label="item.comment"
-          width=""
+          :width="item.comment.length * 24 + 'px'"
         >
         <template slot-scope="scope" >
           {{setArrayName(scope.row, item)}}
