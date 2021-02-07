@@ -143,7 +143,7 @@ export default {
             editModal: false,
             exportPutModal: false,
             fileUrl: '',
-            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_training_base',
+            fileUrl: 'http://27.210.230.34:8190/common/import?infoType=d_training_base',
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
@@ -212,7 +212,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_training_base'), (this.exportModal = true)
+            ;(this.fileUrl = 'http://27.210.230.34:8190/common/import?infoType=d_training_base'), (this.exportModal = true)
         },
         close() {
             this.editModal = false
@@ -425,7 +425,7 @@ export default {
 <style scoped lang="less">
 .ClassifiedDisplay {
 }
-.el-button--primary {
+.el-button {
     margin-top: 20px;
 }
 .showIcon {

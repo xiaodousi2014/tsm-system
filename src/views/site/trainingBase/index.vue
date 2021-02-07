@@ -2,7 +2,7 @@
     <div class="ClassifiedDisplay padding20">
         <!-- 表格 -->
         <!--搜索表单-->
-        <div style="text-align: right;">
+        <div style="text-align: right;margin-top: -20px">
             <el-button type="primary" @click="searchModal = true">检索</el-button>
             <el-button @click="onCreate()">新增</el-button>
             <el-button @click="onEdit()">编辑</el-button>
@@ -37,7 +37,7 @@
             <custom-upload-file-put :url="fileUrl" @close="close" :uploadType="fileType" :id="multipleSelectionInfo.id" :infoType="infoType"></custom-upload-file-put>
         </el-dialog>
         <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
-            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+            <commonon-preferences @close="close" @closeSave="closeSave" :infoType="infoType"></commonon-preferences>
         </el-dialog>
     </div>
 </template>
@@ -87,7 +87,7 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_training_base',
+            fileUrl: 'http://27.210.230.34:8190/common/import?infoType=d_training_base',
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
@@ -159,7 +159,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_training_base'), (this.exportModal = true)
+            ;(this.fileUrl = 'http://27.210.230.34:8190/common/import?infoType=d_training_base'), (this.exportModal = true)
         },
         close() {
             this.editModal = false
@@ -167,6 +167,15 @@ export default {
             this.exportModal = false
             this.exportPutModal = false
             this.preferencesModal = false
+        },
+        closeSave() {
+            this.editModal = false
+            this.createModal = false
+            this.exportModal = false
+            this.exportPutModal = false
+            this.preferencesModal = false
+
+            this.getSitCommonData()
         },
         getSitCommonList() {
             Http.getSitCommonList({
@@ -343,7 +352,7 @@ export default {
 <style scoped lang="less">
 .ClassifiedDisplay {
 }
-.el-button--primary {
+.el-button {
     margin-top: 20px;
 }
 .showIcon {

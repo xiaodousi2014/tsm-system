@@ -1,6 +1,6 @@
 import Http from '../utils/axios'
 // const rt = 'http://139.198.188.175:8090/'
-const rt = 'http://27.210.124.225:8190'
+const rt = 'http://27.210.230.34:8190'
 export default {
 
     // 删除附件

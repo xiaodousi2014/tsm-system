@@ -2,7 +2,7 @@
     <div class="ClassifiedDisplay padding20">
         <!-- 表格 -->
         <!--搜索表单-->
-        <div style="text-align: right;">
+        <div style="text-align: right;margin-top: -20px">
             <el-button type="primary" @click="searchModal = true">检索</el-button>
             <el-button @click="onCreate()">新增</el-button>
             <el-button @click="onEdit()">编辑</el-button>
@@ -87,7 +87,7 @@ export default {
             editModal: false,
             exportPutModal: false,
             fileUrl: '',
-            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_training_sites',
+            fileUrl: 'http://27.210.230.34:8190/common/import?infoType=d_training_sites',
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
@@ -159,7 +159,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_training_sites'), (this.exportModal = true)
+            ;(this.fileUrl = 'http://27.210.230.34:8190/common/import?infoType=d_training_sites'), (this.exportModal = true)
         },
         close() {
             this.editModal = false
@@ -342,7 +342,7 @@ export default {
 <style scoped lang="less">
 .ClassifiedDisplay {
 }
-.el-button--primary {
+.el-button {
     margin-top: 20px;
 }
 .showIcon {
