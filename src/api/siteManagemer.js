@@ -2,12 +2,25 @@ import Http from '../utils/axios'
 // const rt = 'http://139.198.188.175:8090/'
 const rt = 'http://27.210.124.225:8190'
 export default {
+
+    // 删除附件
+    deletefile(query) {
+        return Http.delete(`${rt}/common/deletefile`, query)
+    },
+    // 借用
+    checkedTrue(query) {
+        return Http.post(`${rt}/stationery/handle`, query)
+    },
+    //借用提交
+    onStorageBorrowSumit(params) {
+        return Http.post(`${rt}/stationery/lent`, params)
+    },
     UploadImage(query) {
-        return Http.post(`${query.url}`, query.file)
-       },
+        return Http.post(`${rt}${query.url}`, query.file)
+    },
     // 列表数据导入
     addData(params) {
-        return Http.get(`${rt}/site`, params)
+        return Http.post(`${rt}/site`, params)
     },
     // 列表数据导入
     editData(params) {
@@ -15,7 +28,7 @@ export default {
     },
     // 撤销
     revokeOperation(params) {
-        return Http.put(`${rt}/site`, params)
+        return Http.delete(`${rt}/site`, params)
     },
     // 列表数据导入
     uploadList(params) {

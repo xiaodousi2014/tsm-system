@@ -9,7 +9,9 @@
             <el-button @click="onDelete()">删除</el-button>
             <el-button @click="onUploadFile()">导入</el-button>
             <el-button @click="onExport()">导出</el-button>
-            <el-button @click="onPreferences()">偏好设置</el-button>
+            <el-button @click="onBorrow()">借用</el-button>
+            <el-button @click="onRevoke()">撤销附件</el-button>
+            <el-button type="primary" @click="onUploadFileOther()">上传附件</el-button>
         </div>
 
         <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -31,8 +33,67 @@
         <el-dialog title="导入" :visible.sync="exportModal" width="500px">
             <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
         </el-dialog>
-        <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
-            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+        <el-dialog title="导入附件" :visible.sync="exportPutModal" width="500px">
+            <custom-upload-file-put :url="fileUrl" @close="close" :uploadType="fileType" :id="multipleSelectionInfo.id" :infoType="infoType"></custom-upload-file-put>
+        </el-dialog>
+
+        <el-dialog :title="title" :visible.sync="borrowModal" width="1024px">
+            <div v-for="item in borrowList" :key="item.id">
+                <el-form ref="forms" :model="item" label-width="130px" style="padding-top: 20px">
+                    <el-row>
+                        <el-col :span="8">
+                            <el-form-item label="地图名称:" prop="manufacturer">
+                                <el-input disabled v-model.trim="item.maps_name" maxlength="10"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="借用数量:" prop="mapsModel">
+                                <el-input v-model.trim="item.quantity" maxlength="30" @change="borrowChange($event, item)"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="借用人:" prop="costAmount">
+                                <el-input disabled v-model.trim="item.borrower" maxlength="10"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="联系方式:" prop="costAmount">
+                                <el-input v-model.trim="item.borrower_tel" maxlength="10"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="借用单位:" prop="costAmount">
+                                <el-input v-model.trim="item.borrower_org" maxlength="10"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="借用时间:" prop="costAmount">
+                                <el-date-picker style="width: 100%" v-model="item.borrower_time" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期" :clearable="false"> </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="课程名称:" prop="costAmount">
+                                <el-input v-model.trim="item.course_name" maxlength="10"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="归还人:" prop="costAmount">
+                                <el-input v-model.trim="item.return_man" maxlength="10"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="归还时间:" prop="costAmount">
+                                <el-date-picker style="width: 100%" v-model="item.return_time" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" placeholder="选择日期" :clearable="false"> </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="borrowModal = false">关 闭</el-button>
+                <el-button type="primary" @click="onBorrowSumit()">确 定</el-button>
+            </div>
         </el-dialog>
     </div>
 </template>
@@ -46,7 +107,6 @@ import customUploadFile from '@/components/customUploadFile'
 import customUploadFilePut from '@/components/customUploadFilePut2'
 import customCreate from '@/components/customCreate2'
 import customEdit from '@/components/customEdit2'
-import commononPreferences from '@/components/commononPreferences'
 export default {
     name: 'training-base',
     components: {
@@ -58,7 +118,6 @@ export default {
         customUploadFilePut,
         customCreate,
         customEdit,
-        commononPreferences,
     },
     data() {
         return {
@@ -66,7 +125,7 @@ export default {
             borrowModal: false,
             borrowList: [],
             query: {
-                infoType: 'd_roadpipe',
+                infoType: 'd_training_base',
                 orderField: 'id',
                 orderOrient: '2',
                 indexArray: [],
@@ -81,11 +140,10 @@ export default {
             multipleSelection: [],
             exportModal: false,
             createModal: false,
-            preferencesModal: false,
             editModal: false,
             exportPutModal: false,
             fileUrl: '',
-            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_roadpipe',
+            fileUrl: 'http://27.210.124.225:8190/common/import?infoType=d_training_base',
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
@@ -97,14 +155,11 @@ export default {
         this.getSitCommonData()
     },
     methods: {
-        onPreferences() {
-            this.preferencesModal = true
-        },
         getAttachFile(query) {
             const link = document.createElement('a')
             Http.getAttachFile({
                 id: query.row.id,
-                infoType: 'd_roadpipe',
+                infoType: 'd_training_base',
                 file: query.file,
             })
                 .then((res) => {
@@ -142,7 +197,7 @@ export default {
             }
             Http.revokeOperation({
                 ids: this.multipleSelection,
-                site_type: 'd_roadpipe',
+                site_type: 'd_training_base',
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -157,7 +212,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_roadpipe'), (this.exportModal = true)
+            ;(this.fileUrl = 'http://27.210.124.225:8190/common/import?infoType=d_training_base'), (this.exportModal = true)
         },
         close() {
             this.editModal = false
@@ -166,7 +221,7 @@ export default {
         },
         getSitCommonList() {
             Http.getSitCommonList({
-                infoType: 'd_roadpipe',
+                infoType: 'd_training_base',
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -224,8 +279,8 @@ export default {
             this.getSitCommonData()
         },
         listCreate(event) {
-            event.t_training_base = 'd_roadpipe'
-            event.site_type = 'd_roadpipe'
+            event.t_training_base = 'd_training_base'
+            event.site_type = 'd_training_base'
             event.base_name = ''
             Http.addData(event)
                 .then((res) => {
@@ -256,7 +311,7 @@ export default {
         listEdit() {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
-            params.site_type = 'd_roadpipe'
+            params.site_type = 'd_training_base'
             Http.editData(params)
                 .then((res) => {
                     if (res.code == '0000') {
@@ -267,6 +322,51 @@ export default {
                 .catch((res) => {
                     this.$message.error(res.msg || '系统异常')
                 })
+        },
+        // 借用
+        onBorrow() {
+            if (!this.multipleSelection.length) {
+                this.$message.warning('请选择要借用的数据列！')
+                return
+            }
+            Http.checkedTrue({ ids: this.multipleSelection, type: 2 })
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.title = '借用'
+                        this.borrowModal = true
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        // 借用提交
+        onBorrowSumit() {
+            Http.onStorageBorrowSumit(this.borrowList)
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.$message.success('借用成功！')
+                        this.getTableList()
+                        this.borrowModal = false
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        // 上传附件
+        onUploadFileOther() {
+            if (!this.multipleSelection.length) {
+                this.$message.warning('请选择要编辑的数据列！')
+                return
+            }
+            if (this.multipleSelection.length > 1) {
+                this.$message.warning('只能选择单个数据列编辑！')
+                return
+            }
+
+            this.fileUrl = `http://24992uu588.qicp.vip:80/common/uploadfile?infoType=d_training_base&id=${this.multipleSelection[0]}`
+            this.exportPutModal = true
         },
         // 删除
         onDelete() {
@@ -292,7 +392,7 @@ export default {
         deleteSure() {
             Http.deleteList({
                 ids: this.multipleSelection,
-                site_type: 'd_roadpipe',
+                site_type: 'd_training_base',
             })
                 .then((res) => {
                     if (res.code == '0000') {
@@ -311,7 +411,7 @@ export default {
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_roadpipe`)
+            window.open(`http://24992uu588.qicp.vip:80/common/export?ids=${this.multipleSelection.toString()}&&infoType=d_training_base`)
         },
     },
     created() {},
