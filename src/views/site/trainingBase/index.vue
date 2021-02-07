@@ -163,12 +163,14 @@ export default {
         onUploadFile() {
             ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
-        close() {
+        close(flag) {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
             this.exportPutModal = false
             this.preferencesModal = false
+
+            flag && this.getSitCommonData()
         },
         closeSave() {
             this.editModal = false
