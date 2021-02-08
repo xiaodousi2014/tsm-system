@@ -1,5 +1,5 @@
 <template>
-  <div class="ClassifiedDisplay padding20"  style="padding-top: 0 !important;">
+  <div class="ClassifiedDisplay"  style="padding-top: 0 !important;">
     <!-- 表格 -->
     <!--搜索表单-->
     <div class="table-button">
