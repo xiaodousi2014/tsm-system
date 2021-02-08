@@ -416,7 +416,7 @@ export default {
         this.$message.warning("编辑数据列只能选择一条！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_trainingdevice&id=${this.multipleSelection[0]}`;
+      
       this.editModal = true;
     },
     listEdit() {
@@ -501,7 +501,7 @@ export default {
         this.$message.warning("请选择要报修的数据列！");
         return;
       }
-      Http.checkedTrue({ ids: this.multipleSelection, type: 4 })
+      Http.checkedTrue({ ids: this.multipleSelection, type: 3 })
         .then((res) => {
           if (res.code == "0000") {
             Http.onStorageScrapSumit(this.multipleSelection)
@@ -530,7 +530,7 @@ export default {
         this.$message.warning("报修数据列只能选择一条！");
         return;
       }
-      Http.checkedTrue({ ids: this.multipleSelection, type: 3 })
+      Http.checkedTrue({ ids: this.multipleSelection, type: 2 })
         .then((res) => {
           if (res.code == "0000") {
             this.title = "报修";
@@ -574,7 +574,7 @@ export default {
         this.$message.warning("请选择要借用的数据列！");
         return;
       }
-      Http.checkedTrue({ ids: this.multipleSelection, type: 2 })
+      Http.checkedTrue({ ids: this.multipleSelection, type: 1 })
         .then((res) => {
           if (res.code == "0000") {
             this.title = "借用";
@@ -618,7 +618,7 @@ export default {
     },
     // 撤销操作
     onRevoke() {
-      this.$router.push("delete-list");
+      this.$router.push("delete/list");
     },
     getAllField() {
       Http.getStorageTitle()

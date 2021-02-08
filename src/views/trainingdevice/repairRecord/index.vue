@@ -94,7 +94,7 @@ export default {
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_trainingdevice_repair`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_training_device_repair`)
     },
     getAllField() {
       Http.getRepairTitle()

@@ -608,7 +608,7 @@ export default {
     },
     // 撤销操作
     onRevoke() {
-      this.$router.push("delete-list");
+      this.$router.push("delete/list");
     },
     getAllField() {
       Http.getStorageTitle()

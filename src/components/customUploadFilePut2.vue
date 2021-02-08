@@ -16,7 +16,7 @@
                         </el-upload>
                     </el-form-item>
                     <el-form-item :label="item.comment" v-if="item.type == 'attachment'">
-                        <el-upload ref="upload" :before-remove="deleteFileFun" class="upload-demo" action="string" :with-credentials="true" name="file" multiple :limit="1" :http-request="UploadImage3" :show-file-list="true" acceptType="*" :on-success="successful" :file-list="fileList[index]">
+                        <el-upload ref="upload" :before-remove="deleteFileFun" class="upload-demo" action="string" :with-credentials="true" name="file" multiple  :http-request="UploadImage3" :show-file-list="true" acceptType="*" :on-success="successful" :file-list="fileList[index]">
                             <el-button size="small" type="primary" @click="changeFileFun(item, index)">点击上传</el-button>
                             <div slot="tip" class="el-upload__tip" style="width:300px"></div>
                         </el-upload>

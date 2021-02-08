@@ -161,7 +161,8 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
+         this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`;
+         this.exportModal = true;
         },
         close(flag) {
             this.editModal = false
@@ -286,7 +287,7 @@ export default {
                 return
             }
 
-            this.fileUrl = `http://24992uu588.qicp.vip:80/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
+            this.fileUrl = `http://218.59.43.155:8190/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
             this.exportPutModal = true
         },
         // 删除

@@ -45,7 +45,7 @@ export default {
     },
     upLoadQuery: {
       type:Object,
-      default: {}
+      default: ()=>{ return {} }
     }
   },
   data() {

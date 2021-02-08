@@ -6,9 +6,9 @@
       <el-button  type="primary" @click="searchModal = true"
         >检索</el-button
       >
-      <el-button class="btnSty" @click="onExport()"
+      <!-- <el-button class="btnSty" @click="onExport()"
         >导出</el-button
-      >
+      > -->
     </div>
     <custom-table-select :list="tableAllIist"></custom-table-select>
     <custom-table
@@ -92,7 +92,7 @@ export default {
       }
        let query = [];
       this.multipleSelection.forEach((item) => {
-        query.push(item.id);
+        query.push(item.equipment_id);
       });
       window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_equipment_repair`)
     },

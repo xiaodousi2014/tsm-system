@@ -76,7 +76,7 @@ export default {
       });
     },
     cancal() {
-      this.$router.push("stock-manage");
+      this.$router.push("/information/inventory");
     },
     getAllField() {
       Http.getThreeDeleteStorageTitle()

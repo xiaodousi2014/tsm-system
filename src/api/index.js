@@ -5,11 +5,11 @@
 /*const rt = '/trms' */
 //  const rt = 'http://localhost:8190'
 // const rt = 'http://139.198.188.175:8090/'
-// const rt = 'http://24992uu588.qicp.vip:80/'
+// const rt = 'http://218.59.43.155:8190/'
 // const rt2 = 'http://121.5.2.69:8190/' 
 
 // 服务器地址
-export const SERVICE_URL = "http://24992uu588.qicp.vip:80"
+export const SERVICE_URL = "http://218.59.43.155:8190"
 // export const SERVICE_URL = "//218.59.43.155:8190"
 
 

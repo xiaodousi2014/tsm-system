@@ -76,7 +76,7 @@ export default {
       });
     },
     cancal() {
-      this.$router.push("storage-equipment");
+      this.$router.push("/trainingdevice/inventory");
     },
     getAllField() {
       Http.getDeleteStorageTitle()

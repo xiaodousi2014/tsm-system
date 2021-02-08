@@ -7,12 +7,12 @@ export default {
   name: '保障装备',
  },
  children: [
-    {
-        path: 'plan-declare',
-        name: 'security-equipment-plan-declare',
-        meta: [{name: '计划申报', parentName: '保障装备'}],
-        component: () => import('@/views/equipment/planDeclare/index.vue')
-       },
+    // {
+    //     path: 'plan-declare',
+    //     name: 'security-equipment-plan-declare',
+    //     meta: [{name: '计划申报', parentName: '保障装备'}],
+    //     component: () => import('@/views/equipment/planDeclare/index.vue')
+    //    },
        {
         path: 'record',
         name: 'security-equipment-in-stock-register',
@@ -27,6 +27,12 @@ export default {
         
         meta: [{name: '在库设备', parentName: '保障装备'}],
         component: () => import('@/views/equipment/storageEquipment/index.vue')
+       },
+       {
+        path: 'delete/list',
+        name: 'teaching-equipment-plan-declare',
+        meta: [{name: '删除列表', parentName: '保障装备', path: '/delete-list'}],
+        component: () => import('@/views/equipment/storageEquipment/deleteList.vue')
        },
        {
          path: 'receive/record',
@@ -85,7 +91,6 @@ export default {
         meta: [{name: '报废审核', parentName: '保障装备'}],
         component: () => import('@/views/equipment/scrapExamine/index.vue')
        },
-     
        {
         path: 'check/log',
         name: 'security-equipment-inventory-journal',

@@ -71,7 +71,7 @@ export default {
       this.multipleSelection.forEach((item) => {
         query.push(item.id);
       });
-      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_trainingdevice_lent`)
+      window.open(`${window.upLoadUrl}/common/attachment/export?ids=${query.toString()}&&infoType=t_training_device_lent`)
 
     },
      getAttachFile(query) {

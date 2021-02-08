@@ -26,13 +26,19 @@ export default {
    meta: [{name: '入库登记', parentName: '模拟器械', path: '/declare-in-stock'}],
    component: () => import('@/views/trainingdevice/inStockRegister/index.vue')
   },
-
+ 
   {
    path: 'inventory',
    name: 'simulation-equipment-storage-equipment',
    meta: [{name: '在库器械', parentName: '模拟器械', path: '/declare-in-stock'}],
    component: () => import('@/views/trainingdevice/storageEquipment/index.vue')
   },
+  {
+    path: 'delete/list',
+    name: 'teaching-equipment-plan-declare',
+    meta: [{name: '删除列表', parentName: '模拟器械', path: '/delete-list'}],
+    component: () => import('@/views/trainingdevice/storageEquipment/deleteList.vue')
+   },
   // {
   //   path: 'receive/record',
   //   name: 'simulation-equipment-receive-record',

@@ -96,7 +96,7 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${window.upLoadUrl}/common/attachment/import?infoType=t_training_device_check&id=${this.multipleSelection[0].id}`;
+      this.fileUrl = `${window.upLoadUrl}/common/uploadfile?infoType=t_training_device_check&isAttachment=1&isMultiFiles=true&field=attachment&&id=${this.multipleSelection[0].id}`;
       this.exportModal = true;
     },
     close() {

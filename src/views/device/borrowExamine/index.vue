@@ -15,9 +15,12 @@
       <el-button class="btnSty" @click="onBack()"
         >归还</el-button
       >
+       <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
     </div>
-
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+      <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+        </el-dialog>
+    <!-- <custom-table-select :list="tableAllIist"></custom-table-select> -->
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -45,9 +48,10 @@ import customTableSelect from "@/components/customTableSelect";
 import customSearch from "@/components/customSearch";
 import Http from "@/api/deviceManage";
 import customTable from "@/components/customTable";
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination },
+  components: { customTableSelect, customSearch, customTable, Pagination, commononPreferences },
   data() {
     return {
       query: {
@@ -78,12 +82,17 @@ export default {
       searchList: [],
       multipleSelection: [],
       searchModal: false,
+      preferencesModal:false,
+      infoType: 't_device',
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
+        onPreferences() {
+            this.preferencesModal = true
+        },
     onExport() {
          if (!this.multipleSelection.length) {
         this.$message.warning("请选择要导出的数据列！");

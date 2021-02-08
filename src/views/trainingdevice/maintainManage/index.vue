@@ -1,193 +1,106 @@
 <template>
-  <div class="ClassifiedDisplay padding20">
-    <!-- 表格 -->
-    <!--搜索表单-->
-    <div class="table-button">
-      <el-button  type="primary"  @click="searchModal = true"
-        >检索</el-button
-      >
-      <el-button class="btnSty" @click="onReturn()"
-        >归还</el-button
-      >
-      <el-button class="btnSty" @click="onExport()"
-        >导出</el-button
-      >
+    <div class="content_box">
+        <AttributeCom tableName="d_docs" />
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
-    <custom-table
-      :tableAllIist="tableAllIist"
-      :tableData="tableData"
-      @selectTableList="selectTableList"
-       @getAttachFile='getAttachFile'
-    ></custom-table>
-    <!-- 分页 -->
-    <div class="pagination">
-      <Pagination
-        ref="Pagination"
-        @getSizeChange="getSizeChange"
-        @getCurrentChange="getCurrentChange"
-        :pagination="query"
-        :total="total"
-      />
-    </div>
-        <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
-      <custom-search :searchList="searchList" @Search="Search"></custom-search>
-    </el-dialog>
-  </div>
 </template>
+
 <script>
-import Pagination from "../../../components/customPagination";
-import customTableSelect from "../../../components/customTableSelect";
-import customSearch from "../../../components/customSearch";
-import Http from "@/api/trainingdeviceManage";
-import customTable from "../../../components/customTable";
+import Common from '@/api/common'
+import AttributeCom from '@/components/attributeCom'
+
 export default {
-  name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination },
-  data() {
-    return {
-      query: {
-        orderField: "id",
-        orderOrient: "2",
-        indexArray: [],
-        pageNum: 1,
-        pageCount: 10,
-      },
-      total: 0,
-      tableData: [],
-      tableAllIist: [],
-      searchList: [],
-      multipleSelection: [],
-      searchModal: false,
-    };
-  },
-  mounted() {
-    this.getAllField();
-  },
-  methods: {
-     getAttachFile(query) {
-       const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_trainingdevice_plan" , file: query.file})
-      .then((res) => {
-        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
-          let objectUrl = URL.createObjectURL(blob);
-          link.href = objectUrl;
-          link.download = query.file;
-          link.click();
-          URL.revokeObjectURL(objectUrl);
-      })
-      .catch((res) => {
-        debugger
-        this.$message.error(res.msg || "系统异常");
-      });
+    components: { AttributeCom },
+    data() {
+        return {
+            field_data: [],
+            value: '',
+            fieldInfo: {},
+        }
     },
-      Search(event) {
-      this.query.indexArray = [];
-      this.query.indexArray = event;
-      this.searchModal = false;
-      this.getTableList();
+    computed: {},
+    watch: {},
+    created() {
+        this.init()
     },
-    getAllField() {
-      Http.getMaintainTitle()
-        .then((res) => {
-          if (res.code == "0000") {
-            if (res.data.filter.length) {
-              let list = res.data.filter.filter((item) => {
-                return item.display == true;
-              });
-              this.searchList = list;
-              this.getTableList();
+    mounted() {},
+    methods: {
+        init() {
+            Common.attrdata('t_training_device_sites').then((res) => {
+                if (res.code === '0000' && res.data && res.data.field_data) {
+                    this.field_data = res.data.field_data
+                }
+            })
+        },
+        edit(field) {
+            console.log(field, typeof field.itemdata)
+            this.fieldInfo = {}
+            let itemdata = []
+            if (!Array.isArray(field.itemdata)) {
+                itemdata = field.itemdata && field.itemdata.length > 0 ? field.itemdata.split(',') : []
+            } else {
+                itemdata = field.itemdata
             }
-          }
-        })
-        .catch((res) => {
-          this.$message.error(res.msg || "系统异常");
-        });
-    },
-    getTableList() {
-      Http.getMaintainList(this.query)
-        .then((res) => {
-          if (res.code == "0000") {
-            this.tableData = [];
-            this.total = 0;
-            this.tableAllIist = res.data.columns;
-            if (res.data.searchList.length) {
-              this.tableData = res.data.searchList;
-              this.total = res.page.page_total;
+            console.log(field, itemdata)
+            this.fieldInfo = field
+            this.$set(this.fieldInfo, 'itemdata', itemdata)
+        },
+        add() {
+            if (!this.fieldInfo.itemdata) {
+                return
             }
-          }
-        })
-        .catch((res) => {
-          this.$message.error(res.msg || "系统异常");
-        });
+            if (this.fieldInfo.itemdata) {
+                if (this.fieldInfo.itemdata.indexOf(this.value) > -1) {
+                    this.$message.error('已经存在')
+                    return
+                }
+            }
+            this.fieldInfo.itemdata.push(this.value)
+            this.value = ''
+            // this.submit()
+        },
+        deletefie(key) {
+            console.log(key)
+            this.fieldInfo.itemdata.splice(key, 1)
+            // this.submit()
+        },
+        submit() {
+            let params = {
+                infoType: 't_training_sites',
+                field: this.fieldInfo.name,
+                data: this.fieldInfo.itemdata.join(','),
+            }
+            console.log(params)
+            Common.puAattrdata(params).then((res) => {
+                if (res.code === '0000') {
+                    this.init()
+                }
+            })
+        },
     },
-    getCurrentChange(val) {
-      this.query.pageNum = val;
-      this.getTableList();
-    },
-    getSizeChange(val) {
-      this.query.pageCount = val;
-      this.getTableList();
-    },
-    // 上传附件
-    onUploadAttachment() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要上传附件的数据列！");
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message.warning("只能选择单个数据列上传附件！");
-        return;
-      }
-    },
-    // 编辑
-    onEdit() {
-      if (!this.multipleSelection.length) {
-        this.$message.warning("请选择要编辑的数据列！");
-        return;
-      }
-      if (this.multipleSelection.length > 1) {
-        this.$message.warning("只能选择单个数据列编辑！");
-        return;
-      }
-    },
-    // table选中
-    selectTableList(list) {
-      this.multipleSelection = list;
-    },
-  },
-  created() {},
-};
+}
 </script>
-<style scoped lang="less">
-.showIcon {
-  text-align: right;
-  padding-right: 5px;
-  font-size: 25px;
-  position: relative;
-  .selectList {
-    position: absolute;
-    height: 400px;
-    overflow-y: scroll;
-    top: 30px;
-    right: 0;
-    z-index: 99;
-    min-width: 100px;
-    text-align: left;
-    font-size: 20px;
-    padding: 20px 0;
-    background: #fdfdfd;
-    border: 1px solid rgb(238, 238, 238);
-    li {
-      padding: 0 10px;
-      line-height: 50px;
+
+<style lang="less" scoped>
+.field_box {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    box-sizing: border-box;
+    padding: 0 10px;
+    position: relative;
+    border: 1px solid #eeeeee;
+
+    &_active {
+        background: #3d85cc;
+        color: #ffffff;
     }
-  }
-}
-.pagination {
-  margin-top: 20px;
-}
-.showIcon i {
-  cursor: pointer;
+
+    .delete_icon {
+        position: absolute;
+        top: 12px;
+        right: 10px;
+        font-size: 15px;
+        cursor: pointer;
+    }
 }
 </style>

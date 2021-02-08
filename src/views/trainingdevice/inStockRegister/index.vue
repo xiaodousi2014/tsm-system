@@ -139,8 +139,10 @@ export default {
         this.$message.warning("只能选择单个数据列操作！");
         return;
       }
+      // this.fileUrl = `${window.upLoadUrl}/common/uploadfile?infoType=t_import_record&isAttachment=0&isMultiFiles=true&field=data_record&id=${this.dataList.id}`;     
       this.fileUrl = `${window.upLoadUrl}/common/import/attachment/upload?import_id=${this.dataList.data_id}`;
-      this.exportListModal = true;
+    
+      this.exportPutModal = true;
     },
     close() {
       this.exportPutModal = false;

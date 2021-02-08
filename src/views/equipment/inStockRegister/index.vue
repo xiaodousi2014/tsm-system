@@ -140,7 +140,9 @@ export default {
         return;
       }
       this.fileUrl = `${window.upLoadUrl}/common/import/attachment/upload?import_id=${this.dataList.data_id}`;
-      this.exportListModal = true;
+      
+      // this.fileUrl = `${window.upLoadUrl}/common/import/attachment/upload?import_id=${this.dataList.data_id}`;
+      this.exportPutModal = true;
     },
     close() {
       this.exportPutModal = false;

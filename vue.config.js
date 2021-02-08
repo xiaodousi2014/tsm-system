@@ -1,7 +1,7 @@
 
 // import {SERVICE_URL} from "./src/api/index"
 
-let rt = 'http://24992uu588.qicp.vip:80'
+let rt = 'http://218.59.43.155:8190'
 // let rt = 'http://192.168.100.103:8190/'
 
 module.exports = {

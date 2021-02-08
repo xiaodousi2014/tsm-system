@@ -15,7 +15,7 @@ import Es6Promise from 'es6-promise'
 require('es6-promise').polyfill()
 Es6Promise.polyfill()
 Vue.prototype.$echarts = echarts
-window.upLoadUrl = "http://24992uu588.qicp.vip:80";
+window.upLoadUrl = "http://218.59.43.155:8190";
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
