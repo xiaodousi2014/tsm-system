@@ -5,11 +5,11 @@
                 <div class="user_plan_day">
                     <div style="text-align: right;">
                         <el-button type="primary" @click="searchModal = true">检索</el-button>
-                        <el-button @click="onCreate()">新增</el-button>
-                        <el-button @click="onEdit()">编辑</el-button>
-                        <el-button @click="onDelete()">删除</el-button>
-                        <el-button @click="onUploadFile()">导入</el-button>
-                        <el-button @click="onPreferences()">偏好设置</el-button>
+                        <el-button class="btnSty" @click="onCreate()">新增</el-button>
+                        <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+                        <el-button class="btnSty" @click="onDelete()">删除</el-button>
+                        <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+                        <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
                     </div>
 
                     <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -24,11 +24,11 @@
                 <div class="user_plan_day">
                     <div style="text-align: right;">
                         <el-button type="primary" @click="searchModal = true">检索</el-button>
-                        <el-button @click="onCreate()">新增</el-button>
-                        <el-button @click="onEdit()">编辑</el-button>
-                        <el-button @click="onDelete()">删除</el-button>
-                        <el-button @click="onUploadFile()">导入</el-button>
-                        <el-button @click="onPreferences()">偏好设置</el-button>
+                        <el-button class="btnSty" @click="onCreate()">新增</el-button>
+                        <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+                        <el-button class="btnSty" @click="onDelete()">删除</el-button>
+                        <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+                        <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
                     </div>
 
                     <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -43,11 +43,11 @@
                 <div class="user_plan_day">
                     <div style="text-align: right;">
                         <el-button type="primary" @click="searchModal = true">检索</el-button>
-                        <el-button @click="onCreate()">新增</el-button>
-                        <el-button @click="onEdit()">编辑</el-button>
-                        <el-button @click="onDelete()">删除</el-button>
-                        <el-button @click="onUploadFile()">导入</el-button>
-                        <el-button @click="onPreferences()">偏好设置</el-button>
+                        <el-button class="btnSty" @click="onCreate()">新增</el-button>
+                        <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+                        <el-button class="btnSty" @click="onDelete()">删除</el-button>
+                        <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+                        <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
                     </div>
 
                     <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -62,11 +62,11 @@
                 <div class="user_plan_day">
                     <div style="text-align: right;">
                         <el-button type="primary" @click="searchModal = true">检索</el-button>
-                        <el-button @click="onCreate()">新增</el-button>
-                        <el-button @click="onEdit()">编辑</el-button>
-                        <el-button @click="onDelete()">删除</el-button>
-                        <el-button @click="onUploadFile()">导入</el-button>
-                        <el-button @click="onPreferences()">偏好设置</el-button>
+                        <el-button class="btnSty" @click="onCreate()">新增</el-button>
+                        <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+                        <el-button class="btnSty" @click="onDelete()">删除</el-button>
+                        <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+                        <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
                     </div>
 
                     <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -81,11 +81,11 @@
                 <div class="user_plan_day">
                     <div style="text-align: right;">
                         <el-button type="primary" @click="searchModal = true">检索</el-button>
-                        <el-button @click="onCreate()">新增</el-button>
-                        <el-button @click="onEdit()">编辑</el-button>
-                        <el-button @click="onDelete()">删除</el-button>
-                        <el-button @click="onUploadFile()">导入</el-button>
-                        <el-button @click="onPreferences()">偏好设置</el-button>
+                        <el-button class="btnSty" @click="onCreate()">新增</el-button>
+                        <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+                        <el-button class="btnSty" @click="onDelete()">删除</el-button>
+                        <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+                        <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
                     </div>
 
                     <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -164,7 +164,7 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
@@ -172,8 +172,8 @@ export default {
     },
     mounted() {
         this.lab_id = this.$route.query.id
-        
-        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+
+        this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -227,8 +227,8 @@ export default {
         },
         // 导入
         onUploadFile() {
-         this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`; 
-         this.exportModal = true;
+            this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
+            this.exportModal = true
         },
         close(flag) {
             this.editModal = false

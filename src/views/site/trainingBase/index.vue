@@ -4,13 +4,13 @@
         <!--搜索表单-->
         <div style="text-align: right;margin-top: -20px">
             <el-button type="primary" @click="searchModal = true">检索</el-button>
-            <el-button @click="onCreate()">新增</el-button>
-            <el-button @click="onEdit()">编辑</el-button>
-            <el-button @click="onDelete()">删除</el-button>
-            <el-button @click="onUploadFile()">导入</el-button>
-            <el-button @click="onExport()">导出</el-button>
-            <el-button @click="onRevoke()">撤销操作</el-button>
-            <el-button @click="onPreferences()">偏好设置</el-button>
+            <el-button class="btnSty" @click="onCreate()">新增</el-button>
+            <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+            <el-button class="btnSty" @click="onDelete()">删除</el-button>
+            <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+            <el-button class="btnSty" @click="onExport()">导出</el-button>
+            <el-button class="btnSty" @click="onRevoke()">撤销操作</el-button>
+            <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
             <el-button type="primary" @click="onUploadFileOther()">上传附件</el-button>
         </div>
 
@@ -87,14 +87,14 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
-        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+        this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -137,13 +137,13 @@ export default {
             this.fileTypeAddNameFun(this.multipleSelectionInfo)
         },
         fileTypeAddNameFun(val) {
-            this.fileType.forEach(e => {
+            this.fileType.forEach((e) => {
                 Object.keys(val).map((key) => {
                     if (key == e.name) {
                         e['fileName'] = val[key]
                     }
                 })
-            });
+            })
         },
         // 撤销操作
         onRevoke() {
@@ -171,8 +171,8 @@ export default {
         },
         // 导入
         onUploadFile() {
-          this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`;
-          this.exportModal = true;
+            this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
+            this.exportModal = true
         },
         close(flag) {
             this.editModal = false
@@ -307,7 +307,7 @@ export default {
                 return
             }
 
-            this.fileUrl = `http://218.59.43.155:8190/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
+            this.fileUrl = `http://24992uu588.qicp.vip/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
             this.exportPutModal = true
         },
         // 删除

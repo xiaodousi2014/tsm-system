@@ -4,13 +4,13 @@
         <!--搜索表单-->
         <div style="text-align: right;margin-top: -20px">
             <el-button type="primary" @click="searchModal = true">检索</el-button>
-            <el-button @click="onCreate()">新增</el-button>
-            <el-button @click="onEdit()">编辑</el-button>
-            <el-button @click="onDelete()">删除</el-button>
-            <el-button @click="onUploadFile()">导入</el-button>
-            <el-button @click="onExport()">导出</el-button>
-            <el-button @click="onPreferences()">偏好设置</el-button>
-            <el-button @click="toLibList()">实验室列表</el-button>
+            <el-button class="btnSty" @click="onCreate()">新增</el-button>
+            <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+            <el-button class="btnSty" @click="onDelete()">删除</el-button>
+            <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+            <el-button class="btnSty" @click="onExport()">导出</el-button>
+            <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
+            <el-button class="btnSty" @click="toLibList()">实验室列表</el-button>
         </div>
 
         <custom-table-select :list="tableAllIist"></custom-table-select>
@@ -86,14 +86,14 @@ export default {
             preferencesModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
-        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+        this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -160,8 +160,8 @@ export default {
         },
         // 导入
         onUploadFile() {
-         this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`;
-        this.exportModal = true;
+            this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
+            this.exportModal = true
         },
         close(flag) {
             this.editModal = false
@@ -317,7 +317,7 @@ export default {
                 this.$message.warning('请选择要导出的数据列！')
                 return
             }
-            
+
             const link = document.createElement('a')
             Http.downFileCommon({ ids: this.multipleSelection, infoType: this.infoType })
                 .then((res) => {
@@ -331,7 +331,8 @@ export default {
                     this.$message.error(res.msg || '系统异常')
                 })
         },
-        toLibList() {debugger
+        toLibList() {
+            debugger
             if (!this.multipleSelection.length) {
                 this.$message.warning('请选择一条实验室数据！')
                 return
