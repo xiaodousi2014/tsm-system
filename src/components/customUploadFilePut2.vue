@@ -187,7 +187,7 @@ export default {
 
             if (!isImg) {
                 this.$message.error('上传图片格式不对!')
-                return
+                return false
             }
             if (!isLt2M) {
                 this.$message.error('上传文件大小不能超过 2MB!')

@@ -331,9 +331,13 @@ export default {
                     this.$message.error(res.msg || '系统异常')
                 })
         },
-        toLibList() {
+        toLibList() {debugger
+            if (!this.multipleSelection.length) {
+                this.$message.warning('请选择一条实验室数据！')
+                return
+            }
             if (this.multipleSelection.length > 1) {
-                this.$message.warning('实验室列只能选择一条！')
+                this.$message.warning('实验室只能选择一条！')
                 return
             }
             this.$router.push({

@@ -134,6 +134,16 @@ export default {
             })
             this.multipleSelection = query
             this.multipleSelectionInfo = list[0]
+            this.fileTypeAddNameFun(this.multipleSelectionInfo)
+        },
+        fileTypeAddNameFun(val) {
+            this.fileType.forEach(e => {
+                Object.keys(val).map((key) => {
+                    if (key == e.name) {
+                        e['fileName'] = val[key]
+                    }
+                })
+            });
         },
         // 撤销操作
         onRevoke() {
