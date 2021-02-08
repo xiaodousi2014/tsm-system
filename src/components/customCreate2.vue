@@ -35,7 +35,7 @@ export default {
         searchList: {
             type: Array,
             default: [],
-        },
+        }
     },
     data() {
         return {
@@ -43,6 +43,9 @@ export default {
         }
     },
     watch: {},
+    mounted() {
+        this.form = {}
+    },
     methods: {
         onCancel() {
             this.$emit('close')
@@ -82,11 +85,7 @@ export default {
                 }
             })
 
-            let param = JSON.parse(JSON.stringify(this.form))
-
-            this.form = {}
-
-            this.$emit('listCreate', param)
+            this.$emit('listCreate', this.form)
         },
         onSearch() {
             console.log(this.checkedSearchList)

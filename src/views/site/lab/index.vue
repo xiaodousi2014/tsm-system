@@ -23,10 +23,10 @@
             <custom-search :searchList="searchList" @Search="Search"></custom-search>
         </el-dialog>
 
-        <el-dialog title="新增" :visible.sync="createModal" width="1100px">
-            <custom-create @close="close" :searchList="searchList" @listCreate="listCreate" :form="{}"></custom-create>
+        <el-dialog title="新增" v-if="createModal" :visible.sync="createModal" width="1100px">
+            <custom-create @close="close" :searchList="searchList" @listCreate="listCreate"></custom-create>
         </el-dialog>
-        <el-dialog title="编辑" :visible.sync="editModal" width="1100px">
+        <el-dialog title="编辑" v-if="editModal" :visible.sync="editModal" width="1100px">
             <custom-edit @close="close" :searchList="searchList" :form="multipleSelectionInfo" @listEdit="listEdit"></custom-edit>
         </el-dialog>
         <el-dialog title="导入" :visible.sync="exportModal" width="500px">
@@ -236,7 +236,7 @@ export default {
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('创建成功！')
-                        this.close()
+                        this.close(true)
                     }
                 })
                 .catch((res) => {
@@ -266,7 +266,7 @@ export default {
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('编辑成功！')
-                        this.close()
+                        this.close(true)
                     }
                 })
                 .catch((res) => {
@@ -331,8 +331,12 @@ export default {
                 })
         },
         toLibList() {
+            if (this.multipleSelection.length > 1) {
+                this.$message.warning('实验室列只能选择一条！')
+                return
+            }
             this.$router.push({
-                path: '/site/lab/experiment',
+                path: '/site/lab/experiment?id=' + this.multipleSelectionInfo.id,
             })
         },
     },

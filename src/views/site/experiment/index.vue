@@ -102,10 +102,10 @@
             <custom-search :searchList="searchList" @Search="Search"></custom-search>
         </el-dialog>
 
-        <el-dialog title="新增" :visible.sync="createModal" width="1100px">
-            <custom-create @close="close" :searchList="searchList" @listCreate="listCreate" :form="{}"></custom-create>
+        <el-dialog title="新增" v-if="createModal" :visible.sync="createModal" width="1100px">
+            <custom-create @close="close" :searchList="searchList" @listCreate="listCreate"></custom-create>
         </el-dialog>
-        <el-dialog title="编辑" :visible.sync="editModal" width="1100px">
+        <el-dialog title="编辑" v-if="editModal" :visible.sync="editModal" width="1100px">
             <custom-edit @close="close" :searchList="searchList" :form="multipleSelectionInfo" @listEdit="listEdit"></custom-edit>
         </el-dialog>
         <el-dialog title="导入" :visible.sync="exportModal" width="500px">
@@ -142,6 +142,7 @@ export default {
     },
     data() {
         return {
+            lab_id: '',
             activeName: 'd_lab_experiment',
             infoType: 'd_lab_experiment',
             query: {
@@ -170,6 +171,8 @@ export default {
         }
     },
     mounted() {
+        this.lab_id = this.$route.query.id
+        
         this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
@@ -307,11 +310,12 @@ export default {
             event.t_training_base = this.infoType
             event.site_type = this.infoType
             event.base_name = ''
+            event.lab_id = this.lab_id
             Http.addDataLab(event)
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('创建成功！')
-                        this.close()
+                        this.closeSave()
                     }
                 })
                 .catch((res) => {
@@ -337,11 +341,12 @@ export default {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
             params.site_type = this.infoType
+            params.lab_id = this.lab_id
             Http.editDataLab(params)
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('编辑成功！')
-                        this.close()
+                        this.closeSave()
                     }
                 })
                 .catch((res) => {

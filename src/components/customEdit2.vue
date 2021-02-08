@@ -15,9 +15,9 @@
                                 <el-option v-for="(list, index) in setSearchList(item)" :key="index" :label="list.name" :value="list.id"> </el-option>
                             </el-select>
 
-                        <el-select placeholder="请选择" v-model="form[item.name]" size="small" v-if="item.type == 'list'">
-                            <el-option v-for="(list, index) in setSearchList2(item)" :key="index" :label="list" :value="list"> </el-option>
-                        </el-select>
+                            <el-select placeholder="请选择" v-model="form[item.name]" size="small" v-if="item.type == 'list'">
+                                <el-option v-for="(list, index) in setSearchList2(item)" :key="index" :label="list" :value="list"> </el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                 </template>
@@ -51,24 +51,10 @@ export default {
     },
     data() {
         return {
-            // fileList: [],
             queryName: '',
         }
     },
-    mounted() {
-        this.setFormObj()
-    },
     methods: {
-        setFormObj() {
-            if (!this.searchList || !this.searchList.length) {
-                this.form = {}
-                return
-            }
-
-            this.searchList.forEach((e) => {
-                this.form[e.name] = ''
-            })
-        },
         onProgress(event) {
             this.queryName = event
         },
@@ -144,7 +130,7 @@ export default {
             return list
         },
         onSumit() {
-            this.searchList.forEach(e => {
+            this.searchList.forEach((e) => {
                 if (this.form[e.name] && e.type == 'init') {
                     this.form[e.name] = 0
                 }

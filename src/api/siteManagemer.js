@@ -53,18 +53,18 @@ export default {
     
     // 新增
     addDataLab(params) {
-        return Http.post(`${rt}/lib`, params)
+        return Http.post(`${rt}/lab`, params)
     },
     // 编辑
     editDataLab(params) {
-        return Http.put(`${rt}/lib`, params)
+        return Http.put(`${rt}/lab`, params)
     },
     // 撤销
     revokeOperationLab(params) {
-        return Http.delete(`${rt}/lib`, params)
+        return Http.delete(`${rt}/lab`, params)
     },
     // 删除
     deleteListLab(params) {
-        return Http.delete(`${rt}/lib`, params)
+        return Http.delete(`${rt}/lab`, params)
     },
 }
