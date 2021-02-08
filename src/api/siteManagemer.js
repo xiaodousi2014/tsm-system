@@ -1,6 +1,7 @@
 import Http from '../utils/axios'
 // const rt = 'http://139.198.188.175:8090/'
-const rt = 'http://218.59.43.155:8190'
+// const rt = 'http://24992uu588.qicp.vip'
+const rt = 'http://24992uu588.qicp.vip'
 export default {
     // 删除附件
     deletefile(query) {

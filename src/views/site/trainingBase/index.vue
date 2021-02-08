@@ -87,14 +87,14 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
-        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+        this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -134,6 +134,16 @@ export default {
             })
             this.multipleSelection = query
             this.multipleSelectionInfo = list[0]
+            this.fileTypeAddNameFun(this.multipleSelectionInfo)
+        },
+        fileTypeAddNameFun(val) {
+            this.fileType.forEach(e => {
+                Object.keys(val).map((key) => {
+                    if (key == e.name) {
+                        e['fileName'] = val[key]
+                    }
+                })
+            });
         },
         // 撤销操作
         onRevoke() {
@@ -161,7 +171,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
+            ;(this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
         close(flag) {
             this.editModal = false
@@ -296,7 +306,7 @@ export default {
                 return
             }
 
-            this.fileUrl = `http://24992uu588.qicp.vip:80/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
+            this.fileUrl = `http://24992uu588.qicp.vip/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
             this.exportPutModal = true
         },
         // 删除

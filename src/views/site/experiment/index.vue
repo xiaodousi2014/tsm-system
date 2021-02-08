@@ -164,7 +164,7 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
@@ -173,7 +173,7 @@ export default {
     mounted() {
         this.lab_id = this.$route.query.id
         
-        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
+        this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -227,7 +227,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            ;(this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`), (this.exportModal = true)
+            ;(this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`), (this.exportModal = true)
         },
         close(flag) {
             this.editModal = false
