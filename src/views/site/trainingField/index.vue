@@ -87,14 +87,14 @@ export default {
             createModal: false,
             editModal: false,
             exportPutModal: false,
-            fileUrl: `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`,
+            fileUrl: `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`,
             searchModal: false,
             multipleSelectionInfo: {},
             fileType: [],
         }
     },
     mounted() {
-        this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
+        this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
 
         this.getSitCommonList()
 
@@ -161,7 +161,7 @@ export default {
         },
         // 导入
         onUploadFile() {
-            this.fileUrl = `http://24992uu588.qicp.vip/common/import?infoType=${this.infoType}`
+            this.fileUrl = `http://218.59.43.155:8190/common/import?infoType=${this.infoType}`
             this.exportModal = true
         },
         close(flag) {
@@ -287,7 +287,7 @@ export default {
                 return
             }
 
-            this.fileUrl = `http://24992uu588.qicp.vip/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
+            this.fileUrl = `http://218.59.43.155:8190/common/uploadfile?infoType=${this.infoType}&id=${this.multipleSelection[0]}`
             this.exportPutModal = true
         },
         // 删除
