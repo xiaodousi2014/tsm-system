@@ -1,8 +1,0 @@
-/*解决表格错位，必须加在index.html或APP.vue中 cak*/
-body .el-table th.gutter {
- display: table-cell !important;
-}
-
-body .el-table colgroup.gutter {
- display: table-cell !important;
-}
