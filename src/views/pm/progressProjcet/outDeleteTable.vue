@@ -2,14 +2,14 @@
   <div>
     <div class="content_box my-el-table">
       <div class="menu-type">
-        <span style="font-size: 20px; font-weight: 900">法规删除记录</span>
+        <span style="font-size: 20px; font-weight: 900">成果删除记录</span>
 
         <div class="top-menu-but">
           <el-button
-            type="primary"
-            class="btnWidth"
-            @click="searchModal = true"
-            >检索</el-button
+              type="primary"
+              class="btnWidth"
+              @click="searchModal = true"
+          >检索</el-button
           >
           <el-button class="btnSty" @click="delectList">撤销操作</el-button>
         </div>
@@ -18,16 +18,16 @@
       <el-row>
         <custom-table-select :list="tableAllIist"></custom-table-select>
         <custom-table
-          :tableAllIist="tableAllIist"
-          :tableData="tableData"
-          @selectTableList="selectTableList"
-          @getAttachFile="getAttachFile"
-          @clickrow="clickrow"
+            :tableAllIist="tableAllIist"
+            :tableData="tableData"
+            @selectTableList="selectTableList"
+            @getAttachFile="getAttachFile"
+            @clickrow="clickrow"
         ></custom-table>
         <Pagination
-          :pagination="pagination"
-          @getSizeChange="getSizeChange"
-          @getCurrentChange="getCurrentChange"
+            :pagination="pagination"
+            @getSizeChange="getSizeChange"
+            @getCurrentChange="getCurrentChange"
         />
       </el-row>
     </div>
@@ -38,10 +38,10 @@
   </div>
 </template>
 <script>
-import Api from "@/api/stateKnowledge";
+import Api from "@/api/pmTaskBreak";
 import Common from "@/api/common";
 import Utils from '@/utils/utils'
-import Pagination from "../../components/pagination";
+import Pagination from "@/components/pagination";
 import customTable from '@/components/customTable'
 import customTableSelect from '@/components/customTableSelect'
 import customSearch from '@/components/customSearch'
@@ -68,10 +68,33 @@ export default {
         pageSize: 10,
         total: 0,
       },
-      searchModal: false
+      searchModal: false,
+      project_id: '',
+      project_name: '',
+      indexArr: []
     };
   },
   created() {
+    this.project_id = this.$route.query.project_id
+    this.project_name = this.$route.query.project_name
+    this.indexArr.push(
+        {
+          "col_type": "string",
+          "col_name": "project_id",
+          "value": this.project_id,
+          "relation": 1,
+          "indexType": 1
+        }
+    )
+    this.indexArr.push(
+        {
+          "col_type": "string",
+          "col_name": "project_name",
+          "value": this.project_name,
+          "relation": 1,
+          "indexType": 1
+        }
+    )
     this.getInfoType()
   },
   mounted() {
@@ -81,41 +104,24 @@ export default {
   methods: {
     getInfoType(){
       // 获取所有字段
-      Api.getInfoType().then((res) => {
+      Api.getInfoTypeDelOutcomes().then((res) => {
         if (res.code == "0000") {
           if (res.data.filter.length) {
             //  this.tableAllIist = res.data.filter;
             let list = res.data.filter.filter((item) => {
               return item.display == true;
             });
-            let info = res.data.filter.filter((v)=>{
-              return v.name == 'file_generate_unit_rank'
-            })[0]
-            let file_generate_unit_rank = []
-            file_generate_unit_rank.push({id:undefined,name:'全部'})
-            if(info){
-              Object.entries(JSON.parse(info.itemdata)).forEach((item) => {
-                let query = {
-                  id: Number(item[0]),
-                  name: item[1],
-                };
-                file_generate_unit_rank.push(query);
-              });
-              this.file_generate_unit_rank = file_generate_unit_rank
-              console.log(this.file_generate_unit_rank)
-            }
             this.searchList = list;
             // this.getPlanList();
           }
         }
       })
-      .catch((res) => {
-        this.$message.error(res.msg || "系统异常");
-      });
     },
     getTableList() {
+      let indexArray = Utils.changeIndexArray(this.query.indexArray,this.indexArr)
+      this.query.indexArray = indexArray
       let params = Object.assign({},this.query,this.pagination)
-      Api.dirtyQuery(Utils.filterParams(params)).then((res)=>{
+      Api.queryDelOutcomes(Utils.filterParams(params)).then((res)=>{
         if(res.code === '0000'){
           this.tableData = [];
           // this.total = 0;
@@ -145,7 +151,7 @@ export default {
       let params = {
         ids: this.multipleSelection
       }
-      Api.recordDirty(params).then((res)=>{
+      Api.dirtyOutcomesDel(params).then((res)=>{
         if (res.code == '0000') {
           this.$message.success('操作成功')
           this.close()
@@ -177,18 +183,18 @@ export default {
         infoType: 't_doc',
         file: query.file,
       })
-        .then((res) => {
-          let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
-          let objectUrl = URL.createObjectURL(blob)
-          link.href = objectUrl
-          link.download = query.file
-          link.click()
-          URL.revokeObjectURL(objectUrl)
-        })
-        .catch((res) => {
-          debugger
-          this.$message.error('系统繁忙')
-        })
+          .then((res) => {
+            let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
+            let objectUrl = URL.createObjectURL(blob)
+            link.href = objectUrl
+            link.download = query.file
+            link.click()
+            URL.revokeObjectURL(objectUrl)
+          })
+          .catch((res) => {
+            debugger
+            this.$message.error('系统繁忙')
+          })
     },
     // table选中
     selectTableList(list) {

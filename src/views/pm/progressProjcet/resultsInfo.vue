@@ -2,31 +2,18 @@
   <div>
     <div class="my-el-table content_box">
       <div class="menu-type">
-        <div>
-          <span>法规分类:&nbsp;&nbsp;</span>
-          <div
-            :class="['type-btn', value == item.id && 'type-btn-checked']"
-            v-for="item in file_generate_unit_rank"
-            :key="item.id"
-            @click="clickType(item.id)"
-          >
-            {{ item.name }}
-          </div>
-          <!-- <div class="type-btn type-btn-checked">学校</div> -->
-        </div>
+        <span>项目成果</span>
         <div class="top-menu-but">
           <el-button
-            type="primary"
-            class="btnWidth"
-            @click="searchlist"
-            >检索</el-button
-          >
+              type="primary"
+              class="btnWidth"
+              @click="searchlist">检索</el-button>
           <el-button class="btnSty" @click="addForm">新增</el-button>
           <el-button class="btnSty" @click="edit">编辑</el-button>
           <el-button class="btnSty" @click="delectList">删除</el-button>
-          <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
+          <el-button class="btnSty" @click="importExcel()">导入成果</el-button>
+          <el-button class="btnSty" @click="onTemplateDown()">导入模版下载</el-button>
           <el-button class="btnSty" @click="goPage()">上传附件</el-button>
-          <!-- <el-button class="btnSty" @click="onTemplateDown()">附件模版下载</el-button> -->
           <el-button class="btnSty" @click="goDelectPage(2)">删除记录</el-button>
         </div>
       </div>
@@ -34,49 +21,49 @@
       <el-row >
         <custom-table-select :list="tableAllIist"></custom-table-select>
         <custom-table
-          :tableAllIist="tableAllIist"
-          :tableData="tableData"
-          @selectTableList="selectTableList"
-          @getAttachFile="getAttachFile"
-          @clickrow="clickrow"
+            :tableAllIist="tableAllIist"
+            :tableData="tableData"
+            @selectTableList="selectTableList"
+            @getAttachFile="getAttachFile"
+            @clickrow="clickrow"
         ></custom-table>
         <Pagination :pagination="pagination" @getSizeChange="getSizeChange" @getCurrentChange="getCurrentChange"/>
       </el-row>
     </div>
 
-    <el-dialog :visible.sync="dialogVisible" title="新增" width="1100px" :close-on-press-escape="false" :close-on-click-modal="false">
+    <el-dialog v-if="dialogVisible" :visible.sync="dialogVisible" title="新增" width="1100px">
       <custom-create
-        @close="close"
-        :searchList="searchList"
-        @listCreate="listCreate"
-        :form="{}"
+          @close="close"
+          :searchList="searchList"
+          @listCreate="listCreate"
+          :form="{}"
       ></custom-create>
     </el-dialog>
-    <el-dialog v-if="editModal" :visible.sync="editModal" title="编辑" width="1100px" :close-on-press-escape="false" :close-on-click-modal="false">
+    <el-dialog v-if="editModal" :visible.sync="editModal" title="编辑" width="1100px">
       <custom-edit
-        @close="close"
-        :searchList="searchList"
-        :form="multipleSelectionInfo"
-        @listEdit="listEdit"
+          @close="close"
+          :searchList="searchList"
+          :form="multipleSelectionInfo"
+          @listEdit="listEdit"
       ></custom-edit>
     </el-dialog>
-    <el-dialog v-if="searchModal" :visible.sync="searchModal" title="检索" width="1100px" :close-on-press-escape="false" :close-on-click-modal="false">
+    <el-dialog v-if="searchModal" :visible.sync="searchModal" title="检索" width="1100px">
       <custom-search :searchList="searchList" @Search="Search"></custom-search>
     </el-dialog>
 
-    <el-dialog title="导入附件" :visible.sync="exportPutModal" width="500px">
-      <custom-upload-file-form-put infoType="t_docs" :id="multipleSelectionInfo.id" :url="fileUrl" :isMultiFiles="true" @close="close" />
+    <el-dialog v-if="exportPutModal" title="导入成果" :visible.sync="exportPutModal" width="500px">
+      <custom-upload-file-form-put infoType="t_project_result" :up_id="project_id" :up_name="project_name" :url="fileUrl" @close="close" />
     </el-dialog>
 
-    <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
-      <commonon-preferences @close="close" infoType="t_docs"></commonon-preferences>
+    <el-dialog v-if="exportPutModal2" title="导入附件" :visible.sync="exportPutModal2" width="500px">
+      <custom-upload-file-form-put infoType="t_project_result" :id="multipleSelectionInfo.id" :url="fileUrl2" @close="close" />
     </el-dialog>
   </div>
 </template>
 <script>
-import Api from "@/api/stateKnowledge";
+import Api from "@/api/pmTaskBreak";
 import Utils from '@/utils/utils'
-import Pagination from "../../components/pagination";
+import Pagination from "@/components/pagination";
 import customTableSelect from '@/components/customTableSelect'
 import customSearch from '@/components/customSearch'
 import customTable from '@/components/customTable'
@@ -84,12 +71,9 @@ import customUploadFile from '@/components/customUploadFile'
 import customCreate from '@/components/customCreate'
 import customEdit from '@/components/customEdit'
 import customUploadFileFormPut from '@/components/customUploadFileFormPut'
-import commononPreferences from '@/components/commononPreferences'
-
-let id = 1000;
 
 export default {
-  name: "overview",
+  name: "record",
   components: {
     Pagination,
     customTableSelect,
@@ -98,47 +82,66 @@ export default {
     customUploadFile,
     customCreate,
     customEdit,
-    customUploadFileFormPut,
-    commononPreferences
+    customUploadFileFormPut
   },
   data() {
     return {
-      fileUrl: `${process.env.VUE_APP_API_URL}/common/uploadfile`,
+      serverUrl: `${process.env.VUE_APP_API_URL}`,
+      fileUrl: '',
+      fileUrl2: '',
       dialogVisible: false,
       editModal: false,
       searchModal: false,
       exportPutModal: false,
-      preferencesModal: false,
+      exportPutModal2: false,
       value: undefined,
       tableAllIist: [],
       multipleSelectionInfo: {},
       searchList: [],
       query: {
-        orderField: "unit_group", //排序字段
-        orderOrient: "1", //排序顺序 1正序 2倒序
+        // orderField: "unit_group", //排序字段
+        // orderOrient: "1", //排序顺序 1正序 2倒序
         // indexArray: "1", //检索参数
       },
       //0-txt,1-pdf,2-doc,3-jpg,4-png,5-bmp,6-gif,7-媒体,9-其他
       file_generate_unit_rank: [], // 文件生成单位级别
-      file_sort: [], // 文件类别
-      file_type: [], // 文件类型
       tableData: [
-        {
-          id: "1",
-          number: "112",
-          a: "这是个数据",
-          b: "这是个数据",
-        },
       ],
       pagination: {
         pageNum: 1,
         pageSize: 10,
         total: 0
       },
-      field_data: []
+      field_data: [],
+      project_id: '',
+      project_name: '',
+      indexArr: []
     };
   },
   created() {
+    this.fileUrl = `${this.serverUrl}/common/import` // excel导入
+    this.fileUrl2 = `${this.serverUrl}/common/uploadfile` // excel导入
+    this.project_id = this.$route.query.project_id
+    this.project_name = this.$route.query.project_name
+    this.indexArr.push(
+        {
+          "col_type": "string",
+          "col_name": "project_id",
+          "value": this.project_id,
+          "relation": 1,
+          "indexType": 1
+        }
+    )
+    this.indexArr.push(
+        {
+          "col_type": "string",
+          "col_name": "project_name",
+          "value": this.project_name,
+          "relation": 1,
+          "indexType": 1
+        }
+    )
+    console.log(this.project_id,this.project_name)
     this.getTableList()
   },
   mounted() {
@@ -147,41 +150,26 @@ export default {
   methods: {
     getInfoType(){
       // 获取所有字段
-      Api.getInfoType().then((res) => {
+      Api.getInfoTypeOut().then((res) => {
         if (res.code == "0000") {
           if (res.data.filter.length) {
             //  this.tableAllIist = res.data.filter;
             let list = res.data.filter.filter((item) => {
               return item.display == true;
             });
-            let info = res.data.filter.filter((v)=>{
-              return v.name == 'file_generate_unit_rank'
-            })[0]
-            let file_generate_unit_rank = []
-            file_generate_unit_rank.push({id:undefined,name:'全部'})
-            if(info){
-              Object.entries(JSON.parse(info.itemdata)).forEach((item) => {
-                let query = {
-                  id: Number(item[0]),
-                  name: item[1],
-                };
-                file_generate_unit_rank.push(query);
-              });
-              this.file_generate_unit_rank = file_generate_unit_rank
-              console.log(this.file_generate_unit_rank)
-            }
             this.searchList = list;
-            // this.getPlanList();
           }
+        } else {
+          this.$message.error(res.msg)
         }
       })
-      .catch((res) => {
-        this.$message.error(res.msg || "系统异常");
-      });
     },
     getTableList() {
+      console.log(this.query.indexArray,this.indexArr)
+      let indexArray = Utils.changeIndexArray(this.query.indexArray,this.indexArr)
+      this.query.indexArray = indexArray
       let params = Object.assign({},this.query,this.pagination)
-      Api.queryRecord(Utils.filterParams(params)).then((res)=>{
+      Api.queryOutcomeslist(Utils.filterParams(params)).then((res)=>{
         if(res.code === '0000'){
           this.tableData = [];
           // this.total = 0;
@@ -228,34 +216,22 @@ export default {
       let params = {
         ids: this.multipleSelection
       }
-      Api.deleteRecord(params).then((res)=>{
+      Api.delOutcomes(params).then((res)=>{
         if (res.code == '0000') {
           this.$message.success('删除成功')
           this.close()
+        } else {
+          this.$message.error(res.msg)
         }
       }).catch(()=>{
         this.$message.error('系统繁忙')
       })
     },
-    clickType(value) { // 法规分类
-      this.value = value;
-      let arr = [
-        {
-          "col_type": "map",
-          "col_name": "file_generate_unit_rank",
-          "value": value,
-          "relation": 1,
-          "indexType": 1
-        }
-      ]
-      if(this.value === undefined){
-        arr = []
-      }
-      this.Search(arr)
-    },
     listCreate(event) { // 创建保存
       console.log('listCreate', event)
-      Api.addRecord(event).then((res)=>{
+      event.project_id = this.project_id
+      event.project_name = this.project_name
+      Api.addOutcomes(event).then((res)=>{
         if (res.code == '0000') {
           this.$message.success('操作成功！')
           this.close()
@@ -265,7 +241,9 @@ export default {
       })
     },
     listEdit(event) { // 修改保存
-      Api.putRecord(event).then((res)=>{
+      event.project_id = this.project_id
+      event.project_name = this.project_name
+      Api.putOutcomes(event).then((res)=>{
         if (res.code == '0000') {
           this.$message.success('操作成功！')
           this.close()
@@ -281,7 +259,13 @@ export default {
       this.getTableList()
     },
     goDelectPage() { // 删除记录页面
-      this.$router.push("/doc/in-stock-record-del");
+      // this.$router.push("/pm/progress-projcet-fund-delete");
+      this.$router.push({path: "/pm/progress-projcet-results-delete",
+        query: {
+          project_id: this.project_id,
+          project_name: this.project_name
+        }
+      });
     },
     goPage() {
       console.log(this.multipleSelectionInfo)
@@ -289,17 +273,20 @@ export default {
         this.$message.warning('请先选择数据')
         return
       }
-      this.exportPutModal = true
+      this.exportPutModal2 = true
     },
-    onTemplateDown() {
-      window.open(`${process.env.VUE_APP_API_URL}/common/attachment/download_TemplateFile?infoType=t_docs`)
+    onTemplateDown() { // 下载导入模版
+      window.open(`${this.serverUrl}/common/attachment/download_TemplateFile?infoType=t_project_result`)
+    },
+    importExcel() { // excel导入
+      this.exportPutModal = true
     },
     close() {
       this.editModal = false
       this.dialogVisible = false
       this.searchModal = false
       this.exportPutModal = false
-      this.preferencesModal = false
+      this.exportPutModal2 = false
       this.getTableList()
       // this.search();
     },
@@ -309,13 +296,14 @@ export default {
     // table选中
     selectTableList(list) {
       let query = []
+      console.log(list,list.length)
       list.length>0 && list.forEach((item) => {
         query.push(item.id)
       })
       this.multipleSelection = query
       this.multipleSelectionInfo = list.length>0 ? list[0] : {}
       this.form = []
-      list.forEach((item) => {
+      list.length>0 && list.forEach((item) => {
         let query = {
           device_id: item.id,
           device_name: item.name,
@@ -327,7 +315,7 @@ export default {
         this.form.push(query)
       })
       this.borrowList = []
-      list.forEach((item) => {
+      list.length>0 && list.forEach((item) => {
         let query = {
           device_id: item.id,
           device_name: item.name,
@@ -344,7 +332,7 @@ export default {
         this.borrowList.push(query)
       })
       this.repairList = []
-      list.forEach((item) => {
+      list.length>0 && list.forEach((item) => {
         let query = {
           device_id: item.id,
           device_name: item.name,
@@ -355,10 +343,7 @@ export default {
     },
     clickrow(row){
       console.log('====',row)
-    },
-    onPreferences() {
-      this.preferencesModal = true
-    },
+    }
   },
 };
 </script>

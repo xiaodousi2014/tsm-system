@@ -2,32 +2,34 @@
   <div>
     <div class="content_box my-el-table">
       <div class="menu-type">
-        <span style="font-size: 20px; font-weight: 900">法规删除记录</span>
+        <span></span>
 
         <div class="top-menu-but">
           <el-button
-            type="primary"
-            class="btnWidth"
-            @click="searchModal = true"
-            >检索</el-button
+              type="primary"
+              class="btnWidth"
+              @click="searchModal = true"
+          >检索</el-button
           >
-          <el-button class="btnSty" @click="delectList">撤销操作</el-button>
+          <el-button class="btnSty" @click="delectList">同意</el-button>
+          <el-button class="btnSty" @click="delectList">取消</el-button>
+          <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
         </div>
       </div>
 
       <el-row>
         <custom-table-select :list="tableAllIist"></custom-table-select>
         <custom-table
-          :tableAllIist="tableAllIist"
-          :tableData="tableData"
-          @selectTableList="selectTableList"
-          @getAttachFile="getAttachFile"
-          @clickrow="clickrow"
+            :tableAllIist="tableAllIist"
+            :tableData="tableData"
+            @selectTableList="selectTableList"
+            @getAttachFile="getAttachFile"
+            @clickrow="clickrow"
         ></custom-table>
         <Pagination
-          :pagination="pagination"
-          @getSizeChange="getSizeChange"
-          @getCurrentChange="getCurrentChange"
+            :pagination="pagination"
+            @getSizeChange="getSizeChange"
+            @getCurrentChange="getCurrentChange"
         />
       </el-row>
     </div>
@@ -35,18 +37,21 @@
     <el-dialog v-if="searchModal" :visible.sync="searchModal" title="检索" width="1100px">
       <custom-search :searchList="searchList" @Search="Search"></custom-search>
     </el-dialog>
+
+    <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+      <commonon-preferences @close="close" infoType="t_project"></commonon-preferences>
+    </el-dialog>
   </div>
 </template>
 <script>
-import Api from "@/api/stateKnowledge";
+import Api from "@/api/pmManager";
 import Common from "@/api/common";
 import Utils from '@/utils/utils'
-import Pagination from "../../components/pagination";
+import Pagination from "@/components/pagination";
 import customTable from '@/components/customTable'
 import customTableSelect from '@/components/customTableSelect'
 import customSearch from '@/components/customSearch'
-
-let id = 1000;
+import commononPreferences from '@/components/commononPreferences'
 
 export default {
   name: "rkRecord",
@@ -54,7 +59,8 @@ export default {
     Pagination,
     customTable,
     customTableSelect,
-    customSearch
+    customSearch,
+    commononPreferences
   },
   data() {
     return {
@@ -68,7 +74,8 @@ export default {
         pageSize: 10,
         total: 0,
       },
-      searchModal: false
+      searchModal: false,
+      preferencesModal: false
     };
   },
   created() {
@@ -81,37 +88,21 @@ export default {
   methods: {
     getInfoType(){
       // 获取所有字段
-      Api.getInfoType().then((res) => {
+      Api.deleteInfo().then((res) => {
         if (res.code == "0000") {
           if (res.data.filter.length) {
             //  this.tableAllIist = res.data.filter;
             let list = res.data.filter.filter((item) => {
               return item.display == true;
             });
-            let info = res.data.filter.filter((v)=>{
-              return v.name == 'file_generate_unit_rank'
-            })[0]
-            let file_generate_unit_rank = []
-            file_generate_unit_rank.push({id:undefined,name:'全部'})
-            if(info){
-              Object.entries(JSON.parse(info.itemdata)).forEach((item) => {
-                let query = {
-                  id: Number(item[0]),
-                  name: item[1],
-                };
-                file_generate_unit_rank.push(query);
-              });
-              this.file_generate_unit_rank = file_generate_unit_rank
-              console.log(this.file_generate_unit_rank)
-            }
             this.searchList = list;
             // this.getPlanList();
           }
         }
       })
-      .catch((res) => {
-        this.$message.error(res.msg || "系统异常");
-      });
+          .catch((res) => {
+            this.$message.error("系统异常");
+          });
     },
     getTableList() {
       let params = Object.assign({},this.query,this.pagination)
@@ -158,6 +149,7 @@ export default {
       this.editModal = false
       this.dialogVisible = false
       this.searchModal = false
+      this.preferencesModal = false
       this.getTableList()
       // this.search();
     },
@@ -177,18 +169,18 @@ export default {
         infoType: 't_doc',
         file: query.file,
       })
-        .then((res) => {
-          let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
-          let objectUrl = URL.createObjectURL(blob)
-          link.href = objectUrl
-          link.download = query.file
-          link.click()
-          URL.revokeObjectURL(objectUrl)
-        })
-        .catch((res) => {
-          debugger
-          this.$message.error('系统繁忙')
-        })
+          .then((res) => {
+            let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
+            let objectUrl = URL.createObjectURL(blob)
+            link.href = objectUrl
+            link.download = query.file
+            link.click()
+            URL.revokeObjectURL(objectUrl)
+          })
+          .catch((res) => {
+            debugger
+            this.$message.error('系统繁忙')
+          })
     },
     // table选中
     selectTableList(list) {
@@ -239,7 +231,10 @@ export default {
     },
     clickrow(row){
       console.log('====',row)
-    }
+    },
+    onPreferences() {
+      this.preferencesModal = true
+    },
   },
 };
 </script>
