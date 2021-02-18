@@ -30,7 +30,7 @@ export default {
   {
    path: 'inventory',
    name: 'consumables-manage-storage-equipment',
-   meta: [{name: '在库设备', parentName: '易耗品管理', path: '/declare-in-stock'}],
+   meta: [{name: '库存记录', parentName: '易耗品管理', path: '/declare-in-stock'}],
    component: () => import('@/views/stationery/storageEquipment/index.vue')
   },
 
@@ -61,19 +61,19 @@ export default {
    component: () => import('@/views/stationery/borrowExamine/index.vue')
   },
 
-  {
-   path: 'repair/record',
-   name: 'consumables-manage-repair-record',
-   meta: [{name: '维修记录', parentName: '易耗品管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/stationery/repairRecord/index.vue')
-  },
+  // {
+  //  path: 'repair/record',
+  //  name: 'consumables-manage-repair-record',
+  //  meta: [{name: '维修记录', parentName: '易耗品管理', path: '/declare-in-stock'}],
+  //  component: () => import('@/views/stationery/repairRecord/index.vue')
+  // },
 
-  {
-   path: 'repair/examine',
-   name: 'consumables-manage-repair-examine',
-   meta: [{name: '维修审核', parentName: '易耗品管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/stationery/repairExamine/index.vue')
-  },
+  // {
+  //  path: 'repair/examine',
+  //  name: 'consumables-manage-repair-examine',
+  //  meta: [{name: '维修审核', parentName: '易耗品管理', path: '/declare-in-stock'}],
+  //  component: () => import('@/views/stationery/repairExamine/index.vue')
+  // },
 
   {
    path: 'scrap/record',
