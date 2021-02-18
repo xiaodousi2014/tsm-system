@@ -1,386 +1,227 @@
 <template>
     <div class="user_plan">
-      
-
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <div class="user_plan_day" v-if="isList">
+                <div style="text-align: right;margin-top: -20px">
+                    <el-button class="btnSty" @click="onCreate()">新增</el-button>
+                    <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+                    <el-button class="btnSty" @click="onDelete()">删除</el-button>
+                    <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
+                    <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+                    <el-button type="primary" @click="dayListTable()">列表显示</el-button>
+                    <el-button type="primary" @click="dayListTable('default')">汇总图显示</el-button>
+                </div>
+
+                <custom-table-select :list="tableAllIist"></custom-table-select>
+                <custom-table :tableAllIist="tableAllIist" :tableData="tableData" @selectTableList="selectTableList" @getAttachFile="getAttachFile"></custom-table>
+                <!-- 分页 -->
+                <div class="pagination">
+                    <Pagination ref="Pagination" @getSizeChange="getSizeChange" @getCurrentChange="getCurrentChange" :pagination="query" :total="total" />
+                </div>
+            </div>
+
             <el-tab-pane label="日计划" name="day">
                 <div class="user_plan_day">
-                    <div class="user_plan_day_btn">
-                        <el-button @click="createData">新建</el-button>
-                        <el-button @click="editData">编辑</el-button>
-                        <el-button>删除</el-button>
-                        <el-button>导入</el-button>
-                        <el-button>导出</el-button>
-                        <el-button type="primary" @click="dayListTable()">列表显示</el-button>
-                        <el-button type="primary" @click="dayListTable('default')">汇总图显示</el-button>
-                    </div>
-
-                    <div class="user_plan_day_default_table" v-if="defaultTableShow">
-                        <el-table  border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
+                    <div class="user_plan_day_default_table" v-if="!isList">
+                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
                             <template v-for="(item, index) in tableDataDefaultColumn">
-                                <el-table-column
-                                    header-align="center"
-                                    :key="index"
-                                    :prop="item.code"
-                                    :label="item.name"
-                                >
-                                </el-table-column>
+                                <el-table-column header-align="center" :key="index" :prop="item.code" :label="item.name"> </el-table-column>
                             </template>
                         </el-table>
                     </div>
-                    <div class="user_plan_day_total_table" v-if="!defaultTableShow">
-                        <custom-table-select
-                            :list="tableAllIist"
-                            ></custom-table-select>
-                        <custom-table :tableAllIist = tableAllIist :tableData = tableData1></custom-table>
+                    <div class="user_plan_day_total_table">
+                        <!-- <custom-table-select :list="tableAllIist"></custom-table-select>
+                        <custom-table :tableAllIist="tableAllIist" :tableData="tableData"></custom-table> -->
                     </div>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="周计划" name="week">
                 <div class="user_plan_week">
-                    <div class="user_plan_day_default_table" v-if="defaultTableShow">
-                        <el-table  border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass" :span-method="objectSpanMethod">
-                            <el-table-column
-                                prop="a"
-                                label="使用场地"
-                                width="180">
-                            </el-table-column>
-                            <el-table-column
-                                prop="b"
-                                label="星期一">
-                            </el-table-column>
-                            <el-table-column
-                                prop="c"
-                                label="星期二">
-                            </el-table-column>
-                            <el-table-column
-                                prop="d"
-                                label="星期三">
-                            </el-table-column>
-                            <el-table-column
-                                prop="e"
-                                label="星期四">
-                            </el-table-column>
-                            <el-table-column
-                                prop="f"
-                                label="星期五">
-                            </el-table-column>
-                            <el-table-column
-                                prop="g"
-                                label="星期六">
-                            </el-table-column>
-                            <el-table-column
-                                prop="h"
-                                label="星期日">
-                            </el-table-column>
-                            <el-table-column
-                                prop="i"
-                                label="本周使用时间（H）">
-                            </el-table-column>
+                    <div class="user_plan_day_default_table" v-if="!isList">
+                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass" :span-method="objectSpanMethod">
+                            <el-table-column prop="a" label="使用场地" width="180"> </el-table-column>
+                            <el-table-column prop="b" label="星期一"> </el-table-column>
+                            <el-table-column prop="c" label="星期二"> </el-table-column>
+                            <el-table-column prop="d" label="星期三"> </el-table-column>
+                            <el-table-column prop="e" label="星期四"> </el-table-column>
+                            <el-table-column prop="f" label="星期五"> </el-table-column>
+                            <el-table-column prop="g" label="星期六"> </el-table-column>
+                            <el-table-column prop="h" label="星期日"> </el-table-column>
+                            <el-table-column prop="i" label="本周使用时间（H）"> </el-table-column>
                         </el-table>
                     </div>
                 </div>
             </el-tab-pane>
             <el-tab-pane label="月计划" name="month">
                 <div class="user_plan_month">
-                    <div class="user_plan_day_default_table" v-if="defaultTableShow">
-                        <el-table  border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
-                            <el-table-column
-                                prop="a"
-                                label="使用场地"
-                                width="180">
-                            </el-table-column>
-                            <el-table-column
-                                prop="b"
-                                label="第一周">
-                            </el-table-column>
-                            <el-table-column
-                                prop="c"
-                                label="第二周">
-                            </el-table-column>
-                            <el-table-column
-                                prop="d"
-                                label="第三周">
-                            </el-table-column>
-                            <el-table-column
-                                prop="e"
-                                label="第四周">
-                            </el-table-column>
+                    <div class="user_plan_day_default_table" v-if="!isList">
+                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
+                            <el-table-column prop="a" label="使用场地" width="180"> </el-table-column>
+                            <el-table-column prop="b" label="第一周"> </el-table-column>
+                            <el-table-column prop="c" label="第二周"> </el-table-column>
+                            <el-table-column prop="d" label="第三周"> </el-table-column>
+                            <el-table-column prop="e" label="第四周"> </el-table-column>
                         </el-table>
                     </div>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="学期计划" name="semester">
+            <el-tab-pane label="学期计划" name="year">
                 <div class="user_plan_semester">
-                    <div class="user_plan_day_default_table" v-if="defaultTableShow">
-                        <el-table  border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
-                            <el-table-column
-                                prop="a"
-                                label="使用场地"
-                                width="180">
-                            </el-table-column>
-                            <el-table-column
-                                prop="b"
-                                label="第一月">
-                            </el-table-column>
-                            <el-table-column
-                                prop="c"
-                                label="第二月">
-                            </el-table-column>
-                            <el-table-column
-                                prop="d"
-                                label="第三月">
-                            </el-table-column>
-                            <el-table-column
-                                prop="e"
-                                label="第四月">
-                            </el-table-column>
+                    <div class="user_plan_day_default_table" v-if="!isList">
+                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
+                            <el-table-column prop="a" label="使用场地" width="180"> </el-table-column>
+                            <el-table-column prop="b" label="第一月"> </el-table-column>
+                            <el-table-column prop="c" label="第二月"> </el-table-column>
+                            <el-table-column prop="d" label="第三月"> </el-table-column>
+                            <el-table-column prop="e" label="第四月"> </el-table-column>
                         </el-table>
                     </div>
                 </div>
             </el-tab-pane>
         </el-tabs>
-        
-        <div class="pagination" >
-            <el-pagination
-                background
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page.sync="query.pageNo"
-                :page-sizes="[10, 20, 50, 100]"
-                :page-size="query.limit"
-                layout="total,prev, pager, next,sizes"
-                :total="total"
-                border
-            ></el-pagination>
-        </div>
 
-        <el-drawer
-            title="新建"
-            size="80%"
-            style="height:100vh; overflow: auto;"
-            :close-on-press-escape="false"
-            :destroy-on-close="true"
-            :wrapperClosable="false"
-            :visible.sync="createDialogVisible"
-            direction="rtl"
-            :before-close="handleClose">
-                
-                <el-form ref="form" :inline="true" :model="form" label-width="150px">
-                    <el-form-item :label="item.name" v-for="(item, index) in tableAllIist" :key="index">
-                        <el-col :span="24" v-if="item.type == 'number'">
-                            <el-input v-model="form[item.code]" type="number" :placeholder="'请输入' + item.name"></el-input>
-                        </el-col>
-                        <el-col :span="24" v-if="item.type == 'string'">
-                            <el-input v-model="form[item.code]" type="number" :placeholder="'请输入' + item.name"></el-input>
-                        </el-col>
-                        
-                        <el-col :span="14" v-if="item.type == 'array'">
-                            <el-input v-model="form[item.code]" type="number" :placeholder="'请输入' + item.name"></el-input>
-                        </el-col>
-                        <el-col :span="8" v-if="item.type == 'array'" style="margin-left: 10px">
-                            <el-button
-                                type="primary"
-                                size="small"
-                                icon="el-icon-plus"
-                                @click="addInput(index, item.code)"
-                            ></el-button>
-                            <el-button
-                                size="small"
-                                icon="el-icon-minus"
-                                @click="removeInput(index, item.code)"
-                                v-if="index != 0"
-                            ></el-button>
-                        </el-col>
+        <el-dialog title="新增" v-if="createModal" :visible.sync="createModal" width="1100px">
+            <custom-create @close="close" :searchList="searchList" @listCreate="listCreate"></custom-create>
+        </el-dialog>
+        <el-dialog title="编辑" v-if="editModal" :visible.sync="editModal" width="1100px">
+            <custom-edit @close="close" :searchList="searchList" :form="multipleSelectionInfo" @listEdit="listEdit"></custom-edit>
+        </el-dialog>
 
-                        <el-row v-if="item.type == 'time'">
-                            <el-col :span="11">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                            </el-col>
-                            <el-col style="text-align: center;" class="line" :span="1">-</el-col>
-                            <el-col :span="11">
-                                <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                            </el-col>
-                        </el-row>
-                        <el-row v-if="item.type == 'file'">
-                            <el-col :span="24"></el-col>
-                        </el-row>
-                        
-                        <el-row v-if="item.type == 'file'">
-                            <el-col :span="24">
-                            <el-upload
-                                action="https://jsonplaceholder.typicode.com/posts/"
-                                list-type="picture-card"
-                                :on-preview="handlePictureCardPreview"
-                                :on-remove="handleRemove">
-                                <i class="el-icon-plus"></i>
-                                </el-upload>
-
-                            <el-dialog :visible.sync="dialogVisible">
-                                <img width="100%" :src="dialogImageUrl" alt="">
-                            </el-dialog>
-                            </el-col>
-                        </el-row>
-                    </el-form-item>
-                </el-form>
-
-                <div style="margin: 100px;"></div>
-                
-                <div class="el-drawer__footer">
-                    <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                    <el-button>取消</el-button>
-                </div>
-        </el-drawer>
+        <el-dialog title="导入" v-if="userPlanUploadMode" :visible.sync="userPlanUploadMode" width="500px">
+            <user-plan-upload @close="close"></user-plan-upload>
+        </el-dialog>
     </div>
 </template>
 
 <script>
-import customTableSelect from "@/components/customTableSelect";
-import Http from "@/api/api";
+import customTableSelect from '@/components/customTableSelect'
 import customTable from '@/components/customTable'
+import userPlanUpload from './upload'
+
+import Pagination from '@/components/customPagination'
+import Http from '@/api/siteManagemer'
+import customCreate from '@/components/customCreate2'
+import customEdit from '@/components/customEdit2'
 
 export default {
-    name: "UsePlan",
-    components: { customTableSelect, customTable },
+    name: 'UsePlan',
+    components: {
+        customTableSelect,
+        customTable,
+        Pagination,
+        customCreate,
+        customEdit,
+        userPlanUpload,
+    },
     data() {
         return {
-            dialogImageUrl: '',
-            dialogVisible: false,
-            form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
-            },
-            createDialogVisible: false,
-            activeName: 'day',
+            infoType: 'd_training_site_schedule',
+            userPlanUploadMode: false,
+            isList: true,
+            activeName: '',
             query: {
-                limit: 1,
-                pageNo: 10
+                infoType: 'd_training_site_schedule',
+                orderField: 'id',
+                orderOrient: '2',
+                indexArray: [],
+                pageNum: 1,
+                pageCount: 10,
             },
             total: 0,
-            defaultTableShow: true,
+            multipleSelection: [],
+            multipleSelectionInfo: {},
+            exportModal: false,
+            createModal: false,
+            editModal: false,
             tableDataDefault: [],
-            tableDataDefaultColumn: [
-                {
-                    code: 'a',
-                    name: '使用场地'
-                },
-                {
-                    code: 'b',
-                    name: '08：00'
-                },
-                {
-                    code: 'c',
-                    name: '09：00'
-                },
-                {
-                    code: 'd',
-                    name: '10：00'
-                },
-                {
-                    code: 'e',
-                    name: '11：00'
-                },
-                {
-                    code: 'f',
-                    name: '12：00'
-                },
-                {
-                    code: 'g',
-                    name: '13：00'
-                },
-                {
-                    code: 'h',
-                    name: '14：00'
-                },
-                {
-                    code: 'i',
-                    name: '15：00'
-                },
-                {
-                    code: 'j',
-                    name: '16：00'
-                },
-                {
-                    code: 'k',
-                    name: '17：00'
-                },
-                {
-                    code: 'l',
-                    name: '18：00'
-                },
-                {
-                    code: 'm',
-                    name: '系统建立起使用时间（H）'
-                },
-                {
-                    code: 'n',
-                    name: '今年起场地使用时间（H）'
-                },
-                {
-                    code: 'o',
-                    name: '本学期场地使用时间（H）'
-                },
-            ],
-            tableData1: [
-                {
-                    id: "1",
-                    number: "112",
-                    a: "这是个数据",
-                    b: "这是个数据",
-                    c: "这是个数据",
-                    d: "这是个数据",
-                    e: "这是个数据",
-                    f: "这是个数据",
-                    g: "这是个数据",
-                    h: "这是个数据",
-                    j: "这是个数据",
-                    k: "这是个数据",
-                    l: "这是个数据",
-                }
-            ],
+            tableDataDefaultColumn: [],
+            searchList: [],
+            tableData: [],
             tableAllIist: [],
-        };
-    },
-    mounted() {
-        this.getAllTableList();
+        }
     },
     methods: {
-        handleClose() {
-            this.createDialogVisible = false
+        listCreate(event) {
+            event.t_training_base = this.infoType
+            event.site_type = this.infoType
+            event.base_name = ''
+            Http.addData(event)
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.$message.success('创建成功！')
+                        this.close(true)
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
         },
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
+        onCreate() {
+            this.createModal = true
         },
-        handlePictureCardPreview(file) {
-            this.dialogImageUrl = file.url;
-            this.dialogVisible = true;
+        // 编辑
+        onEdit() {
+            if (!this.multipleSelection.length) {
+                this.$message.warning('请选择要编辑的数据列！')
+                return
+            }
+            if (this.multipleSelection.length > 1) {
+                this.$message.warning('编辑数据列只能选择一条！')
+                return
+            }
+            this.editModal = true
         },
-        addInput(index, code) {
-            let query = {
-                code: "e",
-                name: "俄罗斯",
-                checked: false,
-                type: 'array'
-            };
-            this.form[code].splice(index + 1, 0, query);
-        },
-        removeInput(index) {
-            this.form[code].splice(index, 1);
-        },
-        onSubmit() {
-            console.log('submit!');
-        },
-        createData() {
-            this.createDialogVisible = true
-        },
-        editData() {
+        listEdit() {
+            let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
+            params.site_type = this.infoType
+            Http.modifyPlan(params)
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.$message.success('编辑成功！')
+                        this.close(true)
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        // 删除
+        onDelete() {
+            if (!this.multipleSelection.length) {
+                this.$message.warning('请选择要删除的数据列！')
+                return
+            }
+            this.$confirm('此操作将删除该记录, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+                .then(() => {
+                    this.deleteSure()
+                })
+                .catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除',
+                    })
+                })
+        },
+        deleteSure() {
+            Http.deleteListPlan({
+                ids: this.multipleSelection,
+                site_type: this.infoType,
+            })
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.$message.success('删除成功！')
+                        this.multipleSelection = []
+                        this.getSitCommonData()
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
         },
         rowClass({ row, column, rowIndex, columnIndex }) {
             if (rowIndex === 1 && columnIndex === 4) {
@@ -392,199 +233,140 @@ export default {
                 if (rowIndex % 2 === 0) {
                     return {
                         rowspan: 2,
-                        colspan: 1
-                    };
+                        colspan: 1,
+                    }
                 } else {
                     return {
                         rowspan: 0,
-                        colspan: 0
-                    };
+                        colspan: 0,
+                    }
                 }
             }
         },
         dayListTable(val) {
             if (val) {
-                this.defaultTableShow = true
+                this.isList = false
             } else {
-                this.defaultTableShow = false
+                this.activeName = ''
+                this.isList = true
             }
-            this.query.limit = 1
+            this.query.pageNum = 1
         },
         handleClick(tab, event) {
-            console.log(tab, event);
+            console.log(tab, event)
+            this.isList = false
         },
-        handleSizeChange() {
+        getSitCommonList() {
+            Http.getSitCommonList({
+                infoType: this.infoType,
+            })
+                .then((res) => {
+                    if (res.code == '0000') {
+                        if (res.data.filter.length) {
+                            let list = res.data.filter.filter((item) => {
+                                return item.display == true
+                            })
+                            this.searchList = list
+                        }
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        getSitCommonData() {
+            Http.getSitCommonData(this.query)
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.tableData = []
+                        this.total = 0
+                        this.tableAllIist = res.data.columns
+                        if (res.data.searchList.length) {
+                            this.tableData = res.data.searchList
+                            this.total = res.page.page_total
+                        } else {
+                            this.tableData = []
+                            this.total = 0
+                        }
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        // table选中
+        selectTableList(list) {
+            let query = []
+            list.forEach((item) => {
+                query.push(item.id)
+            })
+            this.multipleSelection = query
+            this.multipleSelectionInfo = list[0]
+        },
+        getAttachFile(query) {
+            const link = document.createElement('a')
+            Http.getAttachFile({
+                id: query.row.id,
+                infoType: this.infoType,
+                file: query.file,
+            })
+                .then((res) => {
+                    let blob = new Blob([res], { type: 'application/octet-stream' }) // res就是接口返回的文件流了
+                    let objectUrl = URL.createObjectURL(blob)
+                    link.href = objectUrl
+                    link.download = query.file
+                    link.click()
+                    URL.revokeObjectURL(objectUrl)
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        onUploadFile() {
+            this.userPlanUploadMode = true
+        },
+        onTemplateDown() {
+            window.open(`${process.env.VUE_APP_API_URL}/common/attachment/download_TemplateFile?infoType=${this.infoType}`)
+        },
+        close(flag) {
+            this.userPlanUploadMode = false
+            this.exportModal = false
+            this.createModal = false
 
+            if (flag) {
+                this.getSitCommonData();
+            }
         },
-        handleCurrentChange() {
+        getCurrentChange(val) {
+            this.query.pageNum = val
+            this.getSitCommonData()
+        },
+        getSizeChange(val) {
+            this.query.pageCount = val
+            this.getSitCommonData()
+        },
+    },
+    mounted() {
+        this.getSitCommonList()
 
-        },
-        getAllTableList() {
-            this.tableDataDefault = [
-                {
-                    a: 'a',
-                    b: 'a',
-                    c: 'a',
-                    d: 'a',
-                    e: 'a',
-                    f: 'a',
-                    g: 'a',
-                    h: 'a',
-                    i: 'a',
-                    j: 'a',
-                    k: 'a',
-                    l: 'a',
-                    m: 'a',
-                    n: 'a',
-                    o: 'a'
-                },
-                {
-                    a: 'a',
-                    b: 'a',
-                    c: 'a',
-                    d: 'a',
-                    e: 'a',
-                    f: 'a',
-                    g: 'a',
-                    h: 'a',
-                    i: 'a',
-                    j: 'a',
-                    k: 'a',
-                    l: 'a',
-                    m: 'a',
-                    n: 'a',
-                    o: 'a'
-                },
-                {
-                    a: 'a',
-                    b: 'a',
-                    c: 'a',
-                    d: 'a',
-                    e: 'a',
-                    f: 'a',
-                    g: 'a',
-                    h: 'a',
-                    i: 'a',
-                    j: 'a',
-                    k: 'a',
-                    l: 'a',
-                    m: 'a',
-                    n: 'a',
-                    o: 'a'
-                },
-                {
-                    a: 'a',
-                    b: 'a',
-                    c: 'a',
-                    d: 'a',
-                    e: 'a',
-                    f: 'a',
-                    g: 'a',
-                    h: 'a',
-                    i: 'a',
-                    j: 'a',
-                    k: 'a',
-                    l: 'a',
-                    m: 'a',
-                    n: 'a',
-                    o: 'a'
-                },
-                {
-                    a: 'a',
-                    b: 'a',
-                    c: 'a',
-                    d: 'a',
-                    e: 'a',
-                    f: 'a',
-                    g: 'a',
-                    h: 'a',
-                    i: 'a',
-                    j: 'a',
-                    k: 'a',
-                    l: 'a',
-                    m: 'a',
-                    n: 'a',
-                    o: 'a'
-                },
-            ]
-            this.tableAllIist = [
-                {
-                    code: "a",
-                    name: "北京",
-                    checked: true,
-                    type: 'number'
-                },
-                {
-                    code: "b",
-                    name: "上海上海上海上海上",
-                    checked: true,
-                    type: 'string'
-                },
-                {
-                    code: "c",
-                    name: "成都",
-                    checked: true,
-                    type: 'string'
-                },
-                {
-                    code: "d",
-                    name: "四川",
-                    checked: true,
-                    type: 'string'
-                },
-                {
-                    code: "e",
-                    name: "俄罗斯",
-                    checked: false,
-                    type: 'array'
-                },
-                {
-                    code: "f",
-                    name: "福建",
-                    checked: true,
-                    type: 'string'
-                },
-                {
-                    code: "g",
-                    name: "广州",
-                    checked: true,
-                    type: 'number'
-                },
-                {
-                    code: "h",
-                    name: "杭州",
-                    checked: false,
-                    type: 'time'
-                },
-                {
-                    code: "j",
-                    name: "济南",
-                    checked: true,
-                    type: 'file'
-                },
-                {
-                    code: "k",
-                    name: "河南",
-                    checked: true,
-                    type: 'file'
-                },
-            ];
-        }
+        this.getSitCommonData()
     },
-    created() {
-    },
-};
+}
 </script>
 <style>
-    .table_td_color{
-        background: #67C23A;
-    }
+.table_td_color {
+    background: #67c23a;
+}
 </style>
 <style scoped lang="less">
 .user_plan {
     padding: 16px;
     margin: 20px;
     background: #fff;
+
+    .el-button {
+        margin-top: 20px;
+    }
 
     /deep/ :focus {
         outline: 0;

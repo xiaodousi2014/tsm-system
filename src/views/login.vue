@@ -92,25 +92,25 @@ export default {
     },
 
     submitForm() {
-      this.loading = true;
-      let params = this.loginForm;
-      let url = "/trmslogin";
-      Http.login(params)
-        .then((res) => {
-          console.log("读取登录的数据");
-          console.log(res);
-          sessionStorage.setItem("loginToken", res.token);
-          sessionStorage.setItem("loginName", res.u_name);
-          sessionStorage.setItem("userId", res.id);
+    //   this.loading = true;
+    //   let params = this.loginForm;
+    //   let url = "/trmslogin";
+    //   Http.login(params)
+    //     .then((res) => {
+    //       console.log("读取登录的数据");
+    //       console.log(res);
+    //       sessionStorage.setItem("loginToken", res.token);
+    //       sessionStorage.setItem("loginName", res.u_name);
+    //       sessionStorage.setItem("userId", res.id);
 
           // removeStorage('ifLogin')
           // removeStorage('token')
           // delCookie('token')
           this.$router.push("/main");
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+        // })
+        // .finally(() => {
+        //   this.loading = false;
+        // });
     },
     getMainFunctionButtonList() {
       this.mainFunctionButtonList = [

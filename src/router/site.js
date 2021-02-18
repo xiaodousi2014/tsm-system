@@ -19,12 +19,12 @@ export default {
             meta: [{ name: '使用计划', parentName: '场地维护', path: '/use-plan' }],
             component: () => import('@/views/site/usePlan/index.vue'),
         },
-        {
-            path: 'location/display',
-            name: 'site-managemer-location-display',
-            meta: [{ name: '位置显示', parentName: '场地维护', path: '/location-display' }],
-            component: () => import('@/views/site/locationDisplay/index.vue'),
-        },
+        // {
+        //     path: 'location/display',
+        //     name: 'site-managemer-location-display',
+        //     meta: [{ name: '位置显示', parentName: '场地维护', path: '/location-display' }],
+        //     component: () => import('@/views/site/locationDisplay/index.vue'),
+        // },
         {
             path: 'training/base',
             name: 'site-managemer-training-base',

@@ -4,6 +4,14 @@ import Http from '../utils/axios'
 const rt = 'http://24992uu588.qicp.vip'
 import { SERVICE_URL } from '@/api/index'
 export default {
+    // 计划删除
+    deleteListPlan(params) {
+        return Http.delete(`${SERVICE_URL}/site/schedule`, params)
+    },
+    // 计划删除
+    modifyPlan(params) {
+        return Http.put(`${SERVICE_URL}/site/schedule`, params)
+    },
     // 删除附件
     deletefile(query) {
         return Http.delete(`${SERVICE_URL}/common/deletefile`, query)

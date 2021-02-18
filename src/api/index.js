@@ -9,6 +9,6 @@
 // const rt2 = 'http://121.5.2.69:8190/' 
 
 // 服务器地址
-export const SERVICE_URL = 'http://127.0.0.1:8090'
+export const SERVICE_URL = 'http://112.254.224.210:8190'
 
 
