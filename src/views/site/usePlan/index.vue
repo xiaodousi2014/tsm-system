@@ -1,44 +1,64 @@
 <template>
     <div class="user_plan">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-            <div class="user_plan_day" v-if="isList">
+            <div class="user_plan_day">
                 <div style="text-align: right;margin-top: -20px">
-                    <el-button class="btnSty" @click="onCreate()">新增</el-button>
-                    <el-button class="btnSty" @click="onEdit()">编辑</el-button>
-                    <el-button class="btnSty" @click="onDelete()">删除</el-button>
-                    <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
-                    <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
-                    <el-button type="primary" @click="dayListTable()">列表显示</el-button>
-                    <el-button type="primary" @click="dayListTable('default')">汇总图显示</el-button>
+                    <el-button :type="primary && 'primary'" @click="dayListTable()">列表显示</el-button>
+                    <el-button :type="!primary && 'primary'" @click="dayListTable('default')">汇总图显示</el-button>
+
+                    <div v-if="isList">
+                        <el-button class="btnSty" @click="onCreate()">新增</el-button>
+                        <el-button class="btnSty" @click="onEdit()">编辑</el-button>
+                        <el-button class="btnSty" @click="onDelete()">删除</el-button>
+                        <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
+                        <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
+                    </div>
                 </div>
 
-                <custom-table-select :list="tableAllIist"></custom-table-select>
-                <custom-table :tableAllIist="tableAllIist" :tableData="tableData" @selectTableList="selectTableList" @getAttachFile="getAttachFile"></custom-table>
-                <!-- 分页 -->
-                <div class="pagination">
-                    <Pagination ref="Pagination" @getSizeChange="getSizeChange" @getCurrentChange="getCurrentChange" :pagination="query" :total="total" />
+                <div v-if="isList">
+                    <custom-table-select :list="tableAllIist"></custom-table-select>
+                    <custom-table :tableAllIist="tableAllIist" :tableData="tableData" @selectTableList="selectTableList" @getAttachFile="getAttachFile"></custom-table>
+                    <!-- 分页 -->
+                    <div class="pagination">
+                        <Pagination ref="Pagination" @getSizeChange="getSizeChange" @getCurrentChange="getCurrentChange" :pagination="query" :total="total" />
+                    </div>
                 </div>
             </div>
 
             <el-tab-pane label="日计划" name="day">
                 <div class="user_plan_day">
                     <div class="user_plan_day_default_table" v-if="!isList">
-                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
-                            <template v-for="(item, index) in tableDataDefaultColumn">
-                                <el-table-column header-align="center" :key="index" :prop="item.code" :label="item.name"> </el-table-column>
+                        <custom-table :tableData="tableData2"></custom-table>
+
+                        <el-table id="el-table" style="width: 100%" :data="tableData2">
+                            <!-- 动态循环的列表 -->
+                            <template v-for="(item, index) in tableData2">
+                                <el-table-column v-if="item.display && item.favorate && item.type != 'attachment'" :key="index" :prop="item.name" :label="item.comment" :width="item.comment.length * 24 + 'px'">
+                                    <template slot-scope="scope">
+                                        {{ setArrayName(scope.row, item) }}
+                                    </template>
+                                </el-table-column>
+                                <el-table-column v-if="item.display && item.favorate && item.type == 'attachment'" :key="index" :prop="item.name" :label="item.comment" width="">
+                                    <template slot-scope="scope">
+                                        <!-- {{setAttachment(scope.row, item)}} -->
+                                        <div v-for="(attach, index) in setAttachment(scope.row, item)" :key="index">
+                                            <a href="javascript:void(0)" @click="getAttachFile(attach, scope.row)">{{ attach }}</a>
+                                        </div>
+                                    </template>
+                                </el-table-column>
                             </template>
                         </el-table>
                     </div>
-                    <div class="user_plan_day_total_table">
-                        <!-- <custom-table-select :list="tableAllIist"></custom-table-select>
-                        <custom-table :tableAllIist="tableAllIist" :tableData="tableData"></custom-table> -->
-                    </div>
+                    <!-- <div class="user_plan_day_total_table">
+                        <custom-table-select :list="tableAllIist"></custom-table-select>
+                        <custom-table :tableAllIist="tableAllIist" :tableData="tableData"></custom-table>
+                    </div> -->
                 </div>
             </el-tab-pane>
             <el-tab-pane label="周计划" name="week">
                 <div class="user_plan_week">
                     <div class="user_plan_day_default_table" v-if="!isList">
-                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass" :span-method="objectSpanMethod">
+                        <!-- <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass" :span-method="objectSpanMethod">
                             <el-table-column prop="a" label="使用场地" width="180"> </el-table-column>
                             <el-table-column prop="b" label="星期一"> </el-table-column>
                             <el-table-column prop="c" label="星期二"> </el-table-column>
@@ -48,7 +68,8 @@
                             <el-table-column prop="g" label="星期六"> </el-table-column>
                             <el-table-column prop="h" label="星期日"> </el-table-column>
                             <el-table-column prop="i" label="本周使用时间（H）"> </el-table-column>
-                        </el-table>
+                        </el-table> -->
+                        <custom-table :tableData="tableData2"></custom-table>
                     </div>
                 </div>
             </el-tab-pane>
@@ -115,6 +136,7 @@ export default {
     },
     data() {
         return {
+            primary: true,
             infoType: 'd_training_site_schedule',
             userPlanUploadMode: false,
             isList: true,
@@ -138,6 +160,7 @@ export default {
             searchList: [],
             tableData: [],
             tableAllIist: [],
+            tableData2: [],
         }
     },
     methods: {
@@ -175,6 +198,8 @@ export default {
             let params = JSON.parse(JSON.stringify(this.multipleSelectionInfo))
 
             params.site_type = this.infoType
+            params.site_id = params.id
+
             Http.modifyPlan(params)
                 .then((res) => {
                     if (res.code == '0000') {
@@ -246,7 +271,12 @@ export default {
         dayListTable(val) {
             if (val) {
                 this.isList = false
+                this.primary = false
+                this.activeName = 'day'
+
+                this.getScheduleList('day')
             } else {
+                this.primary = true
                 this.activeName = ''
                 this.isList = true
             }
@@ -255,6 +285,21 @@ export default {
         handleClick(tab, event) {
             console.log(tab, event)
             this.isList = false
+
+            this.getScheduleList(tab.name)
+        },
+        getScheduleList(type) {
+            Http.scheduleList({
+                schedule: type,
+            })
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.tableData2 = res.data.reachList
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
         },
         getSitCommonList() {
             Http.getSitCommonList({
@@ -334,7 +379,7 @@ export default {
             this.createModal = false
 
             if (flag) {
-                this.getSitCommonData();
+                this.getSitCommonData()
             }
         },
         getCurrentChange(val) {

@@ -7,6 +7,7 @@
             <el-button class="btnSty" @click="onCreate()">新增</el-button>
             <el-button class="btnSty" @click="onEdit()">编辑</el-button>
             <el-button class="btnSty" @click="onDelete()">删除</el-button>
+            <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
             <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
             <el-button class="btnSty" @click="onExport()">导出</el-button>
             <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
@@ -329,6 +330,9 @@ export default {
                 .catch((res) => {
                     this.$message.error(res.msg || '系统异常')
                 })
+        },
+        onTemplateDown() {
+            window.open(`${process.env.VUE_APP_API_URL}/common/attachment/download_TemplateFile?infoType=${this.infoType}`)
         },
     },
     created() {},

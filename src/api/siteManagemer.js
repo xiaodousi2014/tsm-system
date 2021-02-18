@@ -4,6 +4,10 @@ import Http from '../utils/axios'
 const rt = 'http://24992uu588.qicp.vip'
 import { SERVICE_URL } from '@/api/index'
 export default {
+    // 计划图标列表
+    scheduleList(params) {
+        return Http.post(`${SERVICE_URL}/site/schedule/query`, params)
+    },
     // 计划删除
     deleteListPlan(params) {
         return Http.delete(`${SERVICE_URL}/site/schedule`, params)
