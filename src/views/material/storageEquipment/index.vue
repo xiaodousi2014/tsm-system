@@ -690,7 +690,7 @@ export default {
         let query = {
           material_id: item.id,
           material_name: item.name,
-          receiver: "测试用户",
+          receiver: sessionStorage.getItem("loginName"),
           quantity: "1",
           maxNumber: item.inventory
         };
@@ -701,7 +701,7 @@ export default {
         let query = {
           material_id: item.id,
           material_name: item.name,
-          borrower: "测试用户",
+          borrower: sessionStorage.getItem("loginName"),
           quantity: "1",
           borrower_org: "",
           borrower_time: "",
@@ -718,7 +718,7 @@ export default {
         let query = {
           material_id: item.id,
           material_name: item.name,
-          abolish_man: "测试用户",
+          abolish_man: sessionStorage.getItem("loginName"),
           quantity: "1",
           maxNumber: item.inventory
         };

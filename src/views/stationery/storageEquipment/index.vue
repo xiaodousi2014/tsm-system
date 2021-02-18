@@ -702,7 +702,7 @@ export default {
         let query = {
           stationery_id: item.id,
           stationery_name: item.stationery_name,
-          receiver: "测试用户",
+          receiver: sessionStorage.getItem("loginName"),
           quantity: "1",
           maxNumber: item.inventory,
            locate_site: "",
@@ -715,7 +715,7 @@ export default {
         let query = {
           stationery_id: item.id,
           stationery_name: item.stationery_name,
-          borrower: "测试用户",
+          borrower: sessionStorage.getItem("loginName"),
           quantity: "1",
           borrower_org: "",
           borrower_time: "",
@@ -732,7 +732,7 @@ export default {
         let query = {
           stationery_id: item.id,
           stationery_name: item.stationery_name,
-          abolish_man: "测试用户",
+          abolish_man: sessionStorage.getItem("loginName"),
           quantity: "1",
           maxNumber: item.inventory
         };

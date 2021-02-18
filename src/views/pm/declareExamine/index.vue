@@ -195,7 +195,7 @@ export default {
         let query = {
           device_id: item.id,
           device_name: item.name,
-          receiver: '测试用户',
+          receiver: sessionStorage.getItem("loginName"),
           quantity: '1',
           locate_site: '',
           receiver_tel: '',
@@ -207,7 +207,7 @@ export default {
         let query = {
           device_id: item.id,
           device_name: item.name,
-          borrower: '测试用户',
+          borrower: sessionStorage.getItem("loginName"),
           quantity: '1',
           locate_site: '',
           borrower_org: '',
