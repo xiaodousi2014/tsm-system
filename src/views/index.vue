@@ -549,7 +549,7 @@ export default {
   }
 }
 .el-aside {
-  height: 100%;
+   height: calc(100% - 68px);
   background-color: rgb(0, 21, 41);
   color: #333;
   text-align: left;
@@ -569,7 +569,7 @@ export default {
     font-size: 14px;
   }
   .el-menu {
-    height: calc(100% - 60px);
+   height: 100%;
     border-right: none;
     width: 208px;
   }
@@ -652,11 +652,11 @@ body > .el-container {
   background-color: #1890ff !important;
 }
 /deep/.el-submenu__title {
-  line-height: 40px;
-  height: 40px;
+  line-height: 50px;
+  height: 50px;
   // border-radius: 8px;
   padding: 0;
-  margin: 10px 0;
+  // margin: 10px 0;
   color: #fff !important;
   padding-left: 10px !important;
 }

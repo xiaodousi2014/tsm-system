@@ -42,8 +42,23 @@
       <el-button class="btnSty" @click="onCanBorrow()"
         >设置可借</el-button
       >
+     <el-button class="btnSty" @click="preferencesModal = true"
+        >偏好设置</el-button
+      >
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <el-dialog
+      title="偏好设置"
+      v-if="preferencesModal"
+      :visible.sync="preferencesModal"
+      width="800px"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
+    >
+      <commonon-preferences
+        @close="close"
+        :infoType="infoType"
+      ></commonon-preferences>
+    </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -311,6 +326,7 @@ import customEdit from "@/components/customEdit";
 import customUploadFilePut from '@/components/customUploadFilePut2'
 import customUploadFileList from "../../../components/customUploadFileList";
 import customUploadFileListAgain from '../../../components/customUploadFileListAgain.vue';
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -323,7 +339,8 @@ export default {
     customEdit,
     customUploadFileList,
     customUploadFileListAgain,
-    customUploadFilePut
+    customUploadFilePut,
+    commononPreferences
   },
   data() {
     return {
@@ -363,7 +380,9 @@ export default {
         infoType: 't_equipment',
         field: 'attachment',
         isMultiFiles: true,
-      }
+      },
+       preferencesModal: false,
+      infoType: 't_equipment',
     };
   },
   mounted() {
@@ -463,6 +482,7 @@ export default {
       this.upLoadQuery.infoType = 't_equipment';
     },
     close() {
+      this.preferencesModal = false;
       this.editModal = false;
       this.createModal = false;
       this.exportModal = false;

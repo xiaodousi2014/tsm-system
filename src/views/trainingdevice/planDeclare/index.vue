@@ -13,8 +13,12 @@
       <el-button class="btnSty" @click="onRevoke()"
         >撤销操作</el-button
       >
+      <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+
+       <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+        </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -46,6 +50,7 @@ import customSearch from "../../../components/customSearch";
 import Http from "@/api/trainingdeviceManage";
 import customTable from "../../../components/customTable";
 import customUploadFile from "../../../components/customUploadFile";
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -54,6 +59,7 @@ export default {
     customTable,
     Pagination,
     customUploadFile,
+    commononPreferences
   },
   data() {
     return {
@@ -73,6 +79,8 @@ export default {
       exportModal: false,
       fileUrl: `${process.env.VUE_APP_API_URL}/trainingdevice/plan/import`,
       searchModal: false,
+      preferencesModal:false,
+      infoType: 't_trainingdevice_plan',
     };
   },
   mounted() {
@@ -132,6 +140,7 @@ export default {
       this.exportModal = true;
     },
     close() {
+      this.preferencesModal = false;
       this.exportModal = false;
       this.getPlanList();
       // this.search();

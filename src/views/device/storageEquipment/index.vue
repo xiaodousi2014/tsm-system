@@ -42,8 +42,14 @@
       <el-button class="btnSty" @click="onCanBorrow()"
         >设置可借</el-button
       >
+       <el-button class="btnSty" @click="onDownewm()"
+        >二维码下载</el-button
+      >
+    <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+      <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType" @closeSave='close'></commonon-preferences>
+        </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -306,6 +312,7 @@ import customUploadFile from "@/components/customUploadFile";
 import customCreate from "@/components/customCreate";
 import customEdit from "@/components/customEdit";
 import customUploadFileList from "../../../components/customUploadFileList";
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -316,7 +323,8 @@ export default {
     customUploadFile,
     customCreate,
     customEdit,
-    customUploadFileList
+    customUploadFileList,
+    commononPreferences
   },
   data() {
     return {
@@ -354,13 +362,18 @@ export default {
         infoType: 't_device',
         field: 'attachment',
         isMultiFiles: true,
-      }
+      },
+       preferencesModal: false,
+      infoType: 't_device',
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
+     onPreferences() {
+            this.preferencesModal = true
+        },
      getAttachFile(query) {
        const link = document.createElement("a");
       Http.getAttachFile({id:query.row.id, infoType: "t_device" , file: query.file})
@@ -454,6 +467,7 @@ export default {
       this.upLoadQuery.infoType = 't_device';
     },
     close() {
+      this.preferencesModal = false;
       this.editModal = false;
       this.createModal = false;
       this.exportModal = false;
@@ -484,6 +498,17 @@ export default {
         return;
       }
       window.open(`${process.env.VUE_APP_API_URL}/common/attachment/export?ids=${this.multipleSelection.toString()}&&infoType=t_device`)
+    },
+    onDownewm() {
+       if (!this.multipleSelection.length) {
+        this.$message.warning("请选择要操作的数据列！");
+        return;
+      }
+       if (this.multipleSelection.length > 1) {
+        this.$message.warning("只能选择单个数据列操作！");
+        return;
+      }
+      window.open(`${process.env.VUE_APP_API_URL}/device/qrcode?id=${this.dataList.id}`)
     },
     // 报废
     async onScrap() {

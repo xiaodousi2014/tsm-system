@@ -18,7 +18,7 @@ export default {
      * @param {params} params 值
      */
     preferencesSave(params) {
-        return Http.post(`${SERVICE_URL}/common/favorite`, params)
+        return Http.put(`${SERVICE_URL}/common/favorite`, params)
     },
     //查询属性数据
     /**

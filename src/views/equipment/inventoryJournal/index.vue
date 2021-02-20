@@ -3,19 +3,30 @@
     <!-- 表格 -->
     <!--搜索表单-->
     <div class="table-button">
-      <el-button class="btnSty" @click="onExport()"
-        >导出</el-button
-      >
-      <el-button class="btnSty" @click="onUploadFile()"
-        >上传盘点结果</el-button
+      <el-button class="btnSty" @click="onExport()">导出</el-button>
+      <el-button class="btnSty" @click="onUploadFile()">上传盘点结果</el-button>
+      <el-button class="btnSty" @click="preferencesModal = true"
+        >偏好设置</el-button
       >
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <el-dialog
+      title="偏好设置"
+      v-if="preferencesModal"
+      :visible.sync="preferencesModal"
+      width="800px"
+      :close-on-press-escape="false"
+      :close-on-click-modal="false"
+    >
+      <commonon-preferences
+        @close="close"
+        :infoType="infoType"
+      ></commonon-preferences>
+    </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
       @selectTableList="selectTableList"
-       @getAttachFile='getAttachFile'
+      @getAttachFile="getAttachFile"
     ></custom-table>
     <!-- 分页 -->
     <div class="pagination">
@@ -39,6 +50,7 @@ import customSearch from "../../../components/customSearch";
 import Http from "@/api/equipmentManage";
 import customTable from "../../../components/customTable";
 import customUploadFile from "@/components/customUploadFile";
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -47,6 +59,7 @@ export default {
     customTable,
     Pagination,
     customUploadFile,
+    commononPreferences
   },
   data() {
     return {
@@ -64,27 +77,33 @@ export default {
       multipleSelection: [],
       exportModal: false,
       fileUrl: "",
+       preferencesModal: false,
+      infoType: 't_equipment_check',
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
-     getAttachFile(query) {
-       const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_equipment_check" , file: query.file})
-      .then((res) => {
-        let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
+    getAttachFile(query) {
+      const link = document.createElement("a");
+      Http.getAttachFile({
+        id: query.row.id,
+        infoType: "t_equipment_check",
+        file: query.file,
+      })
+        .then((res) => {
+          let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);
           link.href = objectUrl;
           link.download = query.file;
           link.click();
           URL.revokeObjectURL(objectUrl);
-      })
-      .catch((res) => {
-        debugger
-        this.$message.error(res.msg || "系统异常");
-      });
+        })
+        .catch((res) => {
+          debugger;
+          this.$message.error(res.msg || "系统异常");
+        });
     },
     // 上传附件
     onUploadFile() {
@@ -100,6 +119,7 @@ export default {
       this.exportModal = true;
     },
     close() {
+      this.preferencesModal = false;
       this.exportModal = false;
       this.getTableList();
       // this.search();
@@ -114,8 +134,9 @@ export default {
         this.$message.warning("只能选择单个数据列导出！");
         return;
       }
-      window.open(`${process.env.VUE_APP_API_URL}/equipment/check/export?id=${this.multipleSelection[0].id}`)
-     
+      window.open(
+        `${process.env.VUE_APP_API_URL}/equipment/check/export?id=${this.multipleSelection[0].id}`
+      );
     },
     getAllField() {
       Http.getInventoryTitle()

@@ -2,7 +2,7 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+    <!-- <custom-table-select :list="tableAllIist"></custom-table-select> -->
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"

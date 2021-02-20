@@ -4,7 +4,7 @@
             <el-row :gutter="10" style="margin-top: 20px" justify="start">
                 <div v-for="item in searchList" :key="item.name">
                     <el-col style="margin-top: 20px" :md="8" :sm="12" :xs="24" v-if="item.display">
-                        <el-checkbox v-model="form[item.name]">{{ item.comment }}</el-checkbox>
+                        <el-checkbox v-model="item.favorate">{{ item.comment }}</el-checkbox>
                     </el-col>
                 </div>
             </el-row>
@@ -53,13 +53,13 @@ export default {
                 })
         },
         savePreferences() {
-            Object.keys(this.form).map((key) => {
-                this.searchList.forEach((e) => {
-                    if (key == e.name) {
-                        e.display = this.form[key]
-                    }
-                })
-            })
+            // Object.keys(this.form).map((key) => {
+            //     this.searchList.forEach((e) => {
+            //         if (key == e.name) {
+            //             e.display = this.form[key]
+            //         }
+            //     })
+            // })
 
             let query = {
                 tbl_name: this.infoType,
@@ -69,7 +69,6 @@ export default {
             Http.preferencesSave(query)
                 .then((res) => {
                     this.$message.success('保存成功')
-
                     this.closeSave()
                 })
                 .catch((res) => {

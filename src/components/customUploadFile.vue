@@ -59,6 +59,9 @@ export default {
       } else {
         this.fileList = [];
         // console.log(res)
+        if(res.msg) {
+        this.$emit('failReason', res.msg);
+        }
         this.$message.error(res.msg|| '系统异常');
       }
     },

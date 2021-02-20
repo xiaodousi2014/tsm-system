@@ -9,8 +9,11 @@
       <el-button type="primary" @click="onUploadFile()"
         >上传附件</el-button
       >
+   <el-button class="btnSty" @click="preferencesModal=true">偏好设置</el-button>
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+      <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+        </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -42,6 +45,7 @@ import customSearch from "../../../components/customSearch";
 import Http from "@/api/deviceManage";
 import customTable from "../../../components/customTable";
 import customUploadFileList from "@/components/customUploadFileList";
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -50,7 +54,8 @@ export default {
     customTable,
     Pagination,
     // customUploadFile,
-    customUploadFileList
+    customUploadFileList,
+    commononPreferences
   },
   data() {
     return {
@@ -77,7 +82,9 @@ export default {
         infoType: 't_device',
         field: 'attachment',
         isMultiFiles: true,
-      }
+      },
+       preferencesModal: false,
+      infoType: 't_device_abolish',
     };
   },
   mounted() {
@@ -124,6 +131,7 @@ export default {
       this.upLoadQuery.infoType = 't_device_abolish';
     },
     close() {
+       this.preferencesModal = false;
       this.exportModal = false;
       this.getTableList();
       // this.search();

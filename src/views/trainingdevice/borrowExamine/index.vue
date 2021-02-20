@@ -83,7 +83,7 @@ export default {
       multipleSelection: [],
       searchModal: false,
        preferencesModal:false,
-      infoType: 't_training_device',
+      infoType: 't_trainingdevice_lent',
     };
   },
   mounted() {

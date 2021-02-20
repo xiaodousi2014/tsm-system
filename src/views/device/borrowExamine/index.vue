@@ -83,13 +83,17 @@ export default {
       multipleSelection: [],
       searchModal: false,
       preferencesModal:false,
-      infoType: 't_device',
+      infoType: 't_device_lent',
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
+     close() {
+      this.preferencesModal = false;
+       this.getTableList();
+    },
         onPreferences() {
             this.preferencesModal = true
         },

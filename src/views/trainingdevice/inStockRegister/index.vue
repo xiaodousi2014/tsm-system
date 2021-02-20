@@ -13,7 +13,7 @@
       <el-button class="btnSty" @click="onUpload()"
         >文件导入</el-button
       >
-      <el-button class="btnSty" v-if="failReason">查看错误信息</el-button>
+      <el-button class="btnSty" v-if="failMsg" @click='failReasonModal = true'>查看错误信息</el-button>
       <el-button class="btnSty"  @click="onRevoke()"
         >撤销操作</el-button
       >
@@ -36,7 +36,15 @@
       />
     </div>
     <el-dialog title="导入" :visible.sync="exportModal" width="500px">
-      <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
+      <custom-upload-file :url="fileUrl" @close="close" @failReason='onfailReason'></custom-upload-file>
+    </el-dialog>
+     <el-dialog title="查看错误信息" :visible.sync="failReasonModal" width="500px">
+       <div>
+         <div>{{failMsg}}</div>
+           <div slot="footer" class="dialog-footer" style="text-align: center;padding-top:40px">
+           <el-button @click="failReasonModal = false">关 闭</el-button>
+           </div>
+       </div>
     </el-dialog>
      <el-dialog title="上传附件" :visible.sync="exportListModal" width="500px">
       <custom-upload-file-list :url="fileUrl" @close="close" :fileList='dataList'></custom-upload-file-list>
@@ -58,6 +66,7 @@ import customTable from "../../../components/customTable";
 import customUploadFile from "../../../components/customUploadFile";
 import customUploadFilePut from "../../../components/customUploadFilePut";
 import customUploadFileList from "../../../components/customUploadFileList";
+import commononPreferences from '@/components/commononPreferences'
 
 export default {
   name: "declareWarehousing",
@@ -68,7 +77,8 @@ export default {
     Pagination,
     customUploadFile,
     customUploadFilePut,
-    customUploadFileList
+    customUploadFileList,
+    commononPreferences
   },
   data() {
     return {
@@ -86,7 +96,8 @@ export default {
         pageNum: 1,
         pageCount: 10,
       },
-      failReason: "",
+      failMsg: "",
+      failReasonModal: false,
       total: 0,
       tableData: [],
       tableAllIist: [],
@@ -98,12 +109,17 @@ export default {
       exportListModal: false,
       dataList: {},
       fileUrl: `${process.env.VUE_APP_API_URL}/trainingdevice/import`,
+      preferencesModal:false,
+      infoType: 't_import_record',
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
+      onfailReason(msg) {
+     this.failMsg = msg;
+    },
     onTemplateDown() {
       window.open(`${process.env.VUE_APP_API_URL}/common/attachment/download_TemplateFile?infoType=t_training_device`)
     },
@@ -145,6 +161,7 @@ export default {
       this.exportPutModal = true;
     },
     close() {
+      this.preferencesModal = false;
       this.exportPutModal = false;
       this.searchModal = false;
       this.exportModal = false;

@@ -14,6 +14,17 @@ export default {
       onTemplateDown(query) {
         return Http.download(`${SERVICE_URL}/common/download_TemplateFile`, query)
     },
+     // 设备登记
+     onListCreateOne(query) {
+        return Http.post(`${SERVICE_URL}/equipment`, query) 
+      },
+        // 设备登记
+     onListCreateTwo(query) {
+        return Http.post(`${SERVICE_URL}/equipment/electronic`, query) 
+      },
+      onListCreateThree(query) {
+        return Http.post(`${SERVICE_URL}/equipment/system`, query) 
+      },
     //计划申报
     getPlanTitle() {
         return Http.get(`${SERVICE_URL}/information/plan/infoType`)

@@ -42,8 +42,12 @@
       <el-button class="btnSty" @click="onCanBorrow()"
         >设置可借</el-button
       >
+      <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+
+       <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+        </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -311,6 +315,7 @@ import customEdit from "@/components/customEdit";
 import customUploadFilePut from '@/components/customUploadFilePut2'
 import customUploadFileList from "../../../components/customUploadFileList";
 import customUploadFileListAgain from '../../../components/customUploadFileListAgain.vue';
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -323,7 +328,8 @@ export default {
     customEdit,
     customUploadFileList,
     customUploadFileListAgain,
-    customUploadFilePut
+    customUploadFilePut,
+    commononPreferences
   },
   data() {
     return {
@@ -363,7 +369,9 @@ export default {
         infoType: 't_training_device',
         field: 'attachment',
         isMultiFiles: true,
-      }
+      },
+         preferencesModal:false,
+      infoType: 't_training_device',
     };
   },
   mounted() {
@@ -372,7 +380,7 @@ export default {
   methods: {
      getAttachFile(query) {
        const link = document.createElement("a");
-      Http.getAttachFile({id:query.row.id, infoType: "t_trainingdevice" , file: query.file})
+      Http.getAttachFile({id:query.row.id, infoType: "t_training_device" , file: query.file})
       .then((res) => {
         let blob = new Blob([res], { type: "application/octet-stream" }); // res就是接口返回的文件流了
           let objectUrl = URL.createObjectURL(blob);
@@ -463,6 +471,7 @@ export default {
       this.upLoadQuery.infoType = 't_training_device';
     },
     close() {
+      this.preferencesModal = false;
       this.editModal = false;
       this.createModal = false;
       this.exportModal = false;

@@ -1,6 +1,6 @@
 <template>
     <div class="content_box">
-        <AttributeCom tableName="d_docs" />
+        <AttributeCom tableName="t_stationery" />
     </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
     mounted() {},
     methods: {
         init() {
-            Common.attrdata('t_stationery_sites').then((res) => {
+            Common.attrdata('t_stationery').then((res) => {
                 if (res.code === '0000' && res.data && res.data.field_data) {
                     this.field_data = res.data.field_data
                 }
@@ -65,7 +65,7 @@ export default {
         },
         submit() {
             let params = {
-                infoType: 't_training_sites',
+                infoType: 't_stationery',
                 field: this.fieldInfo.name,
                 data: this.fieldInfo.itemdata.join(','),
             }

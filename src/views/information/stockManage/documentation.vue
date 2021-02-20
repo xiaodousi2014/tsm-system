@@ -6,6 +6,9 @@
       <el-button  type="primary" @click="searchModal = true"
         >检索</el-button
       >
+      <el-button class="btnSty" @click="onCreate()"
+        >新增</el-button
+      >
       <el-button class="btnSty" @click="onEdit()"
         >编辑</el-button
       >
@@ -15,8 +18,11 @@
       <el-button class="btnSty" @click="onRevoke()"
         >删除记录</el-button
       >
+     <el-button class="btnSty" @click="preferencesModal=true">偏好设置</el-button>
     </div>
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+      <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+        </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -274,6 +280,7 @@ import customTable from "../../../components/customTable";
 import customUploadFile from "@/components/customUploadFile";
 import customCreate from "@/components/customCreate";
 import customEdit from "@/components/customEdit";
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -284,6 +291,7 @@ export default {
     customUploadFile,
     customCreate,
     customEdit,
+    commononPreferences
   },
   data() {
     return {
@@ -313,6 +321,8 @@ export default {
       fileUrl: "",
       multipleSelectionInfo: {},
       searchModal: false,
+        preferencesModal:false,
+      infoType: 't_information',
     };
   },
   mounted() {
@@ -342,7 +352,7 @@ export default {
       this.getTableList();
     },
     listCreate(event) {
-      Http.onListCreate(event)
+      Http.onListCreateOne(event)
         .then((res) => {
           if (res.code == "0000") {
             this.$message.success("创建成功！");
@@ -408,6 +418,7 @@ export default {
       this.exportModal = true;
     },
     close() {
+        this.preferencesModal = false;
       this.editModal = false;
       this.createModal = false;
       this.exportModal = false;
