@@ -210,8 +210,8 @@ import userPlanUpload from './upload'
 
 import Pagination from '@/components/customPagination'
 import Http from '@/api/siteManagemer'
-import customCreate from '@/components/customCreate2'
-import customEdit from '@/components/customEdit2'
+import customCreate from '@/components/customCreate3'
+import customEdit from '@/components/customEdit3'
 
 export default {
     name: 'UsePlan',
@@ -289,9 +289,8 @@ export default {
         monthOptionFun() {},
         listCreate(event) {
             event.t_training_base = this.infoType
-            event.site_type = this.infoType
             event.base_name = ''
-            Http.addData(event)
+            Http.usePlanAdd(event)
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('创建成功！')

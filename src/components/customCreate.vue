@@ -6,7 +6,7 @@
       label-width="150px"
       :model="form"
     >
-      <el-row :gutter="10" style="margin-top: 20px">
+      <el-row :gutter="10">
         <el-col
           :md="8"
           :sm="12"

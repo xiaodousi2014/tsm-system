@@ -64,7 +64,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="4">
-              <div class="grid-content bg9 bg-purple" @click="onRouter('/site/field')">训练场地</div>
+              <div class="grid-content bg9 bg-purple" @click="onRouter('/site/plan')">训练场地</div>
             </el-col>
             <el-col :span="4">
               <div class="grid-content bg10 bg-purple" @click="onRouter('/system/role')">系统管理</div>

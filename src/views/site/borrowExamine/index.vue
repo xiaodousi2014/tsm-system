@@ -88,10 +88,10 @@ export default {
                 return
             }
             if (this.multipleSelection.length > 1) {
-                this.$message.warning('只能选择单个数据列编辑！')
+                this.$message.warning('只能选择单个数据列！')
                 return
             }
-            Http.borrowOperation({ id: this.multipleSelection[0].id, status: 3 })
+            Http.applySite2({ id: this.multipleSelection[0].id, type: 3 })
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('操作成功！')
@@ -109,10 +109,10 @@ export default {
                 return
             }
             if (this.multipleSelection.length > 1) {
-                this.$message.warning('只能选择单个数据列编辑！')
+                this.$message.warning('只能选择单个数据列！')
                 return
             }
-            Http.borrowOperation({ id: this.multipleSelection[0].id, status: 4 })
+            Http.applySite2({ id: this.multipleSelection[0].id, type: 4 })
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('操作成功！')

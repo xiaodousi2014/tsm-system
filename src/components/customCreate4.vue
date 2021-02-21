@@ -2,8 +2,15 @@
     <div id="customSearch">
         <el-form class="search-from" label-position="right" label-width="150px" :model="form">
             <el-row :gutter="10">
+                <el-col :md="8" :sm="12" :xs="24">
+                    <el-form-item label="场地名">
+                        <el-select placeholder="请选择" v-model="form['site_id']" size="small">
+                            <el-option v-for="(list, index) in option2" :key="index" :label="list.site_name" :value="list.id"> </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
                 <el-col :md="8" :sm="12" :xs="24" v-for="item in searchList" :key="item.name">
-                    <el-form-item :label="item.comment" v-if="item.editable && (item.type == 'string' || item.type == 'date' || item.type == 'datetime' || item.type == 'int' || item.type == 'map' || item.type == 'list')">
+                    <el-form-item :label="item.comment" v-if="item.editable && item.name != 'site_name' && (item.type == 'string' || item.type == 'date' || item.type == 'datetime' || item.type == 'int' || item.type == 'map' || item.type == 'list')">
                         <el-input v-if="item.type == 'string'" size="small" v-model="form[item.name]" placeholder="请输入"></el-input>
 
                         <el-date-picker style="width: 100%" v-if="item.type == 'date' || item.type == 'datetime'" v-model="form[item.name]" size="small" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"> </el-date-picker>
@@ -29,24 +36,47 @@
 </template>
 
 <script>
+import Http from '@/api/siteManagemer'
 export default {
-    name: 'customSearch',
+    name: 'customCreate3',
     props: {
         searchList: {
             type: Array,
             default: [],
-        }
+        },
+        infoType: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
             form: {},
+            option2: [],
+            sites: [],
         }
     },
     watch: {},
     mounted() {
         this.form = {}
+
+        this.getName()
     },
     methods: {
+        getName() {
+            Http.scheduleName({
+                site_type: this.infoType,
+            })
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.sites = res.data
+                        this.option2 = res.data
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
         onCancel() {
             this.$emit('close')
         },
@@ -77,13 +107,19 @@ export default {
             return list
         },
         onSumit() {
-            this.searchList.forEach(e => {
+            this.searchList.forEach((e) => {
                 if (!this.form[e.name] && e.type == 'int') {
                     this.form[e.name] = 0
                 } else if (!this.form[e.name]) {
                     this.form[e.name] = ''
                 }
             })
+
+            for (let index = 0; index < this.sites.length; index++) {
+                if (this.sites[index].id == this.form.site_id) {
+                    this.form.site_name = this.sites[index].site_name
+                }
+            }
 
             this.$emit('listCreate', this.form)
         },

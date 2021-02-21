@@ -24,6 +24,9 @@
             <custom-search :searchList="searchList" @Search="Search"></custom-search>
         </el-dialog>
 
+        <el-dialog title="预约申请" v-if="createModal2" :visible.sync="createModal2" width="1100px">
+            <custom-create-user @close="close" :infoType="infoType" :searchList="searchList2" @listCreate="listCreate2"></custom-create-user>
+        </el-dialog>
         <el-dialog title="新增" v-if="createModal" :visible.sync="createModal" width="1100px">
             <custom-create @close="close" :searchList="searchList" @listCreate="listCreate"></custom-create>
         </el-dialog>
@@ -47,6 +50,7 @@ import customTable from '@/components/customTable'
 import customUploadFile from '@/components/customUploadFile'
 import customUploadFilePut from '@/components/customUploadFilePut2'
 import customCreate from '@/components/customCreate2'
+import customCreateUser from '@/components/customCreate4'
 import customEdit from '@/components/customEdit2'
 import commononPreferences from '@/components/commononPreferences'
 export default {
@@ -59,6 +63,7 @@ export default {
         customUploadFile,
         customUploadFilePut,
         customCreate,
+        customCreateUser,
         customEdit,
         commononPreferences,
     },
@@ -81,9 +86,11 @@ export default {
             tableData: [],
             tableAllIist: [],
             searchList: [],
+            searchList2: [],
             multipleSelection: [],
             exportModal: false,
             createModal: false,
+            createModal2: false,
             preferencesModal: false,
             editModal: false,
             exportPutModal: false,
@@ -99,8 +106,31 @@ export default {
         this.getSitCommonList()
 
         this.getSitCommonData()
+
+        this.getSitCommonList2()
     },
     methods: {
+        onSubscribeSite() {
+            this.createModal2 = true
+        },
+        getSitCommonList2() {
+            Http.getSitCommonList({
+                infoType: 'd_training_site_schedule',
+            })
+                .then((res) => {
+                    if (res.code == '0000') {
+                        if (res.data.filter.length) {
+                            let list = res.data.filter.filter((item) => {
+                                return item.display == true
+                            })
+                            this.searchList2 = list
+                        }
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
         onPreferences() {
             this.preferencesModal = true
         },
@@ -168,6 +198,8 @@ export default {
             this.editModal = false
             this.createModal = false
             this.exportModal = false
+
+            this.createModal2 = false
 
             flag && this.getSitCommonData()
         },
@@ -238,6 +270,18 @@ export default {
                 .then((res) => {
                     if (res.code == '0000') {
                         this.$message.success('创建成功！')
+                        this.close(true)
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
+        },
+        listCreate2(event) {
+            Http.subscribeSite(event)
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.$message.success('预约成功！')
                         this.close(true)
                     }
                 })

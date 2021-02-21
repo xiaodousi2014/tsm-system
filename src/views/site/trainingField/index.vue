@@ -145,11 +145,11 @@ export default {
             if (!this.multipleSelection.length) {
                 this.$message.warning('请选择要申请借用场地的数据列！')
                 return
-            }
+            }debugger
             Http.applySite({
                 site_type: this.infoType,
-                site_id: this.infoType,
-                site_name: this.multipleSelectionInfo.name,
+                site_id: this.multipleSelectionInfo.id,
+                site_name: this.multipleSelectionInfo.site_name,
                 create_time: this.multipleSelectionInfo.create_time
             })
                 .then((res) => {
