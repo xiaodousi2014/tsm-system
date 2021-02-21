@@ -10,6 +10,7 @@
             <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
             <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
             <el-button class="btnSty" @click="onExport()">导出</el-button>
+            <el-button class="btnSty" @click="onApplySite()">借用申请</el-button>
             <el-button class="btnSty" @click="onRevoke()">撤销操作</el-button>
             <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
             <el-button type="primary" @click="onUploadFileOther()">上传附件</el-button>
@@ -138,6 +139,29 @@ export default {
             })
             this.multipleSelection = query
             this.multipleSelectionInfo = list[0]
+        },
+        onApplySite() {
+
+            if (!this.multipleSelection.length) {
+                this.$message.warning('请选择要申请借用场地的数据列！')
+                return
+            }
+            Http.applySite({
+                site_type: this.infoType,
+                site_id: this.infoType,
+                site_name: this.multipleSelectionInfo.name,
+                create_time: this.multipleSelectionInfo.create_time
+            })
+                .then((res) => {
+                    if (res.code == '0000') {
+                        this.$message.success('撤销成功！')
+                        this.multipleSelection = []
+                        this.getSitCommonData()
+                    }
+                })
+                .catch((res) => {
+                    this.$message.error(res.msg || '系统异常')
+                })
         },
         // 撤销操作
         onRevoke() {

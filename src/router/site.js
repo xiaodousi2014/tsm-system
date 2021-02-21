@@ -25,6 +25,13 @@ export default {
         //     meta: [{ name: '位置显示', parentName: '场地维护', path: '/location-display' }],
         //     component: () => import('@/views/site/locationDisplay/index.vue'),
         // },
+
+        {
+            path: 'borrow/audit',
+            name: 'site-borrow-examine',
+            meta: [{ name: '借用审核', parentName: '场地维护', path: '/declare-in-stock' }],
+            component: () => import('@/views/site/borrowExamine/index.vue'),
+        },
         {
             path: 'training/base',
             name: 'site-managemer-training-base',

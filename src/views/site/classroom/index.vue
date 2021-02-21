@@ -10,6 +10,7 @@
             <el-button class="btnSty" @click="onTemplateDown()">导入模板下载</el-button>
             <el-button class="btnSty" @click="onUploadFile()">导入</el-button>
             <el-button class="btnSty" @click="onExport()">导出</el-button>
+            <el-button class="btnSty" @click="onSubscribeSite()">预约申请</el-button>
             <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
         </div>
 

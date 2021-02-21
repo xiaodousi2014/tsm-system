@@ -4,7 +4,7 @@ import Http from '../utils/axios'
 const rt = 'http://24992uu588.qicp.vip'
 import { SERVICE_URL } from '@/api/index'
 export default {
-    // 计划图标列表
+    // 计划图表列表
     scheduleList(params) {
         return Http.post(`${SERVICE_URL}/site/schedule/query`, params)
     },
@@ -15,6 +15,18 @@ export default {
     // 计划删除
     modifyPlan(params) {
         return Http.put(`${SERVICE_URL}/site/schedule`, params)
+    },
+    // 预约场地使用
+    subscribeSite(params) {
+        return Http.post(`${SERVICE_URL}/site/schedule/apply`, params)
+    },
+    // 申请借用场地使用
+    applySite(params) {
+        return Http.post(`${SERVICE_URL}/site/schedule/borrow`, params)
+    },
+    // 借用
+    getSitCommonData2(params) {
+        return Http.post(`${SERVICE_URL}/site/schedule/check/query`, params)
     },
     // 删除附件
     deletefile(query) {

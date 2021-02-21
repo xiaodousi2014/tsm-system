@@ -25,76 +25,165 @@
                 </div>
             </div>
 
-            <el-tab-pane label="日计划" name="day">
+            <el-tab-pane label="日计划" name="day" :disabled="isList">
                 <div class="user_plan_day">
                     <div class="user_plan_day_default_table" v-if="!isList">
-                        <custom-table :tableData="tableData2"></custom-table>
-
-                        <el-table id="el-table" style="width: 100%" :data="tableData2">
-                            <!-- 动态循环的列表 -->
-                            <template v-for="(item, index) in tableData2">
-                                <el-table-column v-if="item.display && item.favorate && item.type != 'attachment'" :key="index" :prop="item.name" :label="item.comment" :width="item.comment.length * 24 + 'px'">
-                                    <template slot-scope="scope">
-                                        {{ setArrayName(scope.row, item) }}
-                                    </template>
-                                </el-table-column>
-                                <el-table-column v-if="item.display && item.favorate && item.type == 'attachment'" :key="index" :prop="item.name" :label="item.comment" width="">
-                                    <template slot-scope="scope">
-                                        <!-- {{setAttachment(scope.row, item)}} -->
-                                        <div v-for="(attach, index) in setAttachment(scope.row, item)" :key="index">
-                                            <a href="javascript:void(0)" @click="getAttachFile(attach, scope.row)">{{ attach }}</a>
-                                        </div>
-                                    </template>
-                                </el-table-column>
-                            </template>
+                        <el-table :cell-class-name="cellClassName" border :span-method="arraySpanMethod" class="week_table" style="width: 100%" :data="tableData2">
+                            <el-table-column prop="site_name" label="使用场地" width="200px"></el-table-column>
+                            <el-table-column label="08：00" prop="1">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="09：00">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="09：00" prop="2">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="10：00">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="10：00" prop="3">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="11：00"></el-table-column>
+                            <el-table-column label="11：00" prop="4">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="12：00"></el-table-column>
+                            <el-table-column label="14：00" prop="5">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="15：00"></el-table-column>
+                            <el-table-column label="15：00" prop="6">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="16：00"></el-table-column>
+                            <el-table-column label="16：00" prop="7">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="17：00"></el-table-column>
+                            <el-table-column label="17：00" prop="8">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="18：00"></el-table-column>
+                            <el-table-column label="19：00" prop="9">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="20：00"></el-table-column>
+                            <el-table-column label="20：00" prop="10">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column label="21：00">
+                                <template>{{ '' }}</template>
+                            </el-table-column>
+                            <el-table-column prop="total_lasttime" label="系统建立起使用时间（h）" width="200px"></el-table-column>
+                            <el-table-column prop="year_lasttime" label="今年起场地使用时间（h）" width="200px"></el-table-column>
+                            <el-table-column prop="term_lasttime" label="本学期场地使用时间（h）" width="200px"></el-table-column>
                         </el-table>
                     </div>
-                    <!-- <div class="user_plan_day_total_table">
-                        <custom-table-select :list="tableAllIist"></custom-table-select>
-                        <custom-table :tableAllIist="tableAllIist" :tableData="tableData"></custom-table>
-                    </div> -->
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="周计划" name="week">
+            <el-tab-pane label="周计划" name="week" :disabled="isList">
                 <div class="user_plan_week">
                     <div class="user_plan_day_default_table" v-if="!isList">
-                        <!-- <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass" :span-method="objectSpanMethod">
-                            <el-table-column prop="a" label="使用场地" width="180"> </el-table-column>
-                            <el-table-column prop="b" label="星期一"> </el-table-column>
-                            <el-table-column prop="c" label="星期二"> </el-table-column>
-                            <el-table-column prop="d" label="星期三"> </el-table-column>
-                            <el-table-column prop="e" label="星期四"> </el-table-column>
-                            <el-table-column prop="f" label="星期五"> </el-table-column>
-                            <el-table-column prop="g" label="星期六"> </el-table-column>
-                            <el-table-column prop="h" label="星期日"> </el-table-column>
-                            <el-table-column prop="i" label="本周使用时间（H）"> </el-table-column>
-                        </el-table> -->
-                        <custom-table :tableData="tableData2"></custom-table>
-                    </div>
-                </div>
-            </el-tab-pane>
-            <el-tab-pane label="月计划" name="month">
-                <div class="user_plan_month">
-                    <div class="user_plan_day_default_table" v-if="!isList">
-                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
-                            <el-table-column prop="a" label="使用场地" width="180"> </el-table-column>
-                            <el-table-column prop="b" label="第一周"> </el-table-column>
-                            <el-table-column prop="c" label="第二周"> </el-table-column>
-                            <el-table-column prop="d" label="第三周"> </el-table-column>
-                            <el-table-column prop="e" label="第四周"> </el-table-column>
+                        <el-table :cell-class-name="cellClassName" class="week_table" style="width: 100%" :data="tableData2">
+                            <el-table-column prop="site_name" label="使用场地" width="150px"></el-table-column>
+                            <el-table-column label="星期一" width="50px">
+                                <template>
+                                    <el-table-column prop="1-1" label="上午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="1-2" label="下午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="星期二">
+                                <template>
+                                    <el-table-column prop="2-1" label="上午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="2-2" label="下午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="星期三">
+                                <template>
+                                    <el-table-column prop="3-1" label="上午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="3-2" label="下午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="星期四">
+                                <template>
+                                    <el-table-column prop="4-1" label="上午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="4-2" label="下午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="星期五">
+                                <template>
+                                    <el-table-column prop="5-1" label="上午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="5-2" label="下午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="星期六">
+                                <template>
+                                    <el-table-column prop="6-1" label="上午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="7-2" label="下午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="星期日">
+                                <template>
+                                    <el-table-column prop="7-1" label="上午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                    <el-table-column prop="7-2" label="下午">
+                                        <template>{{ '' }}</template>
+                                    </el-table-column>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="total_lasttime" label="本周使用时间（h）" width="150px"></el-table-column>
                         </el-table>
                     </div>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="学期计划" name="year">
+            <el-tab-pane label="月计划" name="month" :disabled="isList">
+                <div class="user_plan_month">
+                    <div class="user_plan_day_default_table" v-if="!isList">
+                        <el-table :cell-class-name="cellClassName" border class="week_table" style="width: 100%" :data="tableData2">
+                            <el-table-column prop="site_name" label="使用场地" width="200px"></el-table-column>
+                            <template v-for="item in 31">
+                                <el-table-column :key="item" :label="item + '号'" :prop="item + ''"></el-table-column>
+                            </template>
+                            <el-table-column prop="total_lasttime" label="系统建立起使用时间（h）" width="200px"></el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="学期计划" name="term" :disabled="isList">
                 <div class="user_plan_semester">
                     <div class="user_plan_day_default_table" v-if="!isList">
-                        <el-table border id="el-table" style="width: 100%" :data="tableDataDefault" :cell-class-name="rowClass">
-                            <el-table-column prop="a" label="使用场地" width="180"> </el-table-column>
-                            <el-table-column prop="b" label="第一月"> </el-table-column>
-                            <el-table-column prop="c" label="第二月"> </el-table-column>
-                            <el-table-column prop="d" label="第三月"> </el-table-column>
-                            <el-table-column prop="e" label="第四月"> </el-table-column>
+                        <el-table border class="week_table" style="width: 100%" :data="tableData2" :cell-class-name="cellClassName">
+                            <el-table-column prop="site_name" label="使用场地" width="200px"></el-table-column>
+                            <template v-for="(item, index) in termData">
+                                <el-table-column :key="index" :label="monthOption[item]" :prop="item + ''"></el-table-column>
+                            </template>
                         </el-table>
                     </div>
                 </div>
@@ -136,6 +225,20 @@ export default {
     },
     data() {
         return {
+            monthOption: {
+                1: '第一月',
+                2: '第二月',
+                3: '第三月',
+                4: '第四月',
+                5: '第五月',
+                6: '第六月',
+                7: '第七月',
+                8: '第八月',
+                9: '第九月',
+                10: '第十月',
+                11: '第十一月',
+                12: '第十二月',
+            },
             primary: true,
             infoType: 'd_training_site_schedule',
             userPlanUploadMode: false,
@@ -161,9 +264,29 @@ export default {
             tableData: [],
             tableAllIist: [],
             tableData2: [],
+            termData: [],
         }
     },
     methods: {
+        arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+            if (columnIndex == 0 || columnIndex == 21 || columnIndex == 22 || columnIndex == 23) {
+                return
+            }
+            if (columnIndex % 2 === 1) {
+                return [1, 2]
+            }
+            return [1, 0]
+        },
+        cellClassName({ row, column, rowIndex, columnIndex }) {
+            if (column.property == 'site_name' || column.property == 'term_lasttime' || column.property == 'total_lasttime' || column.property == 'year_lasttime') {
+                return ''
+            }
+
+            if (this.tableData2[rowIndex][column.property] > 0) {
+                return 'td_back'
+            }
+        },
+        monthOptionFun() {},
         listCreate(event) {
             event.t_training_base = this.infoType
             event.site_type = this.infoType
@@ -293,9 +416,21 @@ export default {
                 schedule: type,
             })
                 .then((res) => {
-                    if (res.code == '0000') {
-                        this.tableData2 = res.data.reachList
+                    if (res.code != '0000') {
+                        this.tableData2 = []
                     }
+
+                    this.tableData2 = res.data.reachList
+
+                    for (let index = 0; index < this.tableData2.length; index++) {
+                        Object.keys(this.tableData2[index]).map((key) => {
+                            if (!this.tableData2[index][key]) {
+                                this.tableData2[index][key] = ''
+                            }
+                        })
+                    }
+
+                    this.termData = res.data.term
                 })
                 .catch((res) => {
                     this.$message.error(res.msg || '系统异常')
@@ -401,6 +536,15 @@ export default {
 <style>
 .table_td_color {
     background: #67c23a;
+}
+.week_table th,
+.week_table td {
+    text-align: center;
+}
+
+.week_table .td_back {
+    background: #67c23a;
+    color: #000;
 }
 </style>
 <style scoped lang="less">
