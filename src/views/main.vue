@@ -14,12 +14,12 @@
               </el-badge>
 
               <el-tabs v-model="activeName">
-                <el-tab-pane :label="'通知('+message1+')'" :name="1">
+                <el-tab-pane :label="'通知('+message1+')'" name="1">
                   <div style="width:310px;">
                     <messageCom :message_type="1" @getMessageCount="getMessageCount"/>
                   </div>
                 </el-tab-pane>
-                <el-tab-pane :label="'审批('+message2+')'" :name="2">
+                <el-tab-pane :label="'审批('+message2+')'" name="2">
                   <div style="width:310px;">
                     <messageCom :message_type="2" @getMessageCount="getMessageCount"/>
                   </div>
@@ -167,7 +167,7 @@ export default {
   components: { dropMenuOnUser,messageCom },
   data() {
     return {
-      activeName: 1,
+      activeName: '1',
       message1: 0,
       message2: 0,
       dateTime: "", //获取当前时间
