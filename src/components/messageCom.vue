@@ -16,7 +16,7 @@ export default {
   name: "messageCom",
   props: {
     message_type:{
-      type: Number,
+      type: [Number, String],
       default: 1, // 1通知 2消息
     }
   },

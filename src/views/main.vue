@@ -5,30 +5,26 @@
         <div class="home-title">教学保障管理系统</div>
         <div>
           <div class="home-name">
-            <el-popover
-                placement="bottom-end"
-                width="340"
-                trigger="hover">
+            <el-popover placement="bottom-end" width="340" trigger="hover">
               <el-badge is-dot class="isdots" :hidden="message1==0&&message2==0" slot="reference">
-                <i class="el-icon-bell iconfont"/>
+                <i class="el-icon-bell iconfont" />
               </el-badge>
 
               <el-tabs v-model="activeName">
                 <el-tab-pane :label="'通知('+message1+')'" name="1">
                   <div style="width:310px;">
-                    <messageCom :message_type="1" @getMessageCount="getMessageCount"/>
+                    <messageCom :message_type="1" @getMessageCount="getMessageCount" />
                   </div>
                 </el-tab-pane>
                 <el-tab-pane :label="'审批('+message2+')'" name="2">
                   <div style="width:310px;">
-                    <messageCom :message_type="2" @getMessageCount="getMessageCount"/>
+                    <messageCom :message_type="2" @getMessageCount="getMessageCount" />
                   </div>
                 </el-tab-pane>
               </el-tabs>
             </el-popover>
-            <div class="name">
-              刘教官<br/>{{dateTime}}
-            </div>
+
+            <span class="login-name">刘教官 {{dateTime}}</span>
             <!-- <div class="name">2020/12/27 登录</div> -->
             <div class="logined_icon">
               <dropMenuOnUser></dropMenuOnUser>
@@ -40,115 +36,55 @@
         <div class="login-list">
           <el-row :gutter="20">
             <el-col :span="8">
-              <div
-                class="grid-content bg1 bg-purple"
-                @click="onRouter('/doc/overview')"
-              >
-                法规知识
-              </div>
+              <div class="grid-content bg1 bg-purple" @click="onRouter('/doc/overview')">法规知识</div>
             </el-col>
             <el-col :span="8">
-              <div
-                class="grid-content bg2 bg-purple"
-                @click="onRouter('/pm/record')"
-              >
-                项目管理
-              </div>
+              <div class="grid-content bg2 bg-purple" @click="onRouter('/pm/record')">项目管理</div>
             </el-col>
             <el-col :span="4">
-              <div
-                class="grid-content bg3 bg-purple"
-                @click="onRouter('/device/plan')"
-              >
-                教学设备
-              </div>
+              <div class="grid-content bg3 bg-purple" @click="onRouter('/device/plan')">教学设备</div>
             </el-col>
             <el-col :span="4">
-              <div
-                class="grid-content bg4 bg-purple"
-                @click="onRouter('/trainingdevice/plan')"
-              >
-                模拟器械
-              </div>
+              <div class="grid-content bg4 bg-purple" @click="onRouter('/trainingdevice/plan')">模拟器械</div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="8">
-              <div
-                class="grid-content bg5 bg-purple"
-                @click="onRouter('/material/plan')"
-              >
-                教材管理
-              </div>
+              <div class="grid-content bg5 bg-purple" @click="onRouter('/material/plan')">教材管理</div>
             </el-col>
             <el-col :span="8">
-              <div
-                class="grid-content bg6 bg-purple"
-                @click="onRouter('/maps/plan')"
-              >
-                地图管理
-              </div>
+              <div class="grid-content bg6 bg-purple" @click="onRouter('/maps/plan')">地图管理</div>
             </el-col>
             <el-col :span="4">
-              <div
-                class="grid-content bg7 bg-purple"
-                @click="onRouter('/stationery/plan')"
-              >
-                易耗品管理
-              </div>
+              <div class="grid-content bg7 bg-purple" @click="onRouter('/stationery/plan')">易耗品管理</div>
             </el-col>
             <el-col :span="4">
-              <div
-                class="grid-content bg8 bg-purple"
-                @click="onRouter('/equipment/record')"
-              >
-                保障设备
-              </div>
+              <div class="grid-content bg8 bg-purple" @click="onRouter('/equipment/record')">保障设备</div>
             </el-col>
           </el-row>
           <el-row :gutter="20">
             <el-col :span="4">
-              <div
-                class="grid-content bg9 bg-purple"
-                @click="onRouter('/site/plan')"
-              >
-                训练场地
-              </div>
+              <div class="grid-content bg9 bg-purple" @click="onRouter('/site/field')">训练场地</div>
             </el-col>
             <el-col :span="4">
-              <div
-                class="grid-content bg10 bg-purple"
-                @click="onRouter('/system/role')"
-              >
-                系统管理
-              </div>
+              <div class="grid-content bg10 bg-purple" @click="onRouter('/system/role')">系统管理</div>
             </el-col>
             <el-col :span="8">
-              <div
-                class="grid-content bg11 bg-purple"
-                @click="onRouter('/baseData/student')"
-              >
-                基础信息
-              </div>
+              <div class="grid-content bg11 bg-purple" @click="onRouter('/baseData/student')">基础信息</div>
             </el-col>
             <el-col :span="8">
-              <div
-                class="grid-content bg12 bg-purple"
-                @click="onRouter('/information/plan')"
-              >
-                信息资源
-              </div>
+              <div class="grid-content bg12 bg-purple" @click="onRouter('/information/plan')">信息资源</div>
             </el-col>
           </el-row>
         </div>
-<!--        <div>-->
-<!--          <div class="infomation">重要通知-->
-<!--            <messageCom :message_type="1" @getMessageCount="null"/>-->
-<!--          </div>-->
-<!--          <div class="infomation content-g">消息管理-->
-<!--            <messageCom :message_type="2" @getMessageCount="null"/>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div>-->
+        <!--          <div class="infomation">重要通知-->
+        <!--            <messageCom :message_type="1" @getMessageCount="null"/>-->
+        <!--          </div>-->
+        <!--          <div class="infomation content-g">消息管理-->
+        <!--            <messageCom :message_type="2" @getMessageCount="null"/>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
       <div class="bottom-name">中国人民解放军陆军军事交通学院汽车士官学校</div>
     </div>
@@ -157,14 +93,14 @@
 <script>
 import Http from "../api/api";
 import dropMenuOnUser from "../components/dropMenu.vue";
-import messageCom from '@/components/messageCom'
+import messageCom from "@/components/messageCom";
 
 import router from "@/router/index";
 import Common from "@/api/common";
 
 export default {
   name: "main-list",
-  components: { dropMenuOnUser,messageCom },
+  components: { dropMenuOnUser, messageCom },
   data() {
     return {
       activeName: '1',
@@ -173,29 +109,29 @@ export default {
       dateTime: "", //获取当前时间
       form: {
         name: "",
-        password: "",
+        password: ""
       },
-      mainList: [],
+      mainList: []
     };
   },
   created() {
     this.getMainList();
     // 获取当前时间
     this.getCurrentTime();
-    this.getMessageCount()
+    this.getMessageCount();
   },
   methods: {
     getMessageCount() {
-      Common.queryMessageCount(1).then((res)=>{
-        if(res.code==='0000'){
-          this.message1 = res.data
+      Common.queryMessageCount(1).then(res => {
+        if (res.code === "0000") {
+          this.message1 = res.data;
         }
-      })
-      Common.queryMessageCount(2).then((res)=>{
-        if(res.code==='0000'){
-          this.message2 = res.data
+      });
+      Common.queryMessageCount(2).then(res => {
+        if (res.code === "0000") {
+          this.message2 = res.data;
         }
-      })
+      });
     },
     // 获取当前时间
     getCurrentTime() {
@@ -235,66 +171,66 @@ export default {
         {
           id: 1,
           name: "法规知识",
-          path: "index",
+          path: "index"
         },
         {
           id: 2,
           name: "项目管理",
-          path: "index",
+          path: "index"
         },
         {
           id: 3,
           name: "教学设备",
-          path: "index",
+          path: "index"
         },
         {
           id: 4,
           name: "模拟器械",
-          path: "index",
+          path: "index"
         },
         {
           id: 5,
           name: "教材管理",
-          path: "index",
+          path: "index"
         },
         {
           id: 6,
           name: "地图管理",
-          path: "index",
+          path: "index"
         },
         {
           id: 7,
           name: "易耗品管理",
-          path: "index",
+          path: "index"
         },
         {
           id: 8,
           name: "教学装备",
-          path: "index",
+          path: "index"
         },
         {
           id: 9,
           name: "训练场地",
-          path: "index",
+          path: "index"
         },
         {
           id: 10,
           name: "系统管理",
-          path: "index",
+          path: "index"
         },
         {
           id: 11,
           name: "基础信息",
-          path: "index",
+          path: "index"
         },
         {
           id: 12,
           name: "信息资源",
-          path: "index",
-        },
+          path: "index"
+        }
       ];
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped lang="less">
@@ -332,11 +268,11 @@ export default {
   height: 51px;
   display: inline-block;
 }
-.name {
+.login-name {
   display: inline-block;
   width: 140px;
-  height: 51px;
-  line-height: 25px;
+  // height: 51px;
+  // line-height: 25px;
   text-align: right;
 }
 
@@ -344,8 +280,8 @@ export default {
   width: 46px;
   float: right;
   margin-left: 8px;
-  height: 130px;
-
+  margin-top: 12px;
+  height: 130px; 
   text-align: center;
 }
 
@@ -464,12 +400,12 @@ export default {
 .content-g {
   margin-top: 20px;
 }
-.isdots{
+.isdots {
   height: 51px;
   line-height: 51px;
   width: 20px;
   margin-right: 20px;
-  i{
+  i {
     font-size: 22px;
   }
 }

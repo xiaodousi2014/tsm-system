@@ -84,7 +84,7 @@
             >
               <el-tab-pane
                 :label="'通知('+message1+')'"
-                :name="1"
+                name="1"
               >
                 <div style="width:310px;">
                   <messageCom
@@ -95,7 +95,7 @@
               </el-tab-pane>
               <el-tab-pane
                 :label="'审批('+message2+')'"
-                :name="2"
+                name="2"
               >
                 <div style="width:310px;">
                   <messageCom
@@ -261,7 +261,7 @@ export default {
   components: { messageCom },
   data() {
     return {
-      activeName: 1,
+      activeName: '1',
       message1: 0,
       message2: 0,
       userName: "", //获取用户信息
