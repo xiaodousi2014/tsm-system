@@ -3,8 +3,8 @@
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <div class="user_plan_day">
                 <div style="text-align: right;margin-top: -20px">
-                    <el-button :type="primary && 'primary'" @click="dayListTable()">列表显示</el-button>
-                    <el-button :type="!primary && 'primary'" @click="dayListTable('default')">汇总图显示</el-button>
+                    <el-button :type="primary ? 'primary' : ''" @click="dayListTable()">列表显示</el-button>
+                    <el-button :type="!primary ? 'primary' : ''" @click="dayListTable('default')">汇总图显示</el-button>
 
                     <div v-if="isList">
                         <el-button class="btnSty" @click="onCreate()">新增</el-button>
