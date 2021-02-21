@@ -8,7 +8,7 @@
                     <el-option v-for="item in tableNameOption" :key="item.value" :label="item.label" :value="item.value"> </el-option>
                 </el-select>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="8" :offset="1">
                 <el-divider content-position="left">可维护属性字段</el-divider>
                 <div v-for="field in field_data" :key="field.name" :class="['field_box', fieldInfo.comment === field.comment && 'field_box_active']" @click="edit(field)">
                     {{ field.comment }}
