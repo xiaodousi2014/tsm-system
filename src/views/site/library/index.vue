@@ -24,10 +24,10 @@
         </el-dialog>
 
         <el-dialog title="新增" v-if="createModal" :visible.sync="createModal" width="1100px">
-            <custom-create @close="close" :searchList="searchList" @listCreate="listCreate"></custom-create>
+            <custom-create @close="close" :searchList="searchList2" @listCreate="listCreate"></custom-create>
         </el-dialog>
         <el-dialog title="编辑" v-if="editModal" :visible.sync="editModal" width="1100px">
-            <custom-edit @close="close" :searchList="searchList" :form="multipleSelectionInfo" @listEdit="listEdit"></custom-edit>
+            <custom-edit @close="close" :searchList="searchList2" :form="multipleSelectionInfo" @listEdit="listEdit"></custom-edit>
         </el-dialog>
         <el-dialog title="导入" :visible.sync="exportModal" width="500px">
             <custom-upload-file :url="fileUrl" @close="close"></custom-upload-file>
@@ -45,8 +45,8 @@ import Http from '@/api/siteManagemer'
 import customTable from '@/components/customTable'
 import customUploadFile from '@/components/customUploadFile'
 import customUploadFilePut from '@/components/customUploadFilePut2'
-import customCreate from '@/components/customCreate2'
-import customEdit from '@/components/customEdit2'
+import customCreate from './customCreate'
+import customEdit from './customEdit'
 import commononPreferences from '@/components/commononPreferences'
 export default {
     name: 'training-base',
@@ -80,6 +80,7 @@ export default {
             tableData: [],
             tableAllIist: [],
             searchList: [],
+            searchList2: [],
             multipleSelection: [],
             exportModal: false,
             createModal: false,
@@ -180,7 +181,11 @@ export default {
                             let list = res.data.filter.filter((item) => {
                                 return item.display == true
                             })
-                            this.searchList = list
+                            let list2 = res.data.filter.filter((item) => {
+                                return item.display == true && item.queryable == true
+                            })
+                            this.searchList = list2
+                            this.searchList2 = list
 
                             this.fileTypeFun(list)
                         }

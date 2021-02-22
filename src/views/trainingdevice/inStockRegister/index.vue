@@ -90,7 +90,7 @@ export default {
             col_type: "string",
             col_name: "data_table",
             indexType: "1",
-            value: "t_training_device",
+            value: "t_import_record",
           },
         ],
         pageNum: 1,
@@ -121,7 +121,7 @@ export default {
      this.failMsg = msg;
     },
     onTemplateDown() {
-      window.open(`${process.env.VUE_APP_API_URL}/common/attachment/download_TemplateFile?infoType=t_training_device`)
+      window.open(`${process.env.VUE_APP_API_URL}/common/attachment/download_TemplateFile?infoType=t_import_record`)
     },
      getAttachFile(query) {
        const link = document.createElement("a");
