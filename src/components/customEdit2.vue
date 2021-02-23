@@ -1,23 +1,62 @@
 <template>
     <div id="customSearch">
-        <el-form class="search-from" label-position="right" label-width="150px" :model="form">
+        <el-form ref="forms" class="search-from" label-position="right" label-width="150px" :model="form">
             <el-row :gutter="10" style="margin-top: 20px">
                 <template v-for="item in searchList">
                     <el-col :md="8" :sm="12" :xs="24" :key="item.name" v-if="item.editable && (item.type == 'string' || item.type == 'date' || item.type == 'datetime' || item.type == 'int' || item.type == 'map' || item.type == 'list')">
-                        <el-form-item :label="item.comment">
-                            <el-input v-if="item.type == 'string'" size="small" v-model="form[item.name]" placeholder="请输入"></el-input>
-
-                            <el-date-picker style="width: 100%" v-if="item.type == 'datetime'" v-model="form[item.name]" type="date" size="small" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :clearable="false"> </el-date-picker>
-
-                            <el-input v-if="item.type == 'int'" type="number" size="small" v-model.number="form[item.name]" placeholder="请输入"></el-input>
-
-                            <el-select placeholder="请选择" v-model.lazy="form[item.name]" size="small" v-if="item.type == 'map'">
+                        <el-form-item
+                            :label="item.comment"
+                            :prop="item.name"
+                            :rules="{
+                                required: true,
+                                message: `请输入${item.comment}`,
+                                trigger: 'blur',
+                            }"
+                            v-if="item.editable && (item.type == 'string' || item.type == 'int')"
+                        >
+                            <el-input v-if="item.type == 'string'" size="small" v-model="form[item.name]" placeholder="请输入"> ></el-input>
+                            <el-input v-if="item.type == 'int'" type="number" size="small" v-model.number="form[item.name]" placeholder="请输入"> ></el-input>
+                        </el-form-item>
+                        <el-form-item
+                            :label="item.comment"
+                            :prop="item.name"
+                            :rules="{
+                                required: true,
+                                message: `请选择${item.comment}`,
+                                trigger: 'change',
+                            }"
+                            v-if="item.editable && item.type == 'map'"
+                        >
+                            <el-select placeholder="请选择" v-model="form[item.name]" size="small" v-if="item.type == 'map'">
+                                >
                                 <el-option v-for="(list, index) in setSearchList(item)" :key="index" :label="list.name" :value="list.id"> </el-option>
                             </el-select>
-
+                        </el-form-item>
+                        <el-form-item
+                            :label="item.comment"
+                            :prop="item.name"
+                            v-if="item.editable && item.type == 'list'"
+                            :rules="{
+                                required: true,
+                                message: `请选择${item.comment}`,
+                                trigger: 'change',
+                            }"
+                        >
                             <el-select placeholder="请选择" v-model="form[item.name]" size="small" v-if="item.type == 'list'">
                                 <el-option v-for="(list, index) in setSearchList2(item)" :key="index" :label="list" :value="list"> </el-option>
                             </el-select>
+                        </el-form-item>
+                        <el-form-item
+                            :label="item.comment"
+                            :prop="item.name"
+                            v-if="item.editable && (item.type == 'date' || item.type == 'datetime')"
+                            :rules="{
+                                required: true,
+                                message: `请选择${item.comment}`,
+                                trigger: 'change',
+                            }"
+                        >
+                            <el-date-picker style="width: 100%" v-if="item.type == 'date' || item.type == 'datetime'" v-model="form[item.name]" size="small" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"> </el-date-picker>
                         </el-form-item>
                     </el-col>
                 </template>
@@ -130,12 +169,18 @@ export default {
             return list
         },
         onSumit() {
-            this.searchList.forEach((e) => {
-                if (this.form[e.name] && e.type == 'init') {
-                    this.form[e.name] = 0
+            this.$refs['forms'].validate((valid) => {
+                if (valid) {
+                    this.searchList.forEach((e) => {
+                        if (this.form[e.name] && e.type == 'init') {
+                            this.form[e.name] = 0
+                        }
+                    })
+                    this.$emit('listEdit')
+                } else {
+                    return false
                 }
             })
-            this.$emit('listEdit')
         },
     },
 }

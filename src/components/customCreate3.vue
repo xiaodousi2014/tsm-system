@@ -1,36 +1,91 @@
 <template>
     <div id="customSearch">
-        <el-form class="search-from" label-position="right" label-width="150px" :model="form">
+        <el-form ref="forms" class="search-from" label-position="right" label-width="150px" :model="form">
             <el-row :gutter="10">
                 <el-col :md="8" :sm="12" :xs="24">
-                    <el-form-item label="场地类型">
+                    <el-form-item
+                        label="场地类型"
+                        :rules="{
+                            required: true,
+                            message: `请选择场地类型`,
+                            trigger: 'change',
+                        }"
+                        prop="site_type"
+                    >
                         <el-select placeholder="请选择" v-model="form['site_type']" size="small" @change="getName">
                             <el-option v-for="(list, index) in option1" :key="index" :label="list.label" :value="list.value"> </el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :md="8" :sm="12" :xs="24">
-                    <el-form-item label="场地名">
+                    <el-form-item
+                        label="场地名"
+                        :rules="{
+                            required: true,
+                            message: `请选择场地名`,
+                            trigger: 'change',
+                        }"
+                        prop="site_name"
+                    >
                         <el-select placeholder="请选择" v-model="form['site_id']" size="small">
                             <el-option v-for="(list, index) in option2" :key="index" :label="list.site_name" :value="list.id"> </el-option>
                         </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :md="8" :sm="12" :xs="24" v-for="item in searchList" :key="item.name">
-                    <el-form-item :label="item.comment" v-if="item.editable && item.name != 'site_name' && (item.type == 'string' || item.type == 'date' || item.type == 'datetime' || item.type == 'int' || item.type == 'map' || item.type == 'list')">
-                        <el-input v-if="item.type == 'string'" size="small" v-model="form[item.name]" placeholder="请输入"></el-input>
-
-                        <el-date-picker style="width: 100%" v-if="item.type == 'date' || item.type == 'datetime'" v-model="form[item.name]" size="small" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"> </el-date-picker>
-
-                        <el-input v-if="item.type == 'int'" type="number" size="small" v-model.number="form[item.name]" placeholder="请输入"></el-input>
-
+                    <el-form-item
+                        :label="item.comment"
+                        :prop="item.name"
+                        :rules="{
+                            required: true,
+                            message: `请输入${item.comment}`,
+                            trigger: 'blur',
+                        }"
+                        v-if="item.editable && (item.type == 'string' || item.type == 'int')"
+                    >
+                        <el-input v-if="item.type == 'string'" size="small" v-model="form[item.name]" placeholder="请输入"> ></el-input>
+                        <el-input v-if="item.type == 'int'" type="number" size="small" v-model.number="form[item.name]" placeholder="请输入"> ></el-input>
+                    </el-form-item>
+                    <el-form-item
+                        :label="item.comment"
+                        :prop="item.name"
+                        :rules="{
+                            required: true,
+                            message: `请选择${item.comment}`,
+                            trigger: 'change',
+                        }"
+                        v-if="item.editable && item.type == 'map'"
+                    >
                         <el-select placeholder="请选择" v-model="form[item.name]" size="small" v-if="item.type == 'map'">
+                            >
                             <el-option v-for="(list, index) in setSearchList(item)" :key="index" :label="list.name" :value="list.id"> </el-option>
                         </el-select>
-
-                        <el-select placeholder="请选择" v-model="form[item.name]" size="small" v-if="item.type == 'list'">
+                    </el-form-item>
+                    <el-form-item
+                        :label="item.comment"
+                        :prop="item.name"
+                        :rules="{
+                            required: true,
+                            message: `请选择${item.comment}`,
+                            trigger: 'change',
+                        }"
+                        v-if="item.editable && item.type == 'list'"
+                    >
+                        <el-select placeholder="请选择" v-model="form[item.name]" size="small">
                             <el-option v-for="(list, index) in setSearchList2(item)" :key="index" :label="list" :value="list"> </el-option>
                         </el-select>
+                    </el-form-item>
+                    <el-form-item
+                        :label="item.comment"
+                        :prop="item.name"
+                        v-if="item.editable && (item.type == 'date' || item.type == 'datetime')"
+                        :rules="{
+                            required: true,
+                            message: `请选择${item.comment}`,
+                            trigger: 'change',
+                        }"
+                    >
+                        <el-date-picker style="width: 100%" v-if="item.type == 'date' || item.type == 'datetime'" v-model="form[item.name]" size="small" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"> </el-date-picker>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -57,7 +112,7 @@ export default {
             form: {},
             option1: [],
             option2: [],
-            sites: []
+            sites: [],
         }
     },
     watch: {},
@@ -127,23 +182,27 @@ export default {
             return list
         },
         onSumit() {
-            this.searchList.forEach((e) => {
-                if (!this.form[e.name] && e.type == 'int') {
-                    this.form[e.name] = 0
-                } else if (!this.form[e.name]) {
-                    this.form[e.name] = ''
+            this.$refs['forms'].validate((valid) => {
+                if (valid) {
+                    this.searchList.forEach((e) => {
+                        if (!this.form[e.name] && e.type == 'int') {
+                            this.form[e.name] = 0
+                        } else if (!this.form[e.name]) {
+                            this.form[e.name] = ''
+                        }
+                    })
+
+                    for (let index = 0; index < this.sites.length; index++) {
+                        if (this.sites[index].id == this.form.site_id) {
+                            this.form.site_name = this.sites[index].site_name
+                        }
+                    }
+
+                    this.$emit('listCreate', this.form)
+                } else {
+                    return false
                 }
             })
-
-            for (let index = 0; index < this.sites.length; index++) {
-                if (this.sites[index].id == this.form.site_id) {
-                    this.form.site_name = this.sites[index].site_name
-                }
-            }
-
-            debugger
-
-            this.$emit('listCreate', this.form)
         },
         onSearch() {
             console.log(this.checkedSearchList)
