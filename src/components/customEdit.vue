@@ -72,21 +72,6 @@
               >
               </el-option>
             </el-select>
-
-            <el-select
-              placeholder="请选择"
-              v-model="form[item.name]"
-              size="small"
-              v-if="item.type == 'list'"
-            >
-              <el-option
-                v-for="(list, index) in setSearchList2(item)"
-                :key="index"
-                :label="list"
-                :value="list"
-              >
-              </el-option>
-            </el-select>
           </el-form-item>
             <el-form-item
             :label="item.comment"
@@ -95,6 +80,11 @@
               item.editable &&
                 item.type == 'list'
             "
+               :rules="{
+                required: true,
+                message: `请选择${item.comment}`,
+                trigger: 'change',
+              }"
           >
 
             <el-select
