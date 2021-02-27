@@ -57,18 +57,19 @@ export default {
         orderField: "id",
         orderOrient: "2",
         indexArray: [
-          {
-            col_type: "int",
+         {
+            col_type: "map",
             col_name: "lent_status",
-            indexType: "1",
-            value: "1",
-            relation: '2'
+            indexType: 1,
+            value: 1,
+            relation: 2
           },
            {
-            col_type: "int",
+            col_type: "map",
             col_name: "lent_status",
-            indexType: "1",
-            value: "2",
+            indexType: 1,
+            value: 2,
+             relation: 1
           }
         ],
         pageNum: 1,
@@ -80,7 +81,7 @@ export default {
       searchList: [],
       multipleSelection: [],
       searchModal: false,
-        preferencesModal: false,
+      preferencesModal: false,
       infoType: 't_stationery_lent',
     };
   },

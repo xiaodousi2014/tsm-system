@@ -255,7 +255,7 @@
         @close="close"
         :searchList="searchList"
         @listCreate="listCreate"
-        :form="{}"
+         ref= 'createadd'
       ></custom-create>
     </el-dialog>
     <el-dialog title="编辑" :visible.sync="editModal" width="1100px">
@@ -364,6 +364,10 @@ export default {
         });
     },
     onCreate() {
+        if(this.$refs.createadd) {
+        console.log(this.$refs.createadd.form)
+        this.$refs.createadd.form ={}
+      }
       this.createModal = true;
     },
     onEdit() {

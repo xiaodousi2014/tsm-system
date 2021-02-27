@@ -12,7 +12,7 @@
       <el-button class="btnSty" @click="onReturn()"
         >待报废</el-button
       >
-     <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
+     <el-button class="btnSty" @click="preferencesModal=true">偏好设置</el-button>
     </div>
 
        <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
@@ -72,7 +72,7 @@ export default {
       multipleSelection: [],
       searchModal: false,
       preferencesModal:false,
-      infoType: 't_trainingdevice_repair',
+      infoType: 't_training_device_repair',
     };
   },
   mounted() {

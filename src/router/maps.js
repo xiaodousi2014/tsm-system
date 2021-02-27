@@ -30,7 +30,7 @@ export default {
   {
    path: 'inventory',
    name: 'map-manage-storage-equipment',
-   meta: [{name: '在库设备', parentName: '地图管理', path: '/overview'}],
+   meta: [{name: '在库地图', parentName: '地图管理', path: '/overview'}],
    component: () => import('@/views/maps/storageEquipment/index.vue')
   },
 

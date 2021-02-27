@@ -13,7 +13,7 @@
       <el-button class="btnSty" @click="onRevoke()"
         >撤销操作</el-button
       >
-      <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
+      <el-button class="btnSty" @click="preferencesModal=true">偏好设置</el-button>
     </div>
 
        <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
@@ -80,7 +80,7 @@ export default {
       fileUrl: `${process.env.VUE_APP_API_URL}/trainingdevice/plan/import`,
       searchModal: false,
       preferencesModal:false,
-      infoType: 't_trainingdevice_plan',
+      infoType: 't_training_device_plan',
     };
   },
   mounted() {

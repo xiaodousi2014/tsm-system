@@ -260,6 +260,7 @@
     </el-dialog>
     <el-dialog title="新增" :visible.sync="createModal" width="1100px">
       <custom-create
+        ref='createadd'
         @close="close"
         :searchList="searchList"
         @listCreate="listCreate"
@@ -289,6 +290,7 @@ import customUploadFile from "@/components/customUploadFile";
 import customCreate from "@/components/customCreate";
 import customEdit from "@/components/customEdit";
 import customUploadFileList from "../../../components/customUploadFileList";
+import commononPreferences from '@/components/commononPreferences'
 export default {
   name: "declareWarehousing",
   components: {
@@ -396,6 +398,10 @@ export default {
         });
     },
     onCreate() {
+        if(this.$refs.createadd) {
+        console.log(this.$refs.createadd.form)
+        this.$refs.createadd.form ={}
+      }
       this.createModal = true;
     },
     onEdit() {
@@ -604,7 +610,7 @@ export default {
     },
     // 撤销操作
     onRevoke() {
-      this.$router.push("delete-list");
+      this.$router.push("delete/list");
     },
     getAllField() {
       Http.getStorageTitle()
@@ -630,6 +636,7 @@ export default {
             this.tableData = [];
             this.total = 0;
             this.tableAllIist = res.data.columns;
+          
             if (res.data.searchList.length) {
               this.tableData = res.data.searchList;
               this.total = res.page.page_total;

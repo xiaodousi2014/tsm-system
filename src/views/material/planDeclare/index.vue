@@ -78,6 +78,8 @@ export default {
       exportModal: false,
       fileUrl: `${process.env.VUE_APP_API_URL}/material/plan/import`,
       searchModal: false,
+      preferencesModal: false,
+      infoType: 't_material_plan',
     };
   },
   mounted() {

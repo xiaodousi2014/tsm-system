@@ -7,12 +7,26 @@
         padding: 120px 0;
       ">教学保障管理系统</el-header>
     <div class="login-content">
+      <div class="login-error-text">
+        <el-alert
+          v-if="isShowingText"
+          title="密码输入错误"
+          style="border:1px solid #FFCCC7;margin-bottom:12px;"
+          type="error"
+          show-icon
+          @close="onColseErrorText"
+        ></el-alert>
+      </div>
+
       <el-form
         :model="loginForm"
         :rules="loginFormFieldRules"
         ref="loginForm"
       >
-        <el-form-item>
+        <el-form-item
+          prop="u_name"
+          style="margin-bottom:26px !important;"
+        >
           <el-input
             v-model="loginForm.u_name"
             placeholder="请输入账号"
@@ -23,9 +37,11 @@
             ></i>
           </el-input>
         </el-form-item>
-        <el-form-item>
+
+        <el-form-item prop="u_passwd">
           <el-input
             v-model="loginForm.u_passwd"
+            show-password
             placeholder="请输入密码"
           >
             <i
@@ -64,6 +80,7 @@ export default {
   components: {},
   data() {
     return {
+      isShowingText: false,
       form: {
         name: "",
         password: "",
@@ -83,6 +100,7 @@ export default {
   },
 
   methods: {
+
     // 判断是否登录
     isLogin() {
       let loginToken = sessionStorage.getItem("loginToken");
@@ -91,27 +109,42 @@ export default {
       }
     },
 
-    submitForm() {
-    //   this.loading = true;
-    //   let params = this.loginForm;
-    //   let url = "/trmslogin";
-    //   Http.login(params)
-    //     .then((res) => {
-    //       console.log("读取登录的数据");
-    //       console.log(res);
-    //       sessionStorage.setItem("loginToken", res.token);
-    //       sessionStorage.setItem("loginName", res.u_name);
-    //       sessionStorage.setItem("userId", res.id);
-
-          // removeStorage('ifLogin')
-          // removeStorage('token')
-          // delCookie('token')
-          this.$router.push("/main");
-        // })
-        // .finally(() => {
-        //   this.loading = false;
-        // });
+    // 关闭错误提示框
+    onColseErrorText() {
+      this.isShowingText = false;
     },
+
+    submitForm() {
+      // this.isShowingText = true;
+      this.$refs["loginForm"].validate((valid) => {
+        if (valid) {
+          this.loading = true;
+          let params = this.loginForm;
+          let url = "/trmslogin";
+          Http.login(params)
+            .then((res) => {
+              if (res.code == "0000") {
+                console.log("读取登录的数据");
+                console.log(res);
+                
+                sessionStorage.setItem("loginToken", res.token);
+                sessionStorage.setItem("loginName", res.u_name);
+                sessionStorage.setItem("userId", res.id);
+                this.$router.push("/main");
+              } else {
+                this.isShowingText = true;
+              }
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+
     getMainFunctionButtonList() {
       this.mainFunctionButtonList = [
         {
@@ -164,21 +197,31 @@ export default {
         },
       ];
     },
+
   },
 
   created() {
     // 判断是否已经登录,如果已经登录则直接进入到主页
-    this.isLogin(); 
+    this.isLogin();
     this.getMainFunctionButtonList();
   },
-
+  
 };
 </script>
-<style scoped>
+<style    scoped>
 .login-content {
   width: 368px;
   margin: 50px auto;
 }
+
+.login-error-text {
+  height: 40px;
+}
+.login-content >>> .el-alert__title {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
 .login-list {
   width: 650px;
   line-height: 22px;

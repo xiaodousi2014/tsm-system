@@ -23,7 +23,7 @@
           :key="index"
           :prop="item.name"
           :label="item.comment"
-          width=""
+          width="300px"
         >
         <template slot-scope="scope" >
            <!-- {{setAttachment(scope.row, item)}} -->

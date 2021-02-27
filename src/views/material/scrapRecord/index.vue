@@ -76,14 +76,14 @@ export default {
       fileUrl: "",
       searchModal: false,
        dataList: {},
+        preferencesModal: false,
+         infoType: 't_material_abolish', 
       upLoadQuery: {
         id: '',
         file: '',
         infoType: 't_material',
         field: 'attachment',
         isMultiFiles: true,
-          preferencesModal: false,
-      infoType: 't_material_abolish',
       }
     };
   },
@@ -124,7 +124,7 @@ export default {
         return;
       }
       this.fileUrl = `${process.env.VUE_APP_API_URL}/common/attachment/import?infoType=t_material_abolish&id=${this.multipleSelection[0].id}`;
-         this.exportListModal = true;
+         this.exportModal = true;
       this.upLoadQuery.id= this.dataList.id;
       this.upLoadQuery.infoType = 't_material_abolish';
     },

@@ -83,7 +83,7 @@ export default {
 
         closeSave() {
             this.searchList = []
-            this.$emit('closeSave')
+            this.$emit('close')
         },
     },
 }

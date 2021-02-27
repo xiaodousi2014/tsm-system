@@ -14,9 +14,8 @@
                 name="file"
                 multiple
                 :limit="1"
-                :auto-upload="false"
                 :http-request="UploadImage"
-                :show-file-list="false"
+                
                 :on-success="successful"
                 :before-upload="beforeAvatarUpload"
                 :file-list="fileList"
@@ -65,17 +64,19 @@ export default {
         this.closeModal();
       })
       .catch((res) => {
+        this.fileList=[]
         this.$message.error(res.msg || "系统异常");
       });
     },
      successful(res, file, fileList) {
       if (res.code == '0000') {
         // this.$refs.uploadFiles.clear();
-        this.fileList = [];
+        // this.fileList = [];
         this.$message.success("上传成功");
         this.closeModal();
       } else {
-        this.fileList = [];
+        // this.fileList = [];
+        fileList.pop();
         // console.log(res)
         this.$message.error(res.msg|| '系统异常');
       }
@@ -95,21 +96,6 @@ export default {
       if (!isLt2M) {
         this.$message.error("上传文件大小不能超过 500k!");
       }
-        this.$confirm('此操作将上传该文件, 是否继续?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-            })
-                .then(() => {
-                    this.$refs.upload.submit()
-                })
-                .catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消',
-                    })
-                    this.fileList = []
-                })
       return true;
     },
   }

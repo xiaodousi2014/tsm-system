@@ -24,10 +24,15 @@ export default {
   {
    path: 'inventory',
    name: 'teaching-material-manage-storage-equipment',
-   meta: [{name: '在库设备', parentName: '教材管理', path: '/declare-in-stock'}],
+   meta: [{name: '在库教材', parentName: '教材管理', path: '/declare-in-stock'}],
    component: () => import('@/views/material/storageEquipment/index.vue')
   },
-
+  {
+    path: 'delete/list',
+    name: 'teaching-equipment-plan-declare',
+    meta: [{name: '删除列表', parentName: '教材管理', path: '/delete-list'}],
+    component: () => import('@/views/material/storageEquipment/deleteList.vue')
+   },
   {
    path: 'receive/record',
    name: 'teaching-material-manage-receive-record',

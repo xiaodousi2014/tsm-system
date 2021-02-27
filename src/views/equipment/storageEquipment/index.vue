@@ -293,11 +293,12 @@
             <custom-upload-file-put :url="fileUrl" @close="close" :uploadType="fileType" :id="upLoadQuery.id" :infoType="upLoadQuery.infoType"></custom-upload-file-put>
         </el-dialog>
     <el-dialog title="新增" :visible.sync="createModal" width="1100px">
-      <custom-create
+      <custom-create 
         @close="close"
         :searchList="searchList"
         @listCreate="listCreate"
         :form="{}"
+        ref= 'createadd'
       ></custom-create>
     </el-dialog>
     <el-dialog title="编辑" :visible.sync="editModal" width="1100px" >
@@ -424,6 +425,10 @@ export default {
         });
     },
     onCreate() {
+      if(this.$refs.createadd) {
+        console.log(this.$refs.createadd.form)
+        this.$refs.createadd.form ={}
+      }
       this.createModal = true;
     },
     onEdit() {
@@ -677,6 +682,7 @@ export default {
             this.tableData = [];
             this.total = 0;
             this.tableAllIist = res.data.columns;
+              
             if (res.data.searchList.length) {
               this.tableData = res.data.searchList;
               this.total = res.page.page_total;

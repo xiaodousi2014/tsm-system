@@ -155,6 +155,7 @@ export default {
       this.exportPutModal = true;
     },
     close() {
+      this.exportPutModal = false;
       this.preferencesModal = false;
       this.searchModal = false;
       this.exportModal = false;
@@ -192,7 +193,7 @@ export default {
         });
     },
     onUpload() {
-      this.fileUrl = "${process.env.VUE_APP_API_URL}/material/import",
+      this.fileUrl = `${process.env.VUE_APP_API_URL}/material/import`,
       this.exportModal = true;
     },
     getAllField() {

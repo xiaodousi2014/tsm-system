@@ -56,9 +56,21 @@ export default {
   },
   methods: {
     setAttachmentList() {
+      console.log(this.fileList)
       if (this.fileList && this.fileList.attachment) {
         let fileList = [];
         JSON.parse(this.fileList.attachment).files.forEach((item) => {
+          let query = {
+            name: item,
+            url: item,
+            code: name
+          };
+          fileList.push(query);
+        });
+        return fileList;
+      } else  if (this.fileList && this.fileList.data_name) {
+        let fileList = [];
+        JSON.parse(this.fileList.data_name).files.forEach((item) => {
           let query = {
             name: item,
             url: item,
@@ -85,8 +97,10 @@ export default {
       if (res.code == '0000') {
         this.$message.success("上传成功");
       } else {
-        this.fileList = [];
+        // console.log(fileList.pop())
+        // this.fileList = fileList.pop();
         // console.log(res)
+        fileList.pop()
         this.$message.error(res.msg|| '系统异常');
       }
     },

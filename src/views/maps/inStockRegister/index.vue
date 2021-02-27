@@ -155,6 +155,7 @@ export default {
       this.exportPutModal = true;
     },
     close() {
+      this.exportPutModal = false;
        this.preferencesModal = false;
       this.searchModal = false;
       this.exportModal = false;

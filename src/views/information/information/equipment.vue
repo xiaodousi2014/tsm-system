@@ -203,7 +203,7 @@ export default {
               let list = res.data.filter.filter((item) => {
                 return item.display == true;
               });
-              this.searchList = list;
+            
               this.getTableList();
             }
           }
@@ -219,6 +219,12 @@ export default {
             this.tableData = [];
             this.total = 0;
             this.tableAllIist = res.data.columns;
+              if (res.data.columns.length) {
+              let list = res.data.columns.filter((item) => {
+                return item.display == true;
+              });
+              this.searchList = res.data.columns;
+            }
             if (res.data.searchList.length) {
               this.tableData = res.data.searchList;
               this.total = res.page.page_total;

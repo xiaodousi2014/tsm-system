@@ -25,7 +25,7 @@ export default {
         path: 'inventory',
         name: 'security-equipment-storage-equipment',
         
-        meta: [{name: '在库设备', parentName: '保障装备'}],
+        meta: [{name: '在库装备', parentName: '保障装备'}],
         component: () => import('@/views/equipment/storageEquipment/index.vue')
        },
        {

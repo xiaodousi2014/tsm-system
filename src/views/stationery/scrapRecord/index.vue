@@ -127,9 +127,9 @@ export default {
         this.$message.warning("只能选择单个数据列编辑！");
         return;
       }
-      this.fileUrl = `${process.env.VUE_APP_API_URL}/common/attachment/import?infoType=t_stationery_abolish&id=${this.dataList.id}`;
+      this.fileUrl = `${process.env.VUE_APP_API_URL}/common/attachment/import?infoType=t_stationery_abolish&id=${this.multipleSelection[0].id}`;
          this.exportListModal = true;
-      this.upLoadQuery.id= this.dataList.id;
+      this.upLoadQuery.id= this.multipleSelection[0].id;
       this.upLoadQuery.infoType = 't_stationery_abolish';
     },
     close() {

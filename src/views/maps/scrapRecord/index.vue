@@ -128,6 +128,7 @@ export default {
       this.upLoadQuery.infoType = 't_maps_abolish';
     },
     close() {
+      this.exportListModal = false;
       this.preferencesModal = false;
       this.exportModal = false;
       this.getTableList();

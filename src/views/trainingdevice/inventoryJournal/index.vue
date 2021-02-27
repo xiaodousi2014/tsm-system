@@ -9,7 +9,7 @@
       <el-button class="btnSty" @click="onUploadFile()"
         >上传盘点结果</el-button
       >
-      <el-button class="btnSty" @click="onPreferences()">偏好设置</el-button>
+      <el-button class="btnSty" @click="preferencesModal=true">偏好设置</el-button>
     </div>
 
        <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">

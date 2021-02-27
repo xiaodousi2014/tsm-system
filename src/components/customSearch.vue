@@ -47,6 +47,7 @@
             v-if="it.col_type == 'date' || it.col_type == 'datetime'"
             v-model="it.value"
             type="date"
+            size="small"
             placeholder="选择日期"
           >
           </el-date-picker>
@@ -187,7 +188,12 @@ export default {
     },
     onSearch() {
      console.log(this.checkedSearchList);
-     this.$emit('Search', this.checkedSearchList)
+     if(this.checkedSearchList.length&& this.checkedSearchList[0].col_type) {
+     this.$emit('Search', this.checkedSearchList);
+     } else {
+     this.$emit('Search', [])
+
+     }
     },
     resetSearch(){
       this.checkedSearchList = [
@@ -199,7 +205,7 @@ export default {
           indexType: 1,
         },
       ]
-      this.$emit('Search', [])
+      // this.$emit('Search', [])
     },
     // 删除一个搜索条件
     reduceSearch(index) {

@@ -48,18 +48,18 @@ export default {
    component: () => import('@/views/stationery/receiveExamine/index.vue')
   },
 
-  {
-   path: 'borrow/record',
-   name: 'consumables-manage-borrow-record',
-   meta: [{name: '借用记录', parentName: '易耗品管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/stationery/borrowRecord/index.vue')
-  },
-  {
-   path: 'borrow/examine',
-   name: 'consumables-manage-borrow-examine',
-   meta: [{name: '借用审核', parentName: '易耗品管理', path: '/declare-in-stock'}],
-   component: () => import('@/views/stationery/borrowExamine/index.vue')
-  },
+  // {
+  //  path: 'borrow/record',
+  //  name: 'consumables-manage-borrow-record',
+  //  meta: [{name: '借用记录', parentName: '易耗品管理', path: '/declare-in-stock'}],
+  //  component: () => import('@/views/stationery/borrowRecord/index.vue')
+  // },
+  // {
+  //  path: 'borrow/examine',
+  //  name: 'consumables-manage-borrow-examine',
+  //  meta: [{name: '借用审核', parentName: '易耗品管理', path: '/declare-in-stock'}],
+  //  component: () => import('@/views/stationery/borrowExamine/index.vue')
+  // },
 
   // {
   //  path: 'repair/record',

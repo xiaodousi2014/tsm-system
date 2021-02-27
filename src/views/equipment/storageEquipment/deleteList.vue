@@ -2,7 +2,26 @@
   <div class="ClassifiedDisplay padding20">
     <!-- 表格 -->
     <!--搜索表单-->
-    <custom-table-select :list="tableAllIist"></custom-table-select>
+     <div class="table-button">
+      <el-button type="primary" @click="searchModal = true">检索</el-button>
+       <el-button class="btnSty"  @click="onRevoke()"
+        :disabled="!multipleSelection.length"
+        >撤销操作</el-button
+      >
+        <el-button class="btnSty" @click="cancal()"
+        >返回</el-button
+      >
+      <el-button class="btnSty" @click="preferencesModal = true"
+        >偏好设置</el-button
+      >
+      
+    </div>
+     <el-dialog title="偏好设置" v-if="preferencesModal" :visible.sync="preferencesModal" width="800px" :close-on-press-escape="false" :close-on-click-modal="false">
+            <commonon-preferences @close="close" :infoType="infoType"></commonon-preferences>
+        </el-dialog>
+          <el-dialog title="检索" :visible.sync="searchModal" width="1100px">
+      <custom-search :searchList="searchList" @Search="Search"></custom-search>
+    </el-dialog>
     <custom-table
       :tableAllIist="tableAllIist"
       :tableData="tableData"
@@ -19,15 +38,7 @@
         :total="total"
       />
     </div>
-    <div style="margin: 30px 0 20px 0; text-align: center">
-      <el-button size="small" @click="cancal()">取消</el-button>
-      <el-button
-        size="small"
-        @click="onRevoke()"
-        :disabled="!multipleSelection.length"
-        >撤销删除</el-button
-      >
-    </div>
+ 
   </div>
 </template>
 <script>
@@ -36,9 +47,10 @@ import customTableSelect from "../../../components/customTableSelect";
 import customSearch from "../../../components/customSearch";
 import Http from "@/api/equipmentManage";
 import customTable from "../../../components/customTable";
+import commononPreferences from "@/components/commononPreferences";
 export default {
   name: "declareWarehousing",
-  components: { customTableSelect, customSearch, customTable, Pagination },
+  components: { customTableSelect, customSearch, customTable, Pagination,commononPreferences },
   data() {
     return {
       query: {
@@ -53,12 +65,24 @@ export default {
       tableAllIist: [],
       searchList: [],
       multipleSelection: [],
+          searchModal: false,
+       preferencesModal: false,
+      infoType: "t_equipment_dirty",
     };
   },
   mounted() {
     this.getAllField();
   },
   methods: {
+      close() {
+      this.preferencesModal = false;
+    },
+     Search(event) {
+      this.query.indexArray = [];
+      this.query.indexArray = event;
+      this.searchModal = false;
+      this.getTableList();
+    },
      getAttachFile(query) {
        const link = document.createElement("a");
       Http.getAttachFile({id:query.row.id, infoType: "t_equipment_dirty" , file: query.file})
@@ -98,6 +122,12 @@ export default {
             this.tableData = [];
             this.total = 0;
             this.tableAllIist = res.data.columns;
+              if (res.data.columns.length) {
+              let list = res.data.columns.filter((item) => {
+                return item.display == true;
+              });
+              this.searchList = res.data.columns;
+            } 
             if (res.data.searchList.length) {
               this.tableData = res.data.searchList;
               this.total = res.page.page_total;
